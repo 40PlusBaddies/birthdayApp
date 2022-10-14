@@ -12,8 +12,7 @@ const GiftSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
-  },
-//   how can we include the birthdayPerson's id?
+  }
 })
 
 module.exports = mongoose.model('Gift', GiftSchema)
