@@ -1,4 +1,11 @@
 {
+  "name": "birthdayapp",
+  "description": "A birthday🎉 reminder app that sends a notification📨 a month📆 before (to get a gift🎁), a week before, and a day before.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
@@ -7,6 +14,7 @@
     "express": "^4.18.1",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
+    "method-override": "^3.0.0",
     "mongodb": "^4.9.1",
     "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
@@ -14,5 +22,6 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "validator": "^13.7.0"
-  }
+  },
+  "devDependencies": {}
 }
