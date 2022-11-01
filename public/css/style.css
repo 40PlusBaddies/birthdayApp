@@ -1,0 +1,30 @@
+.container-fluid {
+    background-image: url("/images/background.png");
+    height: 100vh;
+}
+
+
+.logo {
+    font-family: 'Dosis', sans-serif;
+    font-weight: bold;
+}
+
+.logo a {
+    color: red;
+    text-decoration: none;
+}
+
+a {
+    font-family: 'Dosis', sans-serif; 
+    font-weight: bold;
+}
+
+.btn {
+    background-color: red;
+    border: transparent;
+    border-radius: 10px;
+}
+
+.balloonLogo {
+    max-width: 100px;
+}
