@@ -9,6 +9,7 @@ const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
+const { use } = require("passport");
 //const postRoutes = require("./routes/posts");
 
 //Use .env file in config folder
