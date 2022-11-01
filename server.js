@@ -44,8 +44,10 @@ app.use(
         secret: "keyboard cat",
         resave: false,
         saveUninitialized: false,
-        store: MongoStore.create({
-            client: mongoose.connection.getClient(),
+        store: new MongoStore ({
+            mongooseConnection: mongoose.connection,
+        // store: MongoStore.create({
+        //     client: mongoose.connection.getClient(),
         }),
     })
 );
