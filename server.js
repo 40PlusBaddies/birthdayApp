@@ -9,7 +9,7 @@ const methodOverride = require("method-override");
 const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
-//declare root route
+//declare root route, start here
 const mainRoutes = require("./routes/main");
 const { use } = require("passport");
 //declare post (add member) route - (uninitialized)
