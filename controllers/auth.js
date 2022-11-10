@@ -2,6 +2,7 @@ const passport = require("passport");
 const validator = require("validator");
 const User = require("../models/User");
 
+//if user is logged in, redirect to profile.ejs
 exports.getLogin = (req, res) => {
   if (req.user) {
     return res.redirect("/profile");
@@ -11,6 +12,7 @@ exports.getLogin = (req, res) => {
   });
 };
 
+//create user login, errors reload page, success redirects to profile.ejs
 exports.postLogin = (req, res, next) => {
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
