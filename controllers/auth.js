@@ -2,7 +2,7 @@ const passport = require("passport");
 const validator = require("validator");
 const User = require("../models/User");
 
-//if user is logged in, redirect to profile.ejs
+//if user is logged in redirect to profile.ejs, otherwise load login page
 exports.getLogin = (req, res) => {
   if (req.user) {
     return res.redirect("/profile");
@@ -58,6 +58,7 @@ exports.logout = (req, res) => {
   });
 };
 
+//once signed up, redirect to profile.ejs
 exports.getSignup = (req, res) => {
   if (req.user) {
     return res.redirect("/profile");
@@ -67,6 +68,7 @@ exports.getSignup = (req, res) => {
   });
 };
 
+//create new account, errors or duplicate acct reloads page, success redirects to profile.ejs
 exports.postSignup = (req, res, next) => {
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
