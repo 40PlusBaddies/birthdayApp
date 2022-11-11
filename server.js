@@ -1,3 +1,4 @@
+//declare the initial variables to associate their respective component
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -8,8 +9,10 @@ const methodOverride = require("method-override");
 const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
+//declare root route, start here
 const mainRoutes = require("./routes/main");
 const { use } = require("passport");
+//declare post (add member) route - (uninitialized)
 //const postRoutes = require("./routes/posts");
 
 //Use .env file in config folder
