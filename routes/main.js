@@ -4,6 +4,8 @@ const router = express.Router();
 //establish controller variables
 const homeController = require("../controllers/home");
 const authController = require("../controllers/auth");
+const postsController = require("../controllers/posts");
+const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 //main routes
 router.get("/", homeController.getIndex);
