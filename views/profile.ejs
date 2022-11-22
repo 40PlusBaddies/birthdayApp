@@ -8,20 +8,26 @@
               <a href="/logout" class="col-3 btn btn-primary">Logout</a>
           </div>
           <div class="mt-5">
-            <h2>Add a post</h2>
+            <h2>Add a birthday person</h2>
             <form action="/post/createPost" enctype="multipart/form-data" method="POST">
               <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
+                  <label for="title" class="form-label">Name</label>
                   <input type="text" class="form-control" id="title" name="title">
               </div>
               <div class="mb-3">
-                <label for="caption" class="form-label">Caption</label>
+                <label for="caption" class="form-label">Relation</label>
                 <textarea class="form-control" id="caption" name="caption"></textarea>
               </div>
+              <!-- included gift idea form -->
               <div class="mb-3">
+                <label for="gift-ideas" class="form-label">Gift ideas</label>
+                <textarea class="form-control" id="gift-ideas" name="gift-ideas"></textarea>
+              </div>
+              <!-- commented out as there's no image to upload -->
+              <!-- <div class="mb-3">
                 <label for="imgUpload" class="form-label">Image</label>
                 <input type="file" class="form-control" id="imageUpload" name="file">
-              </div>
+              </div> -->
               <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
             </form>
           </div>
