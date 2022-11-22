@@ -10,7 +10,7 @@ module.exports = {
       console.log(err);
     }
   },
-  //probably need to comment/delete the below section out
+  // probably need to comment/delete the below section out
   getFeed: async (req, res) => {
     try {
       const posts = await BirthdayPerson.find().sort({ createdAt: "desc" }).lean();
