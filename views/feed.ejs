@@ -1,15 +1,56 @@
 <%- include('partials/header') -%>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row justify-content-center mt-5">
-      <ul class="row list-unstyled">
-        <% for(var i=0; i<posts.length; i++) {%>
-          <li class="col-6 justify-content-between mt-5">
-            <a href="/post/<%= posts[i]._id%>">
-              <img class="img-fluid" src="<%= posts[i].image%>">
-            </a>
-          </li>
-        <% } %>
+      <div class="text-center">
+        <p><strong>User Name</strong>: <%= user.userName %></p>
+        <p><strong>Email</strong>: <%= user.email %></p>
+        <a href="/profile" class="col-3 btn btn-primary">Back to Profile</a>
+        <a href="/logout" class="col-3 btn btn-primary">Logout</a>
+        <br><br><br><br>
+        <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
+  
+        <ul class="row list-unstyled">
+          <h3 class="logo"><strong>Birthdays Today</strong></h3>
+            <% for(var i=0; i<posts.length; i++) {%>
+              <!--This is where a conditional will go to only display today's birthdays, if posts.birthday === today's date....else something like "no birthdays today"-->
+              <li class="col-6 justify-content-between mt-5">
+                <a href="/post/<%= posts[i]._id%>">
+                  
+                </a>
+              </li>
+            <% } %>
+
+          <h3 class="logo"><strong>Birthdays Tomorrow</strong></h3>
+          <% for(var i=0; i<posts.length; i++) {%>
+            <!--This is where a conditional will go to only display tomorrow's birthdays, if posts.birthday === tomorrow's date....else something like "no birthdays tomorrow"-->
+            <li class="col-6 justify-content-between mt-5">
+              <a href="/post/<%= posts[i]._id%>">
+                
+              </a>
+            </li>
+          <% } %>
+
+          <h3 class="logo"><strong>Birthdays Next Week</strong></h3>
+          <% for(var i=0; i<posts.length; i++) {%>
+            <!--This is where a conditional will go to only display next week's birthdays, if posts.birthday === next week's date....else something like "no birthdays next week"-->
+            <li class="col-6 justify-content-between mt-5">
+              <a href="/post/<%= posts[i]._id%>">
+                
+              </a>
+            </li>
+          <% } %>
+
+          <h3 class="logo"><strong>Birthdays Next Month</strong></h3>
+          <% for(var i=0; i<posts.length; i++) {%>
+            <!--This is where a conditional will go to only display next month's birthdays, if posts.birthday === next month's date....else something like "no birthdays next month"-->
+            <li class="col-6 justify-content-between mt-5">
+              <a href="/post/<%= posts[i]._id%>">
+                
+              </a>
+            </li>
+          <% } %>
         </ul>
+      </div>
     </div>
   </div>  
 <%- include('partials/footer') -%>
