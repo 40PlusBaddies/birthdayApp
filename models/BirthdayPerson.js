@@ -17,7 +17,7 @@ const BirthdayPersonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  //gifts: [String]*/
+  gifts: [String]*/
 })
 
 module.exports = mongoose.model('BirthdayPerson', BirthdayPersonSchema)
