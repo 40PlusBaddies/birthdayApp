@@ -9,7 +9,7 @@
           </div>
           <div class="mt-5">
             <h2>Add a birthday person</h2>
-            <form action="createPost" enctype="multipart/form-data" method="POST">
+            <form action="/createPost"  method="POST">
               <div class="mb-3">
                   <label for="name" class="form-label">Name</label>
                   <input type="text" class="form-control" id="name" name="name">
@@ -23,17 +23,17 @@
                 <label for="date" class="form-label">Birthday</label>
                 <input type="date" class="form-control" id="birthday" name="birthday">
               </div>
-              <!-- included gift idea form -->
+              <!-- included gift idea form 
               <div class="mb-3">
                 <label for="gift-ideas" class="form-label">Gift ideas</label>
                 <textarea class="form-control" id="gift-ideas" name="gift-ideas"></textarea>
-              </div>
+              </div>-->
               <!-- commented out as there's no image to upload -->
               <!-- <div class="mb-3">
                 <label for="imgUpload" class="form-label">Image</label>
                 <input type="file" class="form-control" id="imageUpload" name="file">
               </div> -->
-              <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+              <button type="submit" class="btn btn-primary" >Submit</button>
             </form>
           </div>
       </div>
