@@ -37,9 +37,10 @@ module.exports = {
         relation: req.body.relation,
         birthday: req.body.birthday,
         userId: req.user.userId,
-        gifts: req.body.gift-ideas,
+        //gifts: req.body.gift-ideas,
       });
-      console.log("Your friend of family member has been added!");
+      console.log(req.body)
+      console.log("Your friend or family member has been added!");
       res.redirect("/profile");
     } catch (err) {
       console.log(err);
