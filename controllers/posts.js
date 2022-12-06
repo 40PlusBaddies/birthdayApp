@@ -30,37 +30,37 @@ module.exports = {
   createPost: async (req, res) => {
     try {
       // Upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path);
+      //const result = await cloudinary.uploader.upload(req.file.path);
 
       await BirthdayPerson.create({
-        title: req.body.title,
-        image: result.secure_url,
-        cloudinaryId: result.public_id,
-        caption: req.body.caption,
-        likes: 0,
-        user: req.user.id,
+        name: req.body.name,
+        relation: req.body.relation,
+        birthday: req.body.birthday,
+        userId: req.user.userId,
+        //gifts: req.body.gift-ideas,
       });
-      console.log("Post has been added!");
+      console.log(req.body)
+      console.log("Your friend or family member has been added!");
       res.redirect("/profile");
     } catch (err) {
       console.log(err);
     }
   },
   //probably need to comment/delete the below section out
-  likePost: async (req, res) => {
-    try {
-      await BirthdayPerson.findOneAndUpdate(
-        { _id: req.params.id },
-        {
-          $inc: { likes: 1 },
-        }
-      );
-      console.log("Likes +1");
-      res.redirect(`/post/${req.params.id}`);
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  // likePost: async (req, res) => {
+  //   try {
+  //     await BirthdayPerson.findOneAndUpdate(
+  //       { _id: req.params.id },
+  //       {
+  //         $inc: { likes: 1 },
+  //       }
+  //     );
+  //     console.log("Likes +1");
+  //     res.redirect(`/post/${req.params.id}`);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
   deletePost: async (req, res) => {
     try {
       // Find post by id

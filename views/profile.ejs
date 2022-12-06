@@ -9,31 +9,31 @@
           </div>
           <div class="mt-5">
             <h2>Add a birthday person</h2>
-            <form action="/post/createPost" enctype="multipart/form-data" method="POST">
+            <form action="/post/createPost"  method="POST">
               <div class="mb-3">
-                  <label for="title" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="title" name="title">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" name="name">
               </div>
               <div class="mb-3">
-                <label for="caption" class="form-label">Relation</label>
-                <textarea class="form-control" id="caption" name="caption"></textarea>
+                <label for="relation" class="form-label">Relation</label>
+                <textarea class="form-control" id="relation" name="relation"></textarea>
               </div>
               <!--Included birthday for new person-->
               <div class="mb-3">
-                <label for="title" class="form-label">Birthday</label>
+                <label for="date" class="form-label">Birthday</label>
                 <input type="date" class="form-control" id="birthday" name="birthday">
               </div>
-              <!-- included gift idea form -->
+              <!-- included gift idea form 
               <div class="mb-3">
                 <label for="gift-ideas" class="form-label">Gift ideas</label>
                 <textarea class="form-control" id="gift-ideas" name="gift-ideas"></textarea>
-              </div>
+              </div>-->
               <!-- commented out as there's no image to upload -->
               <!-- <div class="mb-3">
                 <label for="imgUpload" class="form-label">Image</label>
                 <input type="file" class="form-control" id="imageUpload" name="file">
               </div> -->
-              <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+              <button type="submit" class="btn btn-primary" >Submit</button>
             </form>
           </div>
       </div>
