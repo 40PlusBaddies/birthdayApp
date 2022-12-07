@@ -17,7 +17,7 @@ const BirthdayPersonSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  gifts: [String]*/
+  //gifts: [String]
 })
 
 module.exports = mongoose.model('BirthdayPerson', BirthdayPersonSchema)
