@@ -13,11 +13,11 @@ const BirthdayPersonSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  /*userId: {
-    type: String,
-    required: true,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
-  gifts: [String]*/
+  //gifts: [String]
 })
 
 module.exports = mongoose.model('BirthdayPerson', BirthdayPersonSchema)
