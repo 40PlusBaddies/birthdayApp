@@ -36,7 +36,7 @@ module.exports = {
         name: req.body.name,
         relation: req.body.relation,
         birthday: req.body.birthday,
-        userId: req.user.userId,
+        userId: req.user.id,
         //gifts: req.body.gift-ideas,
       });
       console.log(req.body)
