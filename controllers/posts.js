@@ -13,7 +13,7 @@ module.exports = {
   // probably need to comment/delete the below section out
   getFeed: async (req, res) => {
     try {
-      const posts = await BirthdayPerson.find().sort({ createdAt: "desc" }).lean();
+      const posts = await BirthdayPerson.find({ userId: req.user.id }).sort({ createdAt: "desc" }).lean();
       res.render("feed.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
