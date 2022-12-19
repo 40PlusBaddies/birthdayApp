@@ -7,11 +7,15 @@
         <a href="/profile" class="col-3 btn btn-primary">Add Someone's Birthday</a>
         <a href="/logout" class="col-3 btn btn-primary">Logout</a>
         <br><br><br><br>
+        <h2 <strong><%= new Date() %></strong></h2>
+
         <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
   
         <ul class="row list-unstyled">
           <h3 class="logo"><strong>Birthdays Today</strong></h3>
             <% for(var i=0; i<posts.length; i++) {%>
+              <h4 <strong><%= posts[i].name %></strong></h4>
+          
               <!--This is where a conditional will go to only display today's birthdays, if posts.birthday === today's date....else something like "no birthdays today"-->
               <li class="col-6 justify-content-between mt-5">
                 <a href="/post/<%= posts[i]._id%>">
