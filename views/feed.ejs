@@ -31,40 +31,56 @@
                   <% let birthdayMonth = birthday.getMonth(); %>
 
                   <% if(todayDay == birthdayDay && todayMonth == birthdayMonth) { %>
-                    <h5><%= posts[i].name %></h5>
+                    <h5><%= posts[i].name %>!</h5>
                  <% }  %>
               </li>
             <% } %>
 
           <h3 class="logo mt-3"><strong>Birthdays Tomorrow</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <!--This is where a conditional will go to only display tomorrow's birthdays, if posts.birthday === tomorrow's date....else something like "no birthdays tomorrow"-->
-            <li class="col-6 justify-content-between mt-5">
-              <a href="/post/<%= posts[i]._id%>">
-                
-              </a>
+            <li class="justify-content-center">
+                <% let todayDay = today.getDate(); %>
+                <% let todayMonth = today.getMonth(); %>
+                <% let birthday = posts[i].birthday; %>
+                <% let birthdayDay = birthday.getDate(); %>
+                <% let birthdayMonth = birthday.getMonth(); %>
+
+                <% if(todayDay == birthdayDay-1 && todayMonth == birthdayMonth) { %>
+                  <h5><%= posts[i].name %></h5>
+               <% }  %>
             </li>
           <% } %>
 
           <h3 class="logo"><strong>Birthdays Next Week</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <!--This is where a conditional will go to only display next week's birthdays, if posts.birthday === next week's date....else something like "no birthdays next week"-->
-            <li class="col-6 justify-content-between mt-5">
-              <a href="/post/<%= posts[i]._id%>">
-                
-              </a>
+            <li class="justify-content-center">
+                <% let todayDay = today.getDate(); %>
+                <% let todayMonth = today.getMonth(); %>
+                <% let birthday = posts[i].birthday; %>
+                <% let birthdayDay = birthday.getDate(); %>
+                <% let birthdayMonth = birthday.getMonth(); %>
+
+                <% if(todayMonth == birthdayMonth && birthdayDay > todayDay + 1 && birthdayDay <= todayDay +7) { %>
+                  <h5><%= posts[i].name %></h5>
+               <% }  %>
             </li>
           <% } %>
 
-          <h3 class="logo"><strong>Birthdays Next Month</strong></h3>
+          <h3 class="logo"><strong>Birthdays Coming Soon (within 30 days)</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <!--This is where a conditional will go to only display next month's birthdays, if posts.birthday === next month's date....else something like "no birthdays next month"-->
-            <li class="col-6 justify-content-between mt-5">
-              <a href="/post/<%= posts[i]._id%>">
-                
-              </a>
+            <li class="justify-content-center">
+                <% let todayDay = today.getDate(); %>
+                <% let todayMonth = today.getMonth(); %>
+                <% let birthday = posts[i].birthday; %>
+                <% let birthdayDay = birthday.getDate(); %>
+                <% let birthdayMonth = birthday.getMonth(); %>
+
+                <% if(todayMonth == birthdayMonth && birthdayDay > todayDay + 7 && birthdayDay <= todayDay + 30) { %>
+                  <h5><%= posts[i].name %></h5>
+               <% }  %>
             </li>
           <% } %>
+
         </ul>
       </div>
     </div>
