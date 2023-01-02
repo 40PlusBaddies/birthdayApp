@@ -22,7 +22,6 @@
               <!-- <h4><strong><%= posts[i].name %></strong></h4> --> 
               <!-- <h4><%= posts[i].birthday %></h4> -->
              
-              <!-- This is where a conditional will go to only display today's birthdays, if posts.birthday === today's date....else something like "no birthdays today"-->
               <li class="justify-content-center">
                   <% let todayDay = today.getDate(); %>
                   <% let todayMonth = today.getMonth(); %>
@@ -30,7 +29,7 @@
                   <% let birthdayDay = birthday.getDate(); %>
                   <% let birthdayMonth = birthday.getMonth(); %>
 
-                  <% if(todayDay == birthdayDay && todayMonth == birthdayMonth) { %>
+                  <% if((todayDay === birthdayDay) && (todayMonth === birthdayMonth)) { %>
                     <h5><%= posts[i].name %>!</h5>
                  <% }  %>
               </li>
@@ -45,7 +44,7 @@
                 <% let birthdayDay = birthday.getDate(); %>
                 <% let birthdayMonth = birthday.getMonth(); %>
 
-                <% if(todayDay == birthdayDay-1 && todayMonth == birthdayMonth) { %>
+                <% if(todayDay === birthdayDay-1 && todayMonth === birthdayMonth) { %>
                   <h5><%= posts[i].name %></h5>
                <% }  %>
             </li>
@@ -60,7 +59,7 @@
                 <% let birthdayDay = birthday.getDate(); %>
                 <% let birthdayMonth = birthday.getMonth(); %>
 
-                <% if(todayMonth == birthdayMonth && birthdayDay > todayDay + 1 && birthdayDay <= todayDay +7) { %>
+                <% if((todayMonth === birthdayMonth) && (birthdayDay > todayDay + 1) && (birthdayDay <= todayDay +7)) { %>
                   <h5><%= posts[i].name %></h5>
                <% }  %>
             </li>
@@ -75,12 +74,11 @@
                 <% let birthdayDay = birthday.getDate(); %>
                 <% let birthdayMonth = birthday.getMonth(); %>
 
-                <% if(todayMonth == birthdayMonth && birthdayDay > todayDay + 7 && birthdayDay <= todayDay + 30) { %>
+                <% if((todayMonth == birthdayMonth) && (birthdayDay > todayDay + 7) && (birthdayDay <= todayDay + 30)) { %>
                   <h5><%= posts[i].name %></h5>
                <% }  %>
             </li>
           <% } %>
-
         </ul>
       </div>
     </div>

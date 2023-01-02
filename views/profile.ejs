@@ -4,7 +4,8 @@
       <div class="col-6">
           <div>
               <p><strong>User Name</strong>: <%= user.userName %></p>
-              <p><strong>Email</strong>: <%= user.email %></p>
+              <p><strong>Email</strong>: <%= user.email %></p>             
+              <a class="btn btn-primary" href="/feed">See Upcoming Birthdays</a>
               <a href="/logout" class="col-3 btn btn-primary">Logout</a>
           </div>
           <div class="mt-5">
@@ -18,7 +19,6 @@
                 <label for="relation" class="form-label">Relation</label>
                 <textarea class="form-control" id="relation" name="relation"></textarea>
               </div>
-              <!--Included birthday for new person-->
               <div class="mb-3">
                 <label for="date" class="form-label">Birthday</label>
                 <input type="date" class="form-control" id="birthday" name="birthday">
@@ -28,12 +28,7 @@
                 <label for="gift-ideas" class="form-label">Gift ideas</label>
                 <textarea class="form-control" id="gift-ideas" name="gift-ideas"></textarea>
               </div>-->
-              <!-- commented out as there's no image to upload -->
-              <!-- <div class="mb-3">
-                <label for="imgUpload" class="form-label">Image</label>
-                <input type="file" class="form-control" id="imageUpload" name="file">
-              </div> -->
-              <button type="submit" class="btn btn-primary" >Submit</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
       </div>
@@ -47,9 +42,6 @@
           </li>
         <% } %>
         </ul>
-        <div class="row justify-content-center mt-5">
-          <a class="btn btn-primary" href="/feed">See Upcoming Birthdays</a>
-        </div>  
       </div>  
     </div>
   </div>
