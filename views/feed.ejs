@@ -10,7 +10,7 @@
         <!-- <h2 <strong><%= new Date() %></strong></h2> -->
         <!-- formatted date -->
         <% let today = new Date(); %>
-        <% let todayFormatted = today.toLocaleDateString("en-US") %>
+        <% let todayFormatted = today.toLocaleDateString() %>
         <h2><strong"><%= todayFormatted %></strong></h2>
 
         <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
@@ -45,7 +45,7 @@
                 <% let birthdayMonth = birthday.getMonth(); %>
 
                 <% if(todayDay === birthdayDay-1 && todayMonth === birthdayMonth) { %>
-                  <h5><%= posts[i].name %></h5>
+                  <h5><%= posts[i].name %>, <%= posts[i].birthday %></h5>
                <% }  %>
             </li>
           <% } %>
@@ -60,7 +60,7 @@
                 <% let birthdayMonth = birthday.getMonth(); %>
 
                 <% if((todayMonth === birthdayMonth) && (birthdayDay > todayDay + 1) && (birthdayDay <= todayDay +7)) { %>
-                  <h5><%= posts[i].name %></h5>
+                  <h5><%= posts[i].name %>, <%= birthday.toLocaleDateString()%></h5>
                <% }  %>
             </li>
           <% } %>
@@ -75,7 +75,7 @@
                 <% let birthdayMonth = birthday.getMonth(); %>
 
                 <% if((todayMonth == birthdayMonth) && (birthdayDay > todayDay + 7) && (birthdayDay <= todayDay + 30)) { %>
-                  <h5><%= posts[i].name %></h5>
+                  <h5><%= posts[i].name %>, <%= birthday.toLocaleDateString()%></h5>
                <% }  %>
             </li>
           <% } %>
