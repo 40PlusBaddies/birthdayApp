@@ -14,6 +14,7 @@ const mainRoutes = require("./routes/main");
 const { use } = require("passport");
 //declare post (add member) route - (uninitialized)
 const postRoutes = require("./routes/posts");
+const dayjs = require('dayjs')
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -58,6 +59,8 @@ app.use(passport.session());
 
 //Use flash messages for errors, info, ect...
 app.use(flash());
+
+app.locals.dayjs = require('dayjs');
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);

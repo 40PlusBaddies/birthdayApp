@@ -9,9 +9,8 @@
         <br><br><br><br>
         <!-- <h2 <strong><%= new Date() %></strong></h2> -->
         <!-- formatted date -->
-        <% let today = new Date(); %>
-        <% let todayFormatted = today.toLocaleDateString() %>
-        <h2><strong"><%= todayFormatted %></strong></h2>
+        <% let today = dayjs().format('MMMM, D'); %>
+        <h2><strong"><%= today %></strong></h2>
 
         <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
   
@@ -22,62 +21,30 @@
               <!-- <h4><strong><%= posts[i].name %></strong></h4> --> 
               <!-- <h4><%= posts[i].birthday %></h4> -->
              
-              <li class="justify-content-center">
-                  <% let todayDay = today.getDate(); %>
-                  <% let todayMonth = today.getMonth(); %>
-                  <% let birthday = posts[i].birthday; %>
-                  <% let birthdayDay = birthday.getDate(); %>
-                  <% let birthdayMonth = birthday.getMonth(); %>
-
-                  <% if((todayDay === birthdayDay) && (todayMonth === birthdayMonth)) { %>
-                    <h5><%= posts[i].name %>!</h5>
-                 <% }  %>
-              </li>
+              <!-- <li class="justify-content-center">
+                  
+              </li> -->
             <% } %>
 
           <h3 class="logo mt-3"><strong>Birthdays Tomorrow</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <li class="justify-content-center">
-                <% let todayDay = today.getDate(); %>
-                <% let todayMonth = today.getMonth(); %>
-                <% let birthday = posts[i].birthday; %>
-                <% let birthdayDay = birthday.getDate(); %>
-                <% let birthdayMonth = birthday.getMonth(); %>
-
-                <% if(todayDay === birthdayDay-1 && todayMonth === birthdayMonth) { %>
-                  <h5><%= posts[i].name %>, <%= posts[i].birthday %></h5>
-               <% }  %>
-            </li>
+            <!-- <li class="justify-content-center">
+                
+            </li> -->
           <% } %>
 
           <h3 class="logo"><strong>Birthdays Next Week</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <li class="justify-content-center">
-                <% let todayDay = today.getDate(); %>
-                <% let todayMonth = today.getMonth(); %>
-                <% let birthday = posts[i].birthday; %>
-                <% let birthdayDay = birthday.getDate(); %>
-                <% let birthdayMonth = birthday.getMonth(); %>
-
-                <% if((todayMonth === birthdayMonth) && (birthdayDay > todayDay + 1) && (birthdayDay <= todayDay +7)) { %>
-                  <h5><%= posts[i].name %>, <%= birthday.toLocaleDateString()%></h5>
-               <% }  %>
-            </li>
+            <!-- <li class="justify-content-center">
+                
+            </li> -->
           <% } %>
 
           <h3 class="logo"><strong>Birthdays Coming Soon (within 30 days)</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <li class="justify-content-center">
-                <% let todayDay = today.getDate(); %>
-                <% let todayMonth = today.getMonth(); %>
-                <% let birthday = posts[i].birthday; %>
-                <% let birthdayDay = birthday.getDate(); %>
-                <% let birthdayMonth = birthday.getMonth(); %>
-
-                <% if((todayMonth == birthdayMonth) && (birthdayDay > todayDay + 7) && (birthdayDay <= todayDay + 30)) { %>
-                  <h5><%= posts[i].name %>, <%= birthday.toLocaleDateString()%></h5>
-               <% }  %>
-            </li>
+            <!-- <li class="justify-content-center">
+                
+            </li> -->
           <% } %>
         </ul>
       </div>
