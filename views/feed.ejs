@@ -17,13 +17,12 @@
         <ul class="row list-unstyled">
           <h3 class="logo"><strong>Birthdays Today</strong></h3>
             <% for(var i=0; i<posts.length; i++) {%>
-              <!-- the code below shows all my birthdays -->
-              <!-- <h4><strong><%= posts[i].name %></strong></h4> --> 
-              <!-- <h4><%= posts[i].birthday %></h4> -->
-             
-              <!-- <li class="justify-content-center">
-                  
-              </li> -->
+              <li class="justify-content-center">
+                <% let birthday = dayjs(posts[i].birthday) %>
+                <% if(birthday.dayOfYear() == dayjs().dayOfYear()) { %>
+                  <h5><%= posts[i].name %>, <%= birthday.format('MMM, D, YYYY') %>, (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                <% }  %>
+              </li>
             <% } %>
 
           <h3 class="logo mt-3"><strong>Birthdays Tomorrow</strong></h3>
