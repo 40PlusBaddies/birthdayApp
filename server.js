@@ -16,6 +16,7 @@ const { use } = require("passport");
 const postRoutes = require("./routes/posts");
 const dayjs = require('dayjs')
 const dayOfYear = require('dayjs/plugin/dayOfYear')
+const duration = require('dayjs/plugin/duration')
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -63,7 +64,9 @@ app.use(flash());
 
 app.locals.dayjs = require('dayjs');
 app.locals.dayOfYear = require('dayjs/plugin/dayOfYear');
+app.locals.duration = require('dayjs/plugin/duration');
 dayjs.extend(dayOfYear)
+dayjs.extend(duration)
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
