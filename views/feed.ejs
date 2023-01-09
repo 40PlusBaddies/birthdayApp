@@ -28,9 +28,13 @@
 
           <h3 class="logo mt-3"><strong>Birthdays Tomorrow</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
-            <!-- <li class="justify-content-center">
-                
-            </li> -->
+            <li class="justify-content-center">
+              <% let todayDayOfYear = dayjs().dayOfYear() %>
+              <% let birthdayDayOfYear = dayjs(posts[i].birthday).dayOfYear() %>
+              <% if(birthdayDayOfYear - todayDayOfYear == 1) { %>
+                <h5><%= posts[i].name %>, <%= dayjs(posts[i].birthday).format('MMMM, D, YYYY') %></h5>
+              <% }  %>
+            </li>
           <% } %>
 
           <h3 class="logo"><strong>Birthdays Next Week</strong></h3>
