@@ -9,7 +9,7 @@
         <br><br><br><br>
         <!-- <h2 <strong><%= new Date() %></strong></h2> -->
         <!-- formatted date -->
-        <% let today = dayjs().format('MMMM, D, YYYY'); %>
+        <% let today = dayjs().format('MMMM D, YYYY'); %>
         <h2><strong"><%= today %></strong></h2>
 
         <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
@@ -21,7 +21,7 @@
                 <!-- Determine whether a birthdayPerson's birthday is today -->
                 <% let birthday = dayjs.utc(posts[i].birthday) %>
                 <% if(birthday.dayOfYear() == dayjs().dayOfYear()) { %>
-                  <h5><%= posts[i].name %>, <%= birthday.format('MMM, D, YYYY') %>, (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                  <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
                 <% }  %>
               </li>
             <% } %>
@@ -32,7 +32,7 @@
                 <!-- Determine whether a birthdayPerson's birthday is tomorrow -->
                 <% let birthday = dayjs.utc(posts[i].birthday) %>
                 <% if(birthday.dayOfYear() - dayjs().dayOfYear() == 1) { %>
-                  <h5><%= posts[i].name %>, <%= birthday.format('MMM, D, YYYY') %>, (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                  <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
                 <% }  %>
             </li>
           <% } %>
@@ -43,7 +43,7 @@
               <!-- Determine whether a birthdayPerson's birthday is within the next 7 days -->
               <% let birthday = dayjs.utc(posts[i].birthday) %>
               <% if(birthday.dayOfYear() - dayjs().dayOfYear() > 1 && birthday.dayOfYear() - dayjs().dayOfYear() <= 7) { %>
-                <h5><%= posts[i].name %>, <%= birthday.format('MMM, D, YYYY') %>, (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
               <% }  %>
           </li>
           <% } %>
@@ -54,7 +54,7 @@
               <!-- Determine whether a birthdayPerson's birthday is within the next 30 days -->
               <% let birthday = dayjs.utc(posts[i].birthday) %>
               <% if(birthday.dayOfYear() - dayjs().dayOfYear() > 7 && birthday.dayOfYear() - dayjs().dayOfYear() <= 31) { %>
-                <h5><%= posts[i].name %>, <%= birthday.format('MMM, D, YYYY') %>, (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
               <% }  %>
           </li>
           <% } %>
