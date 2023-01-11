@@ -7,10 +7,8 @@
         <a href="/profile" class="col-3 btn btn-primary">Add Someone's Birthday</a>
         <a href="/logout" class="col-3 btn btn-primary">Logout</a>
         <br><br><br><br>
-        <!-- <h2 <strong><%= new Date() %></strong></h2> -->
-        <!-- formatted date -->
-        <% let today = dayjs().format('MMMM D, YYYY'); %>
-        <h2><strong"><%= today %></strong></h2>
+        <!-- today's date -->
+        <h2><strong"><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
 
         <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
   
