@@ -14,11 +14,12 @@ const mainRoutes = require("./routes/main");
 const { use } = require("passport");
 //declare post (add member) route - (uninitialized)
 const postRoutes = require("./routes/posts");
-const dayjs = require('dayjs')
-const dayOfYear = require('dayjs/plugin/dayOfYear')
-const duration = require('dayjs/plugin/duration')
-const utc = require('dayjs/plugin/utc')
-const timezone = require('dayjs/plugin/timezone')
+const dayjs = require('dayjs');
+const dayOfYear = require('dayjs/plugin/dayOfYear');
+const duration = require('dayjs/plugin/duration');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+const nodemailer = require('nodemailer');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -74,6 +75,40 @@ dayjs.extend(duration)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
+function sendNotificationEmail(){
+
+    // create reusable transporter object using the default SMTP transport (recipient info, needs to be valid credentials)
+    let transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+        user: "insert here",
+        pass: "insert here"
+    },
+    tls:{
+        rejectUnauthorized:false
+    }
+    });
+
+    // send mail with defined transport object (sender info, does not need to be valid)
+    let mailOptions = {
+        from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
+        to: "40plusbday@gmail.com", // list of receivers
+        subject: "A friend or family member has a birthday coming up!", // Subject line
+        text: "Open the app to find out who...", // plain text body
+        html: "<b>html body</b>", // html body
+    };
+
+    // send mail with defined transport object 
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    });
+}
+
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 app.use("/post", postRoutes);
@@ -82,3 +117,5 @@ app.use("/post", postRoutes);
 app.listen(process.env.PORT, () => {
     console.log("Server is running, you better catch it!");
 });
+
+sendNotificationEmail()
