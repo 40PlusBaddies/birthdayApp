@@ -7,77 +7,54 @@
         <a href="/profile" class="col-3 btn btn-primary">Add Someone's Birthday</a>
         <a href="/logout" class="col-3 btn btn-primary">Logout</a>
         <br><br><br><br>
-        <!-- <h2 <strong><%= new Date() %></strong></h2> -->
-        <!-- formatted date -->
-        <% let today = new Date(); %>
-        <% let todayFormatted = today.toLocaleDateString() %>
-        <h2><strong"><%= todayFormatted %></strong></h2>
+        <!-- today's date -->
+        <h2><strong"><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
 
         <h1 class="logo"><strong>Upcoming Birthdays</strong></h1>
   
         <ul class="row list-unstyled">
           <h3 class="logo"><strong>Birthdays Today</strong></h3>
             <% for(var i=0; i<posts.length; i++) {%>
-              <!-- the code below shows all my birthdays -->
-              <!-- <h4><strong><%= posts[i].name %></strong></h4> --> 
-              <!-- <h4><%= posts[i].birthday %></h4> -->
-             
               <li class="justify-content-center">
-                  <% let todayDay = today.getDate(); %>
-                  <% let todayMonth = today.getMonth(); %>
-                  <% let birthday = posts[i].birthday; %>
-                  <% let birthdayDay = birthday.getDate(); %>
-                  <% let birthdayMonth = birthday.getMonth(); %>
-
-                  <% if((todayDay === birthdayDay) && (todayMonth === birthdayMonth)) { %>
-                    <h5><%= posts[i].name %>!</h5>
-                 <% }  %>
+                <!-- Determine whether a birthdayPerson's birthday is today -->
+                <% let birthday = dayjs.utc(posts[i].birthday) %>
+                <% if(birthday.dayOfYear() == dayjs().dayOfYear()) { %>
+                  <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                <% }  %>
               </li>
             <% } %>
 
           <h3 class="logo mt-3"><strong>Birthdays Tomorrow</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
             <li class="justify-content-center">
-                <% let todayDay = today.getDate(); %>
-                <% let todayMonth = today.getMonth(); %>
-                <% let birthday = posts[i].birthday; %>
-                <% let birthdayDay = birthday.getDate(); %>
-                <% let birthdayMonth = birthday.getMonth(); %>
-
-                <% if(todayDay === birthdayDay-1 && todayMonth === birthdayMonth) { %>
-                  <h5><%= posts[i].name %>, <%= posts[i].birthday %></h5>
-               <% }  %>
+                <!-- Determine whether a birthdayPerson's birthday is tomorrow -->
+                <% let birthday = dayjs.utc(posts[i].birthday) %>
+                <% if(birthday.dayOfYear() - dayjs().dayOfYear() == 1) { %>
+                  <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+                <% }  %>
             </li>
           <% } %>
 
-          <h3 class="logo"><strong>Birthdays Next Week</strong></h3>
+          <h3 class="logo"><strong>Birthdays Coming Up This Week</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
             <li class="justify-content-center">
-                <% let todayDay = today.getDate(); %>
-                <% let todayMonth = today.getMonth(); %>
-                <% let birthday = posts[i].birthday; %>
-                <% let birthdayDay = birthday.getDate(); %>
-                <% let birthdayMonth = birthday.getMonth(); %>
-
-                <% if((todayMonth === birthdayMonth) && (birthdayDay > todayDay + 1) && (birthdayDay <= todayDay +7)) { %>
-                  <h5><%= posts[i].name %>, <%= birthday.toLocaleDateString()%></h5>
-               <% }  %>
-            </li>
+              <!-- Determine whether a birthdayPerson's birthday is within the next 7 days -->
+              <% let birthday = dayjs.utc(posts[i].birthday) %>
+              <% if(birthday.dayOfYear() - dayjs().dayOfYear() > 1 && birthday.dayOfYear() - dayjs().dayOfYear() <= 7) { %>
+                <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+              <% }  %>
+          </li>
           <% } %>
 
-          <h3 class="logo"><strong>Birthdays Coming Soon (within 30 days)</strong></h3>
+          <h3 class="logo"><strong>Birthdays Coming Up Within 30 days)</strong></h3>
           <% for(var i=0; i<posts.length; i++) {%>
             <li class="justify-content-center">
-                <% let todayDay = today.getDate(); %>
-                <% let todayMonth = today.getMonth(); %>
-                <% let birthday = posts[i].birthday; %>
-                <% let birthdayDay = birthday.getDate(); %>
-                <% let birthdayMonth = birthday.getMonth(); %>
-
-                <% if((todayMonth == birthdayMonth) && (birthdayDay > todayDay + 7) && (birthdayDay <= todayDay + 30)) { %>
-                  <h5><%= posts[i].name %>, <%= birthday.toLocaleDateString()%></h5>
-               <% }  %>
-            </li>
+              <!-- Determine whether a birthdayPerson's birthday is within the next 30 days -->
+              <% let birthday = dayjs.utc(posts[i].birthday) %>
+              <% if(birthday.dayOfYear() - dayjs().dayOfYear() > 7 && birthday.dayOfYear() - dayjs().dayOfYear() <= 31) { %>
+                <h5><%= posts[i].name %>, <%= birthday.format('MMM D, YYYY') %> (<%= Math.floor(dayjs.duration(dayjs().diff(birthday)).asYears()) %> Years Old)</h5>
+              <% }  %>
+          </li>
           <% } %>
         </ul>
       </div>
