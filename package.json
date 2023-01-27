@@ -18,11 +18,21 @@
     "express-session": "^1.17.3",
     "method-override": "^3.0.0",
     "mongodb": "^4.9.1",
-    "mongoose": "^6.6.5",
+    "mongoose": "^6.9.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
     "passport": "^0.5.3",
     "passport-local": "^1.0.0",
     "validator": "^13.7.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marianaWest/birthdayApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marianaWest/birthdayApp/issues"
+  },
+  "homepage": "https://github.com/marianaWest/birthdayApp#readme"
 }

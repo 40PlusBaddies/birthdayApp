@@ -1,8 +1,22 @@
-.container-fluid {
-    background-image: url("/images/background.png");
-    height: 100vh;
+:root {
+    --primary-color: red;
+    --secondary-color: green; 
 }
 
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%;
+}
+
+body {
+    background-image: url("/images/background.png");
+}
+
+.container-fluid {
+    height: 100vh;
+}
 
 .logo {
     font-family: 'Dosis', sans-serif;
@@ -11,21 +25,59 @@
 }
 
 .logo a {
+    display: block;
     color: red;
     text-decoration: none;
+    font-size: 5rem;
+    padding-top: 20px;
 }
 
 a {
     font-family: 'Dosis', sans-serif; 
     font-weight: bold;
+    font-size: 1.8rem;
 }
 
 .btn {
-    background-color: red;
+    background-color: var(--primary-color);
     border: transparent;
     border-radius: 10px;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: orange;
+    font-size: 2rem;
 }
 
 .balloonLogo {
     max-width: 100px;
 }
+
+h2 {
+    font-family: 'Dosis', sans-serif; 
+    font-size: 2.6rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+p {
+    font-family: 'Dosis', sans-serif; 
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+label {
+    font-family: 'Dosis', sans-serif; 
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+}
+
+.form-control {
+    font-family: 'Dosis', sans-serif; 
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+}
+
