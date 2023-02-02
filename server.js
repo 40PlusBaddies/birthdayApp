@@ -20,6 +20,7 @@ const duration = require('dayjs/plugin/duration');
 const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 const nodemailer = require('nodemailer');
+const sendNotificationEmail = require('./lib/transport');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -75,31 +76,6 @@ dayjs.extend(duration)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-async function sendNotificationEmail() {
-    let transporter = nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
-        port: 2525,
-        auth: {
-            user: "047d4c26b47295",
-            pass: "3949f14e243454"
-        },
-        tls:{
-            rejectUnauthorized:false
-        },
-    });
-  
-    let info = await transporter.sendMail({
-        from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "40plusbday@gmail.com", // list of receivers
-        subject: "A friend or family member has a birthday coming up!", // Subject line
-        text: "Open the app to find out who...", // plain text body
-        html: "<b>html body</b>" // html body
-    });
-  
-    console.log("Message sent: %s", info.messageId);
-  }
-  sendNotificationEmail().catch(console.error);
-
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 app.use("/post", postRoutes);
@@ -108,3 +84,5 @@ app.use("/post", postRoutes);
 app.listen(process.env.PORT, () => {
     console.log("Server is running, you better catch it!");
 });
+
+sendNotificationEmail()
