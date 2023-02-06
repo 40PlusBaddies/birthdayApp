@@ -19,6 +19,7 @@ const dayOfYear = require('dayjs/plugin/dayOfYear');
 const duration = require('dayjs/plugin/duration');
 const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
+const relativeTime = require('dayjs/plugin/relativeTime')
 const nodemailer = require('nodemailer');
 const sendNotificationEmail = require('./lib/transport');
 
@@ -71,10 +72,12 @@ app.locals.dayOfYear = require('dayjs/plugin/dayOfYear');
 app.locals.duration = require('dayjs/plugin/duration');
 app.locals.utc = require('dayjs/plugin/utc')
 app.locals.timezone = require('dayjs/plugin/timezone') 
+app.locals.relativeTime = require('dayjs/plugin/relativeTime') 
 dayjs.extend(dayOfYear)
 dayjs.extend(duration)
 dayjs.extend(utc)
 dayjs.extend(timezone)
+dayjs.extend(relativeTime)
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
