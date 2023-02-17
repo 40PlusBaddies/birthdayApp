@@ -65,27 +65,23 @@ async function recurringTask(i) {
 //logic to read db and send email
 async function BirthdayCountdown() {
     const posts = await BirthdayPerson.find({ }).lean()
-    let tomorrow = false
-    let week = false
-    let month = false
     for(let i = 0; i < posts.length; i++){
         let birthday = dayjs.utc(posts[i].birthday)
         if(birthday.dayOfYear() == dayjs().dayOfYear()){
             await recurringTask()
-            tomorrow = false
-        }if(birthday.dayOfYear() - dayjs().dayOfYear() == 1 && tomorrow == false){
+            //posts[i].tomorrowNotificationSent = false
+        }if(birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false){
             await recurringTask()
-            week = false
-            tomorrow = true
-        }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && week == false){
+            //posts[i].weekNotificationSent = false
+            //posts[i].tomorrowNotificationSent = true
+        }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false){
             await recurringTask()
-            month = false
-            week = true
-        }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && month == false){
+            //posts[i].monthNotificationSent = false
+            //posts[i].weekNotificationSent = true
+        }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false){
             await recurringTask()
-            month = true
+            //posts[i].findOneAndUpdate({ _id: req.params.id },{"$set":{"monthNotificationSent":true}})
         }
-    //console.log(`tomorrow = ${tomorrow}, week = ${week}, month = ${month}`)
     }
 }
 
