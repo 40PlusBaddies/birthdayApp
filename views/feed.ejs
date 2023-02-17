@@ -14,7 +14,7 @@
   
         <ul class="row list-unstyled">
           <h3 class="logo"><strong>Birthdays Today</strong></h3>
-            <% for(var i=0; i<posts.length; i++) {%>
+            <% for(let i=0; i<posts.length; i++) {%>
               <li class="justify-content-center">
                 <!-- Determine whether a birthdayPerson's birthday is today -->
                 <% let birthday = dayjs.utc(posts[i].birthday) %>
@@ -25,7 +25,7 @@
             <% } %>
 
           <h3 class="logo mt-3"><strong>Birthdays Tomorrow</strong></h3>
-          <% for(var i=0; i<posts.length; i++) {%>
+          <% for(let i=0; i<posts.length; i++) {%>
             <li class="justify-content-center">
                 <!-- Determine whether a birthdayPerson's birthday is tomorrow -->
                 <% let birthday = dayjs.utc(posts[i].birthday) %>
@@ -36,7 +36,7 @@
           <% } %>
 
           <h3 class="logo"><strong>Birthdays Coming Up This Week</strong></h3>
-          <% for(var i=0; i<posts.length; i++) {%>
+          <% for(let i=0; i<posts.length; i++) {%>
             <li class="justify-content-center">
               <!-- Determine whether a birthdayPerson's birthday is within the next 7 days -->
               <% let birthday = dayjs.utc(posts[i].birthday) %>
@@ -47,7 +47,7 @@
           <% } %>
 
           <h3 class="logo"><strong>Birthdays Coming Up Within 30 days)</strong></h3>
-          <% for(var i=0; i<posts.length; i++) {%>
+          <% for(let i=0; i<posts.length; i++) {%>
             <li class="justify-content-center">
               <!-- Determine whether a birthdayPerson's birthday is within the next 30 days -->
               <% let birthday = dayjs.utc(posts[i].birthday) %>
