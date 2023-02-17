@@ -7,7 +7,7 @@ require("dotenv").config({ path: "./config/.env" });
 //configure emailer
 function sendNotificationEmail(){
 
-    // create reusable transporter object using the default SMTP transport (recipient info, needs to be valid credentials)
+    //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         
         host: "sandbox.smtp.mailtrap.io",
@@ -33,7 +33,7 @@ function sendNotificationEmail(){
         }
     });
 
-    // send mail with defined transport object (sender info, does not need to be valid)
+    //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let mailOptions = {
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
         to: "40plusbday@gmail.com", // list of receivers
@@ -42,7 +42,7 @@ function sendNotificationEmail(){
         html: "<b>html body</b>", // html body
     };
 
-    // send mail with defined transport object 
+    //send mail with defined transport object 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return console.log(error);
@@ -53,13 +53,16 @@ function sendNotificationEmail(){
     });
 }
 
+//creates setTimeout wrapper function
 function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
+//creates delay between individual emails in ms
 async function recurringTask(i) {
-    await setDelay(2000)
-    sendNotificationEmail()
+    await setDelay(1500)
+    console.log('send email test') //sendNotificationEmail()
 }
-  
+
+//logic to read db and send email
 async function BirthdayCountdown() {
     const posts = await BirthdayPerson.find({ }).lean()
     let tomorrow = false
@@ -84,4 +87,8 @@ async function BirthdayCountdown() {
         }
     }
 }
-BirthdayCountdown() //Needs to refresh once daily
+
+//called daily using bree
+BirthdayCountdown()
+
+//console.log('test with no delay')

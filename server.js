@@ -8,6 +8,7 @@ const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");
 const flash = require("express-flash");
 const logger = require("morgan");
+const Bree = require('bree')
 const connectDB = require("./config/database");
 //declare root route, start here
 const mainRoutes = require("./routes/main");
@@ -21,7 +22,7 @@ const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 const relativeTime = require('dayjs/plugin/relativeTime')
 const nodemailer = require('nodemailer');
-const sendNotificationEmail = require('./lib/transport');
+const sendNotificationEmail = require('./jobs/transport');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -78,6 +79,16 @@ dayjs.extend(duration)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(relativeTime)
+
+//tells bree which file to schedule and sets time
+const bree = new Bree({
+    jobs: [{
+        name: 'transport',
+        cron: ' 54 12 * * * ',
+    }]
+})
+
+bree.start()
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
