@@ -17,6 +17,18 @@ const BirthdayPersonSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  monthNotificationSent: {
+    type: Boolean,
+    default: false,
+  },
+  weekNotificationSent: {
+    type: Boolean,
+    default: false,
+  },
+  tomorrowNotificationSent: {
+    type: Boolean,
+    default: false,
+  },
   //gifts: [String]
 })
 
