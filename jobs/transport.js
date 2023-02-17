@@ -85,6 +85,7 @@ async function BirthdayCountdown() {
             await recurringTask()
             month = true
         }
+    //console.log(`tomorrow = ${tomorrow}, week = ${week}, month = ${month}`)
     }
 }
 
