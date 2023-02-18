@@ -78,7 +78,7 @@ dayjs.extend(utc)
 const bree = new Bree({
     jobs: [{
         name: 'transport',
-        cron: ' 46 6 * * * ',
+        cron: ' 14 12 * * * ',
     }]
 })
 
