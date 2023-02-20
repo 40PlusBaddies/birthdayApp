@@ -78,11 +78,14 @@ dayjs.extend(utc)
 const bree = new Bree({
     jobs: [{
         name: 'transport',
-        cron: ' 14 12 * * * ',
+        cron: ' 40 14 * * * ',
     }]
-})
+});
 
-bree.start()
+(async () => {
+    await bree.start();
+})();
+
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
