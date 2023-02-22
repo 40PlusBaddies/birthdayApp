@@ -1,8 +1,15 @@
 const nodemailer = require('nodemailer');
 const BirthdayPerson = require("../models/BirthdayPerson");
 const dayjs = require('dayjs');
+const dayOfYear = require('dayjs/plugin/dayOfYear');
+const duration = require('dayjs/plugin/duration');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(dayOfYear)
+dayjs.extend(duration)
+dayjs.extend(utc)
 require("dotenv").config({ path: "./config/.env" });
 const { google } = require("googleapis");
+const { default: mongoose } = require('mongoose');
 const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(
     process.env.my_oauth_client_id, // ClientID
@@ -13,7 +20,7 @@ oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token 
 const accessToken = oauth2Client.getAccessToken()
 
 //configure emailer
-async function sendNotificationEmail() {
+async function sendNotificationEmail(firstName) {
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         // host: "sandbox.smtp.mailtrap.io",
@@ -41,7 +48,7 @@ async function sendNotificationEmail() {
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
         to: "40plusbday@gmail.com", // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
-        text: "Open the app to find out who...", // plain text body
+        text: `${firstName}'s birthday is coming up!`, // plain text body
         html: "<b>html body</b>", // html body
     })
   
@@ -53,31 +60,41 @@ async function sendNotificationEmail() {
 function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
-async function recurringTask(i) {
+async function recurringTask(firstName) {
     await setDelay(2000)
-    sendNotificationEmail().catch(console.error)
+    sendNotificationEmail(firstName).catch(console.error)
 }
 
 //logic to read db and send email
-async function BirthdayCountdown() {
-    const posts = await BirthdayPerson.find({ }).lean()
-    for(let i = 0; i < posts.length; i++){
-        let birthday = dayjs.utc(posts[i].birthday)
-        if(birthday.dayOfYear() == dayjs().dayOfYear()){
-            await recurringTask()
-            //posts[i].tomorrowNotificationSent = false
-        }if(birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false){
-            await recurringTask()
-            //posts[i].weekNotificationSent = false
-            //posts[i].tomorrowNotificationSent = true
-        }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false){
-            await recurringTask()
-            //posts[i].monthNotificationSent = false
-            //posts[i].weekNotificationSent = true
-        }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false){
-            await recurringTask()
-            //posts[i].findOneAndUpdate({ _id: req.params.id },{"$set":{"monthNotificationSent":true}})
+const BirthdayCountdown = async () => {
+    try {
+        await mongoose.connect(process.env.DB_STRING, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: "birthdayApp",
+        })
+        const posts = await BirthdayPerson.find({ }).lean()
+        for(let i = 0; i < posts.length; i++){
+            let birthday = dayjs.utc(posts[i].birthday)
+            if(birthday.dayOfYear() == dayjs().dayOfYear()){
+                await recurringTask()
+                //posts[i].tomorrowNotificationSent = false
+            }if(birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false){
+                await recurringTask()
+                //posts[i].weekNotificationSent = false
+                //posts[i].tomorrowNotificationSent = true
+            }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false){
+                await recurringTask()
+                //posts[i].monthNotificationSent = false
+                //posts[i].weekNotificationSent = true
+            }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false){
+                await recurringTask(posts[i].name)
+                //posts[i].findOneAndUpdate({ _id: req.params.id },{"$set":{"monthNotificationSent":true}})
+            }
         }
+    }catch (err) {
+        console.error(err)
+        process.exit(1)
     }
 }
 
