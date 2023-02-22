@@ -89,7 +89,7 @@ const BirthdayCountdown = async () => {
                 //posts[i].weekNotificationSent = true
             }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false){
                 await recurringTask(posts[i].name)
-                //posts[i].findOneAndUpdate({ _id: req.params.id },{"$set":{"monthNotificationSent":true}})
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
     }catch (err) {
