@@ -23,12 +23,6 @@ const accessToken = oauth2Client.getAccessToken()
 async function sendNotificationEmail(firstName) {
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        // host: "sandbox.smtp.mailtrap.io",
-        // port: 2525,
-        // auth: {
-        //     user: process.env.mailtrapUser,
-        //     pass: process.env.mailtrapPass
-
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
@@ -61,7 +55,7 @@ function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
 async function recurringTask(firstName) {
-    await setDelay(2000)
+    await setDelay(1500)
     sendNotificationEmail(firstName).catch(console.error)
 }
 
