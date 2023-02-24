@@ -4,20 +4,12 @@ const dayjs = require('dayjs');
 const dayOfYear = require('dayjs/plugin/dayOfYear');
 const duration = require('dayjs/plugin/duration');
 const utc = require('dayjs/plugin/utc');
-dayjs.extend(dayOfYear)
-dayjs.extend(duration)
-dayjs.extend(utc)
-require("dotenv").config({ path: "./config/.env" });
 const { google } = require("googleapis");
-const { default: mongoose } = require('mongoose');
-const OAuth2 = google.auth.OAuth2;
-const oauth2Client = new OAuth2(
-    process.env.my_oauth_client_id, // ClientID
-    process.env.my_oauth_client_secret, // Client Secret
-    "https://developers.google.com/oauthplayground" // Redirect URL
-);
-oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token })
-const accessToken = oauth2Client.getAccessToken()
+const { parentPort } = require('worker_threads');
+const mongoose = require('mongoose')
+
+require("dotenv").config({ path: "./config/.env" });
+let accessToken = undefined;
 
 //configure emailer
 async function sendNotificationEmail(firstName) {
@@ -33,21 +25,21 @@ async function sendNotificationEmail(firstName) {
             clientSecret: process.env.my_oauth_client_secret,
             refreshToken: process.env.my_oauth_refresh_token,
             accessToken: accessToken
-      },tls: {
-        rejectUnauthorized: false
-      }
+        }, tls: {
+            rejectUnauthorized: false
+        }
     })
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "40plusbday@gmail.com", // list of receivers
+        to: "ed_way@hotmail.com", // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         text: `${firstName}'s birthday is coming up!`, // plain text body
         html: "<b>html body</b>", // html body
     })
-  
-    console.log("Message sent: %s", info.messageId)
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info))
+
+    parentPort.postMessage(`Message sent: ${info.messageId}`)
+    parentPort.postMessage(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`)
 }
 
 //creates setTimeout wrapper function
@@ -56,41 +48,63 @@ function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 //creates delay between individual emails in ms
 async function recurringTask(firstName) {
     await setDelay(1500)
-    sendNotificationEmail(firstName).catch(console.error)
+    sendNotificationEmail(firstName)
 }
 
 //logic to read db and send email
 const BirthdayCountdown = async () => {
     try {
-        await mongoose.connect(process.env.DB_STRING, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: "birthdayApp",
-        })
-        const posts = await BirthdayPerson.find({ }).lean()
-        for(let i = 0; i < posts.length; i++){
+        const posts = await BirthdayPerson.find({}).lean()
+        for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
-            if(birthday.dayOfYear() == dayjs().dayOfYear()){
+            if (birthday.dayOfYear() == dayjs().dayOfYear()) {
                 await recurringTask()
                 //posts[i].tomorrowNotificationSent = false
-            }if(birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false){
+            } if (birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false) {
                 await recurringTask()
                 //posts[i].weekNotificationSent = false
                 //posts[i].tomorrowNotificationSent = true
-            }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false){
+            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false) {
                 await recurringTask()
                 //posts[i].monthNotificationSent = false
                 //posts[i].weekNotificationSent = true
-            }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false){
+            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false) {
                 await recurringTask(posts[i].name)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
-    }catch (err) {
-        console.error(err)
+    } catch (err) {
+        parentPort.postMessage(err)
         process.exit(1)
     }
 }
 
 //called daily using bree
-BirthdayCountdown()
+(async () => {
+    dayjs.extend(dayOfYear)
+    dayjs.extend(duration)
+    dayjs.extend(utc)
+
+    const oauth2Client = new google.auth.OAuth2(
+        process.env.my_oauth_client_id, // ClientID
+        process.env.my_oauth_client_secret, // Client Secret
+        "https://developers.google.com/oauthplayground" // Redirect URL
+    );
+    oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token })
+    await oauth2Client.getAccessToken()
+        .then((token) => accessToken = token)
+
+    // stop deprication warning
+    mongoose.set('strictQuery', true);
+    await mongoose.connect(process.env.DB_STRING, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: "birthdayApp",
+    }).catch()
+
+    parentPort.postMessage('weeee lets send some emails')
+    await BirthdayCountdown();
+
+    if (parentPort) parentPort.postMessage('done');
+    else process.exit(0);
+})();

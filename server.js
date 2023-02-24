@@ -12,15 +12,12 @@ const Bree = require('bree')
 const connectDB = require("./config/database");
 //declare root route, start here
 const mainRoutes = require("./routes/main");
-const { use } = require("passport");
 //declare post (add member) route - (uninitialized)
 const postRoutes = require("./routes/posts");
 const dayjs = require('dayjs');
 const dayOfYear = require('dayjs/plugin/dayOfYear');
 const duration = require('dayjs/plugin/duration');
 const utc = require('dayjs/plugin/utc');
-const nodemailer = require('nodemailer');
-const sendNotificationEmail = require('./jobs/transport');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -78,9 +75,13 @@ dayjs.extend(utc)
 const bree = new Bree({
     jobs: [{
         name: 'transport',
-        cron: ' * 4 * * * ',
-        closeWorkerAfterMs: 21600000,
+        cron: ' * * * * * ',
+        // closeWorkerAfterMs: 21600000,
     }]
+});
+
+bree.on('worker created', (name) => {
+    console.log('worker created', name);
 });
 
 (async () => {
