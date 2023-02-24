@@ -8,17 +8,19 @@ const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");
 const flash = require("express-flash");
 const logger = require("morgan");
+const Bree = require('bree')
 const connectDB = require("./config/database");
 //declare root route, start here
 const mainRoutes = require("./routes/main");
 const { use } = require("passport");
 //declare post (add member) route - (uninitialized)
 const postRoutes = require("./routes/posts");
-const dayjs = require('dayjs')
-const dayOfYear = require('dayjs/plugin/dayOfYear')
-const duration = require('dayjs/plugin/duration')
-const utc = require('dayjs/plugin/utc')
-const timezone = require('dayjs/plugin/timezone')
+const dayjs = require('dayjs');
+const dayOfYear = require('dayjs/plugin/dayOfYear');
+const duration = require('dayjs/plugin/duration');
+const utc = require('dayjs/plugin/utc');
+const nodemailer = require('nodemailer');
+const sendNotificationEmail = require('./jobs/transport');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -68,11 +70,23 @@ app.locals.dayjs = require('dayjs');
 app.locals.dayOfYear = require('dayjs/plugin/dayOfYear');
 app.locals.duration = require('dayjs/plugin/duration');
 app.locals.utc = require('dayjs/plugin/utc')
-app.locals.timezone = require('dayjs/plugin/timezone') 
 dayjs.extend(dayOfYear)
 dayjs.extend(duration)
 dayjs.extend(utc)
-dayjs.extend(timezone)
+
+//tells bree which file to schedule and sets time
+const bree = new Bree({
+    jobs: [{
+        name: 'transport',
+        cron: ' * 4 * * * ',
+        closeWorkerAfterMs: 21600000,
+    }]
+});
+
+(async () => {
+    await bree.start();
+})();
+
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
