@@ -32,7 +32,7 @@ async function sendNotificationEmail(firstName) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "ed_way@hotmail.com", // list of receivers
+        to: "40plusbday@gmail.com", // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         text: `${firstName}'s birthday is coming up!`, // plain text body
         html: "<b>html body</b>", // html body
