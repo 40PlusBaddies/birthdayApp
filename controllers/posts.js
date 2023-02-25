@@ -1,4 +1,3 @@
-//const cloudinary = require("../middleware/cloudinary");
 const BirthdayPerson = require("../models/BirthdayPerson");
 
 module.exports = {
