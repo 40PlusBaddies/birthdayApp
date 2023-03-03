@@ -57,20 +57,25 @@ const BirthdayCountdown = async () => {
         const posts = await BirthdayPerson.find({}).lean()
         for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
-            if (birthday.dayOfYear() == dayjs().dayOfYear()) {
+            if(birthday.dayOfYear() == dayjs().dayOfYear()){
                 await recurringTask()
-                //posts[i].tomorrowNotificationSent = false
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false) {
+                await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : false} })
+            }if(birthday.dayOfYear() - dayjs().dayOfYear() == 1 && 
+                posts[i].tomorrowNotificationSent == false){
                 await recurringTask()
-                //posts[i].weekNotificationSent = false
-                //posts[i].tomorrowNotificationSent = true
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false) {
+                await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : false} })
+                await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : true} })
+            }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && 
+                birthday.dayOfYear() - dayjs().dayOfYear() > 1 &&
+                posts[i].weekNotificationSent == false){
                 await recurringTask()
-                //posts[i].monthNotificationSent = false
-                //posts[i].weekNotificationSent = true
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false) {
+                await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : false} })
+                await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : true} })
+            }if(birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && 
+                birthday.dayOfYear() - dayjs().dayOfYear() > 7 &&
+                posts[i].monthNotificationSent == false){
                 await recurringTask(posts[i].name)
-                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
+                await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
     } catch (err) {
