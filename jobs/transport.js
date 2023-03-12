@@ -7,12 +7,14 @@ const utc = require('dayjs/plugin/utc');
 const { google } = require("googleapis");
 const { parentPort } = require('worker_threads');
 const mongoose = require('mongoose')
+const User = require('../models/User');
+const { db } = require('../models/User');
 
 require("dotenv").config({ path: "./config/.env" });
 let accessToken = undefined;
 
 //configure emailer
-async function sendNotificationEmail(firstName) {
+async function sendNotificationEmail(firstName, email) {
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -46,33 +48,51 @@ async function sendNotificationEmail(firstName) {
 function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
-async function recurringTask(firstName) {
+async function recurringTask(dailyBirthdayAlerts) {
     await setDelay(1500)
-    sendNotificationEmail(firstName)
+    sendNotificationEmail(dailyBirthdayAlerts)
 }
 
 //logic to read db and send email
 const BirthdayCountdown = async () => {
     try {
         const posts = await BirthdayPerson.find({}).lean()
+        const user = await User.find({}).lean()
+        let dailyBirthdayAlerts = [];
+
         for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
-            if (birthday.dayOfYear() == dayjs().dayOfYear()) {
-                await recurringTask()
-                //posts[i].tomorrowNotificationSent = false
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false) {
-                await recurringTask()
-                //posts[i].weekNotificationSent = false
-                //posts[i].tomorrowNotificationSent = true
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false) {
-                await recurringTask()
-                //posts[i].monthNotificationSent = false
-                //posts[i].weekNotificationSent = true
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false) {
-                await recurringTask(posts[i].name)
-                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
+            if (birthday.dayOfYear() === dayjs().dayOfYear()) {
+                console.log("first conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
+                dailyBirthdayAlerts.push(posts[i])
+            }
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 /*&& posts[i].tomorrowNotificationSent == false*/) {
+                console.log("second conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
+                dailyBirthdayAlerts.push(posts[i])
+            }
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  /*&& posts[i].weekNotificationSent == false*/) {
+                console.log("third conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
+                dailyBirthdayAlerts.push(posts[i])
+            }
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 /*&& posts[i].monthNotificationSent == false*/) {
+                console.log("fourth conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
+                dailyBirthdayAlerts.push(posts[i])
             }
         }
+        for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
+            for (let j = 0; j < user.length; j++) {
+                //use a nested loop to loop through the Users to find the UserId associated with the birthday person and send an email
+                if (user[j]._id == dailyBirthdayAlerts[i].userId) {
+                    //this comparison does not work
+                    console.log(user[j]._id, "send email to: ", user[j].userName, user[j].email)
+                }
+                else {
+                    console.log("no match")
+                }
+            }
+        }
+
+
     } catch (err) {
         parentPort.postMessage(err)
         process.exit(1)
