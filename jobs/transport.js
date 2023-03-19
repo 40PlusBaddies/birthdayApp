@@ -14,7 +14,7 @@ require("dotenv").config({ path: "./config/.env" });
 let accessToken = undefined;
 
 //configure emailer
-async function sendNotificationEmail(firstName, email) {
+async function sendNotificationEmail(email) {
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -36,7 +36,7 @@ async function sendNotificationEmail(firstName, email) {
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
         to: "40plusbday@gmail.com", // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
-        text: `${firstName}'s birthday is coming up!`, // plain text body
+        //text: `${firstName}'s birthday is coming up!`, // plain text body
         html: "<b>html body</b>", // html body
     })
 
@@ -48,55 +48,86 @@ async function sendNotificationEmail(firstName, email) {
 function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
-async function recurringTask(dailyBirthdayAlerts) {
+async function recurringTask(email) {
     await setDelay(1500)
-    sendNotificationEmail(dailyBirthdayAlerts)
+    parentPort.postMessage(`recurring task function called: ${email}`)
+    sendNotificationEmail(email)
 }
+
+/*structure of data to hold daily birthday alerts: 
+
+let dailyBirthdayAlerts = [{
+    userEmail: email,
+    individualBirthdayAlert: [
+        {birthdayPersonName: birthdayName,
+        birthdayPersonBirthday: birthday
+    }]
+}]
+*/
+
+//dailyBirthdayAlerts.userEmail
+//dailyBirthdayAlerts[i].individualBirthdayAlert[j].birthdayPersonName
+//dailyBirthdayAlerts[i].individualBirthdayAlert[j].birthdayPersonBirthday
 
 //logic to read db and send email
 const BirthdayCountdown = async () => {
     try {
         const posts = await BirthdayPerson.find({}).lean()
         const user = await User.find({}).lean()
-        let dailyBirthdayAlerts = [];
+        //let dailyBirthdayAlerts = [];
 
+        let dailyBirthdayAlerts = []
+        
         for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
             if (birthday.dayOfYear() === dayjs().dayOfYear()) {
-                console.log("first conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
-                dailyBirthdayAlerts.push(posts[i])
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 /*&& posts[i].tomorrowNotificationSent == false*/) {
-                console.log("second conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
-                dailyBirthdayAlerts.push(posts[i])
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && posts[i].tomorrowNotificationSent == false) {
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  /*&& posts[i].weekNotificationSent == false*/) {
-                console.log("third conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
-                dailyBirthdayAlerts.push(posts[i])
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  && posts[i].weekNotificationSent == false) {
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 /*&& posts[i].monthNotificationSent == false*/) {
-                console.log("fourth conditional: ", posts[i].name, "Birthday is: ", birthday.dayOfYear(),"Today is: ", dayjs().dayOfYear(), "difference: ", birthday.dayOfYear() - dayjs().dayOfYear())
-                dailyBirthdayAlerts.push(posts[i])
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 && posts[i].monthNotificationSent == false) {
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
         }
+        //this loop is just for checking out what is happening after the dailyBirthdayAlerts array is created
         for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
-            for (let j = 0; j < user.length; j++) {
-                //use a nested loop to loop through the Users to find the UserId associated with the birthday person and send an email
-                if (user[j]._id == dailyBirthdayAlerts[i].userId) {
-                    //this comparison does not work
-                    console.log(user[j]._id, "send email to: ", user[j].userName, user[j].email)
-                }
-                else {
-                    console.log("no match")
-                }
-            }
+            parentPort.postMessage(dailyBirthdayAlerts[i])
+            parentPort.postMessage(dailyBirthdayAlerts[i].individualBirthdayAlert)
         }
-
-
     } catch (err) {
         parentPort.postMessage(err)
         process.exit(1)
     }
+}
+
+const helperFunction = async (post, dailyBirthdayAlerts) => {
+    let thisUser = await User.findById({ _id: post.userId });
+    let email = thisUser.email;
+    let name = post.name;
+    let birthday = post.birthday;
+
+    let individualAlerts = {};
+
+    //parentPort.postMessage(email)
+
+    //the below conditional is not really working, it's capturing everyone in the if
+    if (dailyBirthdayAlerts.userEmail !== email) {
+        parentPort.postMessage("if conditional called")
+        individualAlerts = {
+            userEmail: email,
+            individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
+        }
+        dailyBirthdayAlerts.push(individualAlerts)
+    }
+    else {
+        parentPort.postMessage("else conditional called")
+        //this needs to be figured out
+    }
+   return dailyBirthdayAlerts;
 }
 
 //called daily using bree
@@ -124,6 +155,7 @@ const BirthdayCountdown = async () => {
 
     parentPort.postMessage('weeee lets send some emails')
     await BirthdayCountdown();
+    
 
     if (parentPort) parentPort.postMessage('done');
     else process.exit(0);

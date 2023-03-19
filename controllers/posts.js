@@ -1,4 +1,5 @@
 const BirthdayPerson = require("../models/BirthdayPerson");
+const User = require("../models/User");
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -64,8 +65,7 @@ module.exports = {
     try {
       // Find post by id
       let post = await BirthdayPerson.findById({ _id: req.params.id });
-      // Delete image from cloudinary
-      await cloudinary.uploader.destroy(post.cloudinaryId);
+      
       // Delete post from db
       await BirthdayPerson.remove({ _id: req.params.id });
       console.log("Deleted Post");
@@ -74,4 +74,14 @@ module.exports = {
       res.redirect("/profile");
     }
   },
+
+  emailUser: async (req, res) => {
+    try {
+      let user = await User.findById({ _id: req.params.id });
+
+    } catch (err) {
+      console.log ("error");
+    }
+  },
+
 };
