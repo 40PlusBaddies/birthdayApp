@@ -74,14 +74,4 @@ module.exports = {
       res.redirect("/profile");
     }
   },
-
-  emailUser: async (req, res) => {
-    try {
-      let user = await User.findById({ _id: req.params.id });
-
-    } catch (err) {
-      console.log ("error");
-    }
-  },
-
 };
