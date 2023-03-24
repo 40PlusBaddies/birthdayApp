@@ -54,46 +54,33 @@ async function recurringTask(email) {
     sendNotificationEmail(email)
 }
 
-/*structure of data to hold daily birthday alerts: 
-
-let dailyBirthdayAlerts = [{
-    userEmail: email,
-    individualBirthdayAlert: [
-        {birthdayPersonName: birthdayName,
-        birthdayPersonBirthday: birthday
-    }]
-}]
-*/
-
-//dailyBirthdayAlerts.userEmail
-//dailyBirthdayAlerts[i].individualBirthdayAlert[j].birthdayPersonName
-//dailyBirthdayAlerts[i].individualBirthdayAlert[j].birthdayPersonBirthday
-
 //logic to read db and send email
 const BirthdayCountdown = async () => {
     try {
         const posts = await BirthdayPerson.find({}).lean()
-        const user = await User.find({}).lean()
-        //let dailyBirthdayAlerts = [];
-
         let dailyBirthdayAlerts = []
         
         for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
             if (birthday.dayOfYear() === dayjs().dayOfYear()) {
-                await helperFunction(posts[i], dailyBirthdayAlerts)
+                let userEmail = await User.findById({ _id: posts[i].userId });
+                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && posts[i].tomorrowNotificationSent == false) {
-                await helperFunction(posts[i], dailyBirthdayAlerts)
+                let userEmail = await User.findById({ _id: posts[i].userId });
+                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  && posts[i].weekNotificationSent == false) {
-                await helperFunction(posts[i], dailyBirthdayAlerts)
+                let userEmail = await User.findById({ _id: posts[i].userId });
+                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 && posts[i].monthNotificationSent == false) {
-                await helperFunction(posts[i], dailyBirthdayAlerts)
+                let userEmail = await User.findById({ _id: posts[i].userId });
+                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
             }
         }
         //this loop is just for checking out what is happening after the dailyBirthdayAlerts array is created
+        //***Maybe we can put the recurringTask() function in here? Not sure */
         for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
             parentPort.postMessage(dailyBirthdayAlerts[i])
             parentPort.postMessage(dailyBirthdayAlerts[i].individualBirthdayAlert)
@@ -104,28 +91,23 @@ const BirthdayCountdown = async () => {
     }
 }
 
-const helperFunction = async (post, dailyBirthdayAlerts) => {
-    let thisUser = await User.findById({ _id: post.userId });
-    let email = thisUser.email;
+const helperFunction = async (post, userEmail, dailyBirthdayAlerts) => {
     let name = post.name;
     let birthday = post.birthday;
-
     let individualAlerts = {};
 
-    //parentPort.postMessage(email)
-
-    //the below conditional is not really working, it's capturing everyone in the if
-    if (dailyBirthdayAlerts.userEmail !== email) {
+    if (!dailyBirthdayAlerts.some(e => e.userEmail === userEmail.email)) {
         parentPort.postMessage("if conditional called")
         individualAlerts = {
-            userEmail: email,
+            userEmail: userEmail.email,
             individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
         }
         dailyBirthdayAlerts.push(individualAlerts)
     }
     else {
         parentPort.postMessage("else conditional called")
-        //this needs to be figured out
+        let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
+        dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
     }
    return dailyBirthdayAlerts;
 }
