@@ -14,7 +14,7 @@ require("dotenv").config({ path: "./config/.env" });
 let accessToken = undefined;
 
 //configure emailer
-async function sendNotificationEmail(email) {
+async function sendNotificationEmail(indieAlert) {
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -34,10 +34,11 @@ async function sendNotificationEmail(email) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "40plusbday@gmail.com", // list of receivers
+        to: indieAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
-        //text: `${firstName}'s birthday is coming up!`, // plain text body
-        html: "<b>html body</b>", // html body
+        //this line below is temporary until we can loop thru all the birthday people for each user somehow
+        text: `${indieAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
+        //html: "<b>html body</b>", // html body
     })
 
     parentPort.postMessage(`Message sent: ${info.messageId}`)
@@ -48,10 +49,11 @@ async function sendNotificationEmail(email) {
 function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
-async function recurringTask(email) {
+async function recurringTask(indieAlert) {
     await setDelay(1500)
-    parentPort.postMessage(`recurring task function called: ${email}`)
-    sendNotificationEmail(email)
+    parentPort.postMessage(`recurring task function called: ${indieAlert.userEmail}`)
+    //pass the individualAlert object to the email function
+    sendNotificationEmail(indieAlert)
 }
 
 //logic to read db and send email
@@ -79,11 +81,15 @@ const BirthdayCountdown = async () => {
                 await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
             }
         }
-        //this loop is just for checking out what is happening after the dailyBirthdayAlerts array is created
-        //***Maybe we can put the recurringTask() function in here? Not sure */
+        //run thru the completed array
+        //Maybe we can put the recurringTask() function in here? Not sure
         for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
+            //some console logs to see what's going on
             parentPort.postMessage(dailyBirthdayAlerts[i])
             parentPort.postMessage(dailyBirthdayAlerts[i].individualBirthdayAlert)
+
+            //pass the individualAlert object to the recurring task function, so we can access the User email and the birthday people and birthdays that need to be emailed today
+            await recurringTask(dailyBirthdayAlerts[i]);
         }
     } catch (err) {
         parentPort.postMessage(err)
@@ -92,21 +98,31 @@ const BirthdayCountdown = async () => {
 }
 
 const helperFunction = async (post, userEmail, dailyBirthdayAlerts) => {
+    //get the birthday people ready to add to the correct object
     let name = post.name;
     let birthday = post.birthday;
+
+    //create an empty object that will hold the User email, and an array of their birthday people for today's alerts. These objects will be stored in the dailyBirthdayAlerts array
     let individualAlerts = {};
 
+    //if we don't already have the User in the array, we add them here
     if (!dailyBirthdayAlerts.some(e => e.userEmail === userEmail.email)) {
         parentPort.postMessage("if conditional called")
+        //make a new object with the User email and their first set of birthday people
         individualAlerts = {
             userEmail: userEmail.email,
             individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
         }
+        //add the individual alert object to the array 
         dailyBirthdayAlerts.push(individualAlerts)
     }
+    //if the User is already in the array, we add on more birthday people in here
     else {
         parentPort.postMessage("else conditional called")
+        //first find the index of the individual alert object that contains the email we already have
         let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
+
+        //use the index to add to the birthday people for this user for today's alerts
         dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
     }
    return dailyBirthdayAlerts;
