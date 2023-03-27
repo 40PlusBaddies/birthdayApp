@@ -34,10 +34,10 @@ async function sendNotificationEmail(indieAlert) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: indieAlert.userEmail, // list of receivers
+        to: "chandrarose2003@yahoo.com", //indieAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
-        text: `${indieAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
+        text: `hi ${indieAlert.userEmail} ${indieAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
         //html: "<b>html body</b>", // html body
     })
 
@@ -65,20 +65,16 @@ const BirthdayCountdown = async () => {
         for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
             if (birthday.dayOfYear() === dayjs().dayOfYear()) {
-                let userEmail = await User.findById({ _id: posts[i].userId });
-                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && posts[i].tomorrowNotificationSent == false) {
-                let userEmail = await User.findById({ _id: posts[i].userId });
-                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  && posts[i].weekNotificationSent == false) {
-                let userEmail = await User.findById({ _id: posts[i].userId });
-                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 && posts[i].monthNotificationSent == false) {
-                let userEmail = await User.findById({ _id: posts[i].userId });
-                await helperFunction(posts[i], userEmail, dailyBirthdayAlerts)
+                await helperFunction(posts[i], dailyBirthdayAlerts)
             }
         }
         //run thru the completed array
@@ -97,10 +93,12 @@ const BirthdayCountdown = async () => {
     }
 }
 
-const helperFunction = async (post, userEmail, dailyBirthdayAlerts) => {
+const helperFunction = async (post, dailyBirthdayAlerts) => {
     //get the birthday people ready to add to the correct object
     let name = post.name;
     let birthday = post.birthday;
+    //get the Users from the database who have a notification to go out
+    let userEmail = await User.findById({ _id: post.userId });
 
     //create an empty object that will hold the User email, and an array of their birthday people for today's alerts. These objects will be stored in the dailyBirthdayAlerts array
     let individualAlerts = {};
