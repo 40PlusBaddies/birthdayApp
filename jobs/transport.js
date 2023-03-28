@@ -35,7 +35,7 @@ async function sendNotificationEmail(indAlert) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "chandrarose2003@yahoo.com", //indAlert.userEmail, // list of receivers
+        to: "birthdayreminderapp@github.com", //indAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
         text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
@@ -51,7 +51,7 @@ function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
 async function recurringTask(indAlert) {
-    await setDelay(1500)
+    await setDelay(2500)
     parentPort.postMessage(`recurring task function called: ${indAlert.userEmail}`)
     //pass the individualAlert object to the email function
     sendNotificationEmail(indAlert)
@@ -78,7 +78,7 @@ const BirthdayCountdown = async () => {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
             }
         }
-        //after all conditionals, Daily Birthday Alerts array is complete for now
+        //after all conditionals, Daily Birthday Alerts array is complete for now, time to send emails
         await sendEmails(dailyBirthdayAlerts)
 
     } catch (err) {
