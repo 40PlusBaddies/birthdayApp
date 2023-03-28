@@ -7,12 +7,15 @@ const utc = require('dayjs/plugin/utc');
 const { google } = require("googleapis");
 const { parentPort } = require('worker_threads');
 const mongoose = require('mongoose')
+const User = require('../models/User');
+const { db } = require('../models/User');
 
 require("dotenv").config({ path: "./config/.env" });
 let accessToken = undefined;
 
 //configure emailer
-async function sendNotificationEmail(firstName) {
+async function sendNotificationEmail(indAlert) {
+    parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -32,10 +35,11 @@ async function sendNotificationEmail(firstName) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "40plusbday@gmail.com", // list of receivers
+        to: "birthdayreminderapp@github.com", //indAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
-        text: `${firstName}'s birthday is coming up!`, // plain text body
-        html: "<b>html body</b>", // html body
+        //this line below is temporary until we can loop thru all the birthday people for each user somehow
+        text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
+        //html: "<b>html body</b>", // html body
     })
 
     parentPort.postMessage(`Message sent: ${info.messageId}`)
@@ -46,37 +50,84 @@ async function sendNotificationEmail(firstName) {
 function setDelay(ms) { return new Promise(res => setTimeout(res, ms)) }
 
 //creates delay between individual emails in ms
-async function recurringTask(firstName) {
-    await setDelay(1500)
-    sendNotificationEmail(firstName)
+async function recurringTask(indAlert) {
+    await setDelay(2500)
+    parentPort.postMessage(`recurring task function called: ${indAlert.userEmail}`)
+    //pass the individualAlert object to the email function
+    sendNotificationEmail(indAlert)
 }
 
 //logic to read db and send email
 const BirthdayCountdown = async () => {
     try {
         const posts = await BirthdayPerson.find({}).lean()
+        let dailyBirthdayAlerts = []
+        
         for (let i = 0; i < posts.length; i++) {
             let birthday = dayjs.utc(posts[i].birthday)
-            if (birthday.dayOfYear() == dayjs().dayOfYear()) {
-                await recurringTask()
-                //posts[i].tomorrowNotificationSent = false
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() == 1 && posts[i].tomorrowNotificationSent == false) {
-                await recurringTask()
-                //posts[i].weekNotificationSent = false
-                //posts[i].tomorrowNotificationSent = true
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && posts[i].weekNotificationSent == false) {
-                await recurringTask()
-                //posts[i].monthNotificationSent = false
-                //posts[i].weekNotificationSent = true
-            } if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && posts[i].monthNotificationSent == false) {
-                await recurringTask(posts[i].name)
-                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
+            if (birthday.dayOfYear() === dayjs().dayOfYear()) {
+                await createAlerts(posts[i], dailyBirthdayAlerts)
+            }
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && posts[i].tomorrowNotificationSent == false) {
+                await createAlerts(posts[i], dailyBirthdayAlerts)
+            }
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  && posts[i].weekNotificationSent == false) {
+                await createAlerts(posts[i], dailyBirthdayAlerts)
+            }
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 && posts[i].monthNotificationSent == false) {
+                await createAlerts(posts[i], dailyBirthdayAlerts)
             }
         }
+        //after all conditionals, Daily Birthday Alerts array is complete for now, time to send emails
+        await sendEmails(dailyBirthdayAlerts)
+
     } catch (err) {
         parentPort.postMessage(err)
         process.exit(1)
     }
+}
+//run thru the completed array
+//Maybe we can put the recurringTask() function in here? Not sure
+const sendEmails = async (dailyBirthdayAlerts) => {
+    for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
+        //some console logs to see what's going on
+        parentPort.postMessage(dailyBirthdayAlerts[i])
+        //parentPort.postMessage(dailyBirthdayAlerts[i].individualBirthdayAlert)
+
+        //pass the individualAlert object to the recurring task function, so we can access the User email and the birthday people and birthdays that need to be emailed today
+        await recurringTask(dailyBirthdayAlerts[i]);
+    }
+}
+
+const createAlerts = async (post, dailyBirthdayAlerts) => {
+    //get the birthday people ready to add to the correct object
+    let name = post.name;
+    let birthday = post.birthday;
+
+    //get the Users from the database who have a notification to go out
+    let userEmail = await User.findById({ _id: post.userId });
+
+    //if we don't already have the User in the array, we add them here
+    if (!dailyBirthdayAlerts.some(e => e.userEmail === userEmail.email)) {
+        parentPort.postMessage("if conditional called")
+        //make a new object with the User email and their first set of birthday people
+        let individualAlerts = {
+            userEmail: userEmail.email,
+            individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
+        }
+        //add the individual alert object to the array 
+        dailyBirthdayAlerts.push(individualAlerts)
+    }
+    //if the User is already in the array, we add on more birthday people in here
+    else {
+        parentPort.postMessage("else conditional called")
+        //first find the index of the individual alert object that contains the email we already have
+        let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
+
+        //use the index to add to the birthday people for this user for today's alerts
+        dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
+    }
+   return dailyBirthdayAlerts;
 }
 
 //called daily using bree
@@ -104,6 +155,7 @@ const BirthdayCountdown = async () => {
 
     parentPort.postMessage('weeee lets send some emails')
     await BirthdayCountdown();
+    
 
     if (parentPort) parentPort.postMessage('done');
     else process.exit(0);
