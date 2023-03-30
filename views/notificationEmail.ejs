@@ -56,6 +56,8 @@
                   </tr>
                   <tr>
                       <td style="padding-bottom: 10px; text-align: center;">
+                        
+                        <h1 style="margin-top: 0; margin-bottom: 16px; font-size: 26px; line-height: 32px; font-weight: bold; letter-spacing: -0.02em;">Hi, <%= indAlert.userName %></h1>
                       <h1 style="margin-top: 0; margin-bottom: 16px; font-size: 26px; line-height: 32px; font-weight: bold; letter-spacing: -0.02em;">Time to celebrate!</h1>
                       <p style="margin: 0; font-weight: bold;">Upcoming birthdays</p>
                     </td>
@@ -69,7 +71,17 @@
                               <![endif]-->
                               <div class="col-sml" style="display: inline-block; width: 100%; max-width: 285px; vertical-align: top; padding-bottom: 20px; font-family: Arial, Helvetica, sans-serif; line-height: 18px; color: #363636;">
                                 <p style="font-size: 18px; color: #e84f13eb; margin-top: 0; margin-bottom: 12px; font-weight: bold;">Tomorrow:</p>
-                                <p style="font-size: 16px; margin-top: 0; margin-bottom: 18px;">Birthday Person (relationship): date</p>
+                                <p style="font-size: 16px; margin-top: 0; margin-bottom: 18px;"><%= indAlert.individualBirthdayAlert[0].birthdayPerson %>: <%= indAlert.individualBirthdayAlert[0].birthday %></p>
+                                
+                                <ul>     
+                                  <% for (let i = 0; i < indAlert.length; i++) { %>
+                                  <li>
+                                    <%= indAlert.individualBirthdayAlert[i].birthdayPerson %>
+                                  </li>
+                                <% } %>   
+                               </ul>
+              
+                               
                               </div>
                               <!--[if mso]>
                             </td>

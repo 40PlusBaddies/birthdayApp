@@ -10,36 +10,61 @@ const mongoose = require('mongoose')
 const User = require('../models/User');
 const { db } = require('../models/User');
 
-require("dotenv").config({ path: "./config/.env" });
-let accessToken = undefined;
+// try
+const path = require("path");
+const ejs = require("ejs");
 
-//configure emailer
+require("dotenv").config({ path: "./config/.env" });
+// let accessToken = undefined;
+
+//configure emailer ORIGINAL
+// async function sendNotificationEmail(indAlert) {
+//     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
+    //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
+    // let transporter = nodemailer.createTransport({
+    //     host: 'smtp.gmail.com',
+    //     port: 465,
+    //     secure: true,
+    //     auth: {
+    //         type: 'OAuth2',
+    //         user: process.env.my_gmail_username,
+    //         clientId: process.env.my_oauth_client_id,
+    //         clientSecret: process.env.my_oauth_client_secret,
+    //         refreshToken: process.env.my_oauth_refresh_token,
+    //         accessToken: accessToken
+    //     }, tls: {
+    //         rejectUnauthorized: false
+    //     }
+    // })
+
+//configure emailer TESTING
 async function sendNotificationEmail(indAlert) {
     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
-    //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
+  
     let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        host: "sandbox.smtp.mailtrap.io",
+        port: 2525,
         auth: {
-            type: 'OAuth2',
-            user: process.env.my_gmail_username,
-            clientId: process.env.my_oauth_client_id,
-            clientSecret: process.env.my_oauth_client_secret,
-            refreshToken: process.env.my_oauth_refresh_token,
-            accessToken: accessToken
-        }, tls: {
-            rejectUnauthorized: false
-        }
+            user: "03931e6b8279fc",
+            pass: "a4541f9aa6236e"
+        },
     })
+
+    // to connect to file
+    const requiredPath = path.join(__dirname, "../views/notificationEmail.ejs");
+    const data = await ejs.renderFile(requiredPath, {
+        indAlert
+    });
+
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "birthdayreminderapp@github.com", //indAlert.userEmail, // list of receivers
+        to: "marianahartenthal@gmail.com", //indAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
-        text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
-        //html: "<b>html body</b>", // html body
+        // text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
+       
+        html: data // html body
     })
 
     parentPort.postMessage(`Message sent: ${info.messageId}`)
@@ -113,6 +138,9 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
         //make a new object with the User email and their first set of birthday people
         let individualAlerts = {
             userEmail: userEmail.email,
+            // new
+            userName: userEmail.userName,
+            //
             individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
         }
         //add the individual alert object to the array 
@@ -136,14 +164,15 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
     dayjs.extend(duration)
     dayjs.extend(utc)
 
-    const oauth2Client = new google.auth.OAuth2(
-        process.env.my_oauth_client_id, // ClientID
-        process.env.my_oauth_client_secret, // Client Secret
-        "https://developers.google.com/oauthplayground" // Redirect URL
-    );
-    oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token })
-    await oauth2Client.getAccessToken()
-        .then((token) => accessToken = token)
+    // to test
+    // const oauth2Client = new google.auth.OAuth2(
+    //     process.env.my_oauth_client_id, // ClientID
+    //     process.env.my_oauth_client_secret, // Client Secret
+    //     "https://developers.google.com/oauthplayground" // Redirect URL
+    // );
+    // oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token })
+    // await oauth2Client.getAccessToken()
+    //     .then((token) => accessToken = token)
 
     // stop deprication warning
     mongoose.set('strictQuery', true);
