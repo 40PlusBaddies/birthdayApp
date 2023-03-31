@@ -26,7 +26,7 @@
       padding: 0;
       /* crucial for Gmail! */
       word-spacing: normal;
-      background-image: url(images/background.png);
+      background-image: url(../public/images/background.png);
     "
   >
     <div
@@ -39,6 +39,7 @@
         -ms-text-size-adjust: 100%;
       "
     >
+ 
       <table role="presentation" style="width:100%;border:none;border-spacing:0;">
         <tr>
           <td align="center" style="padding:0;">
@@ -50,7 +51,7 @@
                 <table role="presentation" style="width:94%; max-width: 920px;border:none;border-spacing:0;text-align:left;font-family:Arial, Helvetica, sans-serif;font-size:16px;line-height:22px;color:#e84f13eb">
                   <tr>
                     <td style="padding: 40px 30px 30px 30px; text-align: center; font-size: 24px; font-weight: bold">
-                      <a href="http://www.example.com/" style="width: 100px; max-width: 80%; height: auto; border: none; text-decoration: none; color:#ff0000"><img src="images/logo.png" width="100" alt="Logo"></a>  
+                      <a href="http://www.example.com/" style="width: 100px; max-width: 80%; height: auto; border: none; text-decoration: none; color:#ff0000"><img src="../public/images/logo.png" width="100" alt="Logo"></a>  
                       <p style="color: #ff0000">Red Balloon</p>            
                     </td>
                   </tr>
@@ -71,17 +72,13 @@
                               <![endif]-->
                               <div class="col-sml" style="display: inline-block; width: 100%; max-width: 285px; vertical-align: top; padding-bottom: 20px; font-family: Arial, Helvetica, sans-serif; line-height: 18px; color: #363636;">
                                 <p style="font-size: 18px; color: #e84f13eb; margin-top: 0; margin-bottom: 12px; font-weight: bold;">Tomorrow:</p>
-                                <p style="font-size: 16px; margin-top: 0; margin-bottom: 18px;"><%= indAlert.individualBirthdayAlert[0].birthdayPerson %>: <%= indAlert.individualBirthdayAlert[0].birthday %></p>
-                                
-                                <ul>     
-                                  <% for (let i = 0; i < indAlert.length; i++) { %>
-                                  <li>
-                                    <%= indAlert.individualBirthdayAlert[i].birthdayPerson %>
-                                  </li>
-                                <% } %>   
-                               </ul>
-              
-                               
+                                <% for (let i = 0; i < indAlert.individualBirthdayAlert.length; i++) { %>
+                                <p style="font-size: 16px; margin-top: 0; margin-bottom: 18px;"><%= indAlert.individualBirthdayAlert[i].birthdayPerson %>: <%= indAlert.individualBirthdayAlert[i].birthday %></p>       
+                                  
+                             <% } %>   
+                              
+
+
                               </div>
                               <!--[if mso]>
                             </td>

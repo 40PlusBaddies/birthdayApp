@@ -45,8 +45,8 @@ async function sendNotificationEmail(indAlert) {
         host: "sandbox.smtp.mailtrap.io",
         port: 2525,
         auth: {
-            user: "03931e6b8279fc",
-            pass: "a4541f9aa6236e"
+            user: "7411985b7bb594",
+            pass: "fe1dd6322bf9d3"
         },
     })
 
