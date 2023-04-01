@@ -17,38 +17,38 @@ const ejs = require("ejs");
 require("dotenv").config({ path: "./config/.env" });
 // let accessToken = undefined;
 
-//configure emailer ORIGINAL
-// async function sendNotificationEmail(indAlert) {
-//     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
-    //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
-    // let transporter = nodemailer.createTransport({
-    //     host: 'smtp.gmail.com',
-    //     port: 465,
-    //     secure: true,
-    //     auth: {
-    //         type: 'OAuth2',
-    //         user: process.env.my_gmail_username,
-    //         clientId: process.env.my_oauth_client_id,
-    //         clientSecret: process.env.my_oauth_client_secret,
-    //         refreshToken: process.env.my_oauth_refresh_token,
-    //         accessToken: accessToken
-    //     }, tls: {
-    //         rejectUnauthorized: false
-    //     }
-    // })
-
-//configure emailer TESTING
+//configure emailer 
 async function sendNotificationEmail(indAlert) {
     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
-  
+    //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
-            user: "7411985b7bb594",
-            pass: "fe1dd6322bf9d3"
-        },
+            type: 'OAuth2',
+            user: process.env.my_gmail_username,
+            clientId: process.env.my_oauth_client_id,
+            clientSecret: process.env.my_oauth_client_secret,
+            refreshToken: process.env.my_oauth_refresh_token,
+            accessToken: accessToken
+        }, tls: {
+            rejectUnauthorized: false
+        }
     })
+
+//configure emailer if you want to test with Mailtrap
+// async function sendNotificationEmail(indAlert) {
+//     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
+  
+//     let transporter = nodemailer.createTransport({
+//         host: "sandbox.smtp.mailtrap.io",
+//         port: 2525,
+//         auth: {
+//             user: "7411985b7bb594",
+//             pass: "fe1dd6322bf9d3"
+//         },
+//     })
 
     // to connect to file
     const requiredPath = path.join(__dirname, "../views/notificationEmail.ejs");
