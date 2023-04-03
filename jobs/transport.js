@@ -15,7 +15,7 @@ const path = require("path");
 const ejs = require("ejs");
 
 require("dotenv").config({ path: "./config/.env" });
-// let accessToken = undefined;
+let accessToken = undefined;
 
 //configure emailer 
 async function sendNotificationEmail(indAlert) {
