@@ -10,10 +10,14 @@ const mongoose = require('mongoose')
 const User = require('../models/User');
 const { db } = require('../models/User');
 
+// try
+const path = require("path");
+const ejs = require("ejs");
+
 require("dotenv").config({ path: "./config/.env" });
 let accessToken = undefined;
 
-//configure emailer
+//configure emailer 
 async function sendNotificationEmail(indAlert) {
     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
     //source email, requires valid credentials - creates reusable transporter object using the default SMTP transport
@@ -32,14 +36,35 @@ async function sendNotificationEmail(indAlert) {
             rejectUnauthorized: false
         }
     })
+
+//configure emailer if you want to test with Mailtrap
+// async function sendNotificationEmail(indAlert) {
+//     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
+  
+//     let transporter = nodemailer.createTransport({
+//         host: "sandbox.smtp.mailtrap.io",
+//         port: 2525,
+//         auth: {
+//             user: "7411985b7bb594",
+//             pass: "fe1dd6322bf9d3"
+//         },
+//     })
+
+    // to connect to file
+    const requiredPath = path.join(__dirname, "../views/notificationEmail.ejs");
+    const data = await ejs.renderFile(requiredPath, {
+        indAlert
+    });
+
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "birthdayreminderapp@github.com", //indAlert.userEmail, // list of receivers
+        to: "birthdayApp@gmail.com", //indAlert.userEmail, // list of receivers // I don't remember the right email
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
-        text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
-        //html: "<b>html body</b>", // html body
+        // text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
+       
+        html: data // html body
     })
 
     parentPort.postMessage(`Message sent: ${info.messageId}`)
@@ -113,6 +138,9 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
         //make a new object with the User email and their first set of birthday people
         let individualAlerts = {
             userEmail: userEmail.email,
+            // new
+            userName: userEmail.userName,
+            //
             individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
         }
         //add the individual alert object to the array 
@@ -136,14 +164,15 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
     dayjs.extend(duration)
     dayjs.extend(utc)
 
-    const oauth2Client = new google.auth.OAuth2(
-        process.env.my_oauth_client_id, // ClientID
-        process.env.my_oauth_client_secret, // Client Secret
-        "https://developers.google.com/oauthplayground" // Redirect URL
-    );
-    oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token })
-    await oauth2Client.getAccessToken()
-        .then((token) => accessToken = token)
+    // to test
+    // const oauth2Client = new google.auth.OAuth2(
+    //     process.env.my_oauth_client_id, // ClientID
+    //     process.env.my_oauth_client_secret, // Client Secret
+    //     "https://developers.google.com/oauthplayground" // Redirect URL
+    // );
+    // oauth2Client.setCredentials({ refresh_token: process.env.my_oauth_refresh_token })
+    // await oauth2Client.getAccessToken()
+    //     .then((token) => accessToken = token)
 
     // stop deprication warning
     mongoose.set('strictQuery', true);
