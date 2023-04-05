@@ -37,19 +37,6 @@ async function sendNotificationEmail(indAlert) {
         }
     })
 
-//configure emailer if you want to test with Mailtrap
-// async function sendNotificationEmail(indAlert) {
-//     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
-  
-//     let transporter = nodemailer.createTransport({
-//         host: "sandbox.smtp.mailtrap.io",
-//         port: 2525,
-//         auth: {
-//             user: "XXXX",
-//             pass: "XXXX"S
-//         },
-//     })
-
     // to connect to file
     const requiredPath = path.join(__dirname, "../views/notificationEmail.ejs");
     const data = await ejs.renderFile(requiredPath, {
@@ -91,7 +78,7 @@ async function recurringTask(indAlert) {
     await setDelay(2500)
     parentPort.postMessage(`recurring task function called: ${indAlert.userEmail}`)
     //pass the individualAlert object to the email function
-    sendNotificationEmail(indAlert)
+    await sendNotificationEmail(indAlert)
 }
 
 //logic to read db and send email
@@ -104,15 +91,26 @@ const BirthdayCountdown = async () => {
             let birthday = dayjs.utc(posts[i].birthday)
             if (birthday.dayOfYear() === dayjs().dayOfYear()) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : false} })
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && posts[i].tomorrowNotificationSent == false) {
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && 
+                posts[i].tomorrowNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : false} })
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : true} })
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  && posts[i].weekNotificationSent == false) {
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && 
+                birthday.dayOfYear() - dayjs().dayOfYear() > 1  && 
+                posts[i].weekNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : false} })
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : true} })
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 && posts[i].monthNotificationSent == false) {
-                await createAlerts(posts[i], dailyBirthdayAlerts)
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && 
+                birthday.dayOfYear() - dayjs().dayOfYear() > 7 && 
+                posts[i].monthNotificationSent == false) {
+                //await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
         //after all conditionals, Daily Birthday Alerts array is complete for now, time to send emails
