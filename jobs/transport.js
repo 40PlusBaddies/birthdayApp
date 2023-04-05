@@ -59,7 +59,7 @@ async function sendNotificationEmail(indAlert) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "birthdayApp@gmail.com", //indAlert.userEmail, // list of receivers // I don't remember the right email
+        to: "40plusbday@gmail.com", //indAlert.userEmail, // list of receivers // I don't remember the right email
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
         // text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
@@ -79,7 +79,7 @@ async function recurringTask(indAlert) {
     await setDelay(2500)
     parentPort.postMessage(`recurring task function called: ${indAlert.userEmail}`)
     //pass the individualAlert object to the email function
-    sendNotificationEmail(indAlert)
+    await sendNotificationEmail(indAlert)
 }
 
 //logic to read db and send email
@@ -92,15 +92,26 @@ const BirthdayCountdown = async () => {
             let birthday = dayjs.utc(posts[i].birthday)
             if (birthday.dayOfYear() === dayjs().dayOfYear()) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : false} })
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && posts[i].tomorrowNotificationSent == false) {
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && 
+                posts[i].tomorrowNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : false} })
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : true} })
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && birthday.dayOfYear() - dayjs().dayOfYear() > 1  && posts[i].weekNotificationSent == false) {
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && 
+                birthday.dayOfYear() - dayjs().dayOfYear() > 1  && 
+                posts[i].weekNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : false} })
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : true} })
             }
-            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && birthday.dayOfYear() - dayjs().dayOfYear() > 7 && posts[i].monthNotificationSent == false) {
-                await createAlerts(posts[i], dailyBirthdayAlerts)
+            else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && 
+                birthday.dayOfYear() - dayjs().dayOfYear() > 7 && 
+                posts[i].monthNotificationSent == false) {
+                //await createAlerts(posts[i], dailyBirthdayAlerts)
+                //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
         //after all conditionals, Daily Birthday Alerts array is complete for now, time to send emails
