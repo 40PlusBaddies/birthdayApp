@@ -37,19 +37,6 @@ async function sendNotificationEmail(indAlert) {
         }
     })
 
-//configure emailer if you want to test with Mailtrap
-// async function sendNotificationEmail(indAlert) {
-//     parentPort.postMessage(`sendNotificationEmail function called: ${indAlert.userEmail}`)
-  
-//     let transporter = nodemailer.createTransport({
-//         host: "sandbox.smtp.mailtrap.io",
-//         port: 2525,
-//         auth: {
-//             user: "7411985b7bb594",
-//             pass: "fe1dd6322bf9d3"
-//         },
-//     })
-
     // to connect to file
     const requiredPath = path.join(__dirname, "../views/notificationEmail.ejs");
     const data = await ejs.renderFile(requiredPath, {
@@ -58,13 +45,25 @@ async function sendNotificationEmail(indAlert) {
 
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"Birthday Reminders" <birthdayreminderapp@github.com>', // sender address
-        to: "40plusbday@gmail.com", //indAlert.userEmail, // list of receivers // I don't remember the right email
+        from: '"Birthday Reminders" <40plusbday@gmail.com>', // sender address
+        to: "birthdayApp@gmail.com", //indAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
         // text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
-       
-        html: data // html body
+        html: data, // html body
+        // embed logo
+        attachments: [
+            {
+                filename: 'logo.png',
+                path: path.join(__dirname, "../public/images/logo.png"), 
+                cid: 'logo'
+            }, 
+            {
+                filename: 'background-warm', 
+                path: path.join(__dirname, '../public/images/background-warm.png'),
+                cid: 'background-warm'
+            }
+        ]
     })
 
     parentPort.postMessage(`Message sent: ${info.messageId}`)
