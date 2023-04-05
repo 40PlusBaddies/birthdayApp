@@ -79,7 +79,7 @@ async function recurringTask(indAlert) {
     await setDelay(2500)
     parentPort.postMessage(`recurring task function called: ${indAlert.userEmail}`)
     //pass the individualAlert object to the email function
-    sendNotificationEmail(indAlert)
+    await sendNotificationEmail(indAlert)
 }
 
 //logic to read db and send email
