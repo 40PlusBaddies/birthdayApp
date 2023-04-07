@@ -59,7 +59,7 @@ async function sendNotificationEmail(indAlert) {
                 cid: 'logo'
             }, 
             {
-                filename: 'background-warm', 
+                filename: 'background-warm.png', 
                 path: path.join(__dirname, '../public/images/background-warm.png'),
                 cid: 'background-warm'
             }
