@@ -46,7 +46,7 @@ async function sendNotificationEmail(indAlert) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <40plusbday@gmail.com>', // sender address
-        to: "birthdayApp@gmail.com", //indAlert.userEmail, // list of receivers
+        to: "40plusbday@gmail.com", //indAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
         // text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
