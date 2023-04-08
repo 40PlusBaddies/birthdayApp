@@ -94,22 +94,22 @@ const BirthdayCountdown = async () => {
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : false} })
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && 
-                posts[i].tomorrowNotificationSent == false) {
+                     posts[i].tomorrowNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : false} })
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : true} })
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && 
-                birthday.dayOfYear() - dayjs().dayOfYear() > 1  && 
-                posts[i].weekNotificationSent == false) {
+                     birthday.dayOfYear() - dayjs().dayOfYear() > 1  && 
+                     posts[i].weekNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : false} })
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : true} })
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && 
-                birthday.dayOfYear() - dayjs().dayOfYear() > 7 && 
-                posts[i].monthNotificationSent == false) {
-                //await createAlerts(posts[i], dailyBirthdayAlerts)
+                     birthday.dayOfYear() - dayjs().dayOfYear() > 7 && 
+                     posts[i].monthNotificationSent == false) {
+                await createAlerts(posts[i], dailyBirthdayAlerts)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
@@ -154,7 +154,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
             individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
         }
         //add the individual alert object to the array 
-        dailyBirthdayAlerts.push(individualAlerts)
+        await dailyBirthdayAlerts.push(individualAlerts)
     }
     //if the User is already in the array, we add on more birthday people in here
     else {
@@ -163,7 +163,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
         let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
 
         //use the index to add to the birthday people for this user for today's alerts
-        dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
+        await dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
     }
    return dailyBirthdayAlerts;
 }
