@@ -35,10 +35,42 @@
       <div class="col-6">
         <ul class="row list-unstyled">
         <% for(let i=0; i<posts.length; i++) {%>
-          <li class="col-6 justify-content-between mt-5">
-            <a href="/post/<%= posts[i]._id%>">
-              <img class="img-fluid" src="<%= posts[i].image%>">
-            </a>
+          <li class="justify-content-between mst-5">
+            <h3><%= posts[i].name %> - <%= dayjs.utc(posts[i].birthday).format('MMM D, YYYY') %></h3>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form">
+              Edit
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="formLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="formLabel">Make Changes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form action="/post/editPost"  method="PUT">
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="name">Edit Name</label>
+                        <input type="name" class="form-control" id="name" placeholder="Enter new name here...or don't.">
+                      </div>
+                      <div class="form-group">
+                        <label for="date">Edit Birthday</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
           </li>
         <% } %>
         </ul>
