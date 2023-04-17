@@ -46,7 +46,7 @@ async function sendNotificationEmail(indAlert) {
     //sender metadata (does not need to be valid) and list of recipients - send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Birthday Reminders" <40plusbday@gmail.com>', // sender address
-        to: "birthdayApp@gmail.com", //indAlert.userEmail, // list of receivers
+        to: "40plusbday@gmail.com", //indAlert.userEmail, // list of receivers
         subject: "A friend or family member has a birthday coming up!", // Subject line
         //this line below is temporary until we can loop thru all the birthday people for each user somehow
         // text: `hi ${indAlert.userEmail} ${indAlert.individualBirthdayAlert[0].birthdayPerson}'s birthday is coming up!`, // plain text body
@@ -59,7 +59,7 @@ async function sendNotificationEmail(indAlert) {
                 cid: 'logo'
             }, 
             {
-                filename: 'background-warm', 
+                filename: 'background-warm.png', 
                 path: path.join(__dirname, '../public/images/background-warm.png'),
                 cid: 'background-warm'
             }
@@ -94,22 +94,22 @@ const BirthdayCountdown = async () => {
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : false} })
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() === 1 && 
-                posts[i].tomorrowNotificationSent == false) {
+                     posts[i].tomorrowNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : false} })
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {tomorrowNotificationSent : true} })
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 7 && 
-                birthday.dayOfYear() - dayjs().dayOfYear() > 1  && 
-                posts[i].weekNotificationSent == false) {
+                     birthday.dayOfYear() - dayjs().dayOfYear() > 1  && 
+                     posts[i].weekNotificationSent == false) {
                 await createAlerts(posts[i], dailyBirthdayAlerts)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : false} })
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {weekNotificationSent : true} })
             }
             else if (birthday.dayOfYear() - dayjs().dayOfYear() <= 31 && 
-                birthday.dayOfYear() - dayjs().dayOfYear() > 7 && 
-                posts[i].monthNotificationSent == false) {
-                //await createAlerts(posts[i], dailyBirthdayAlerts)
+                     birthday.dayOfYear() - dayjs().dayOfYear() > 7 && 
+                     posts[i].monthNotificationSent == false) {
+                await createAlerts(posts[i], dailyBirthdayAlerts)
                 //await BirthdayPerson.findOneAndUpdate({ _id: posts[i]._id },{ $set: {monthNotificationSent : true} })
             }
         }
@@ -154,7 +154,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
             individualBirthdayAlert: [{birthdayPerson: name, birthday: birthday}]
         }
         //add the individual alert object to the array 
-        dailyBirthdayAlerts.push(individualAlerts)
+        await dailyBirthdayAlerts.push(individualAlerts)
     }
     //if the User is already in the array, we add on more birthday people in here
     else {
@@ -163,7 +163,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
         let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
 
         //use the index to add to the birthday people for this user for today's alerts
-        dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
+        await dailyBirthdayAlerts[i].individualBirthdayAlert.push({birthdayPerson: name, birthday: birthday})
     }
    return dailyBirthdayAlerts;
 }
