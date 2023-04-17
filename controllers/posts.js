@@ -4,7 +4,7 @@ const User = require("../models/User");
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const posts = await BirthdayPerson.find({ user: req.user.id });
+      const posts = await BirthdayPerson.find({ userId: req.user.id }).sort({ name: 1 }).lean();
       res.render("profile.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
@@ -46,21 +46,20 @@ module.exports = {
       console.log(err);
     }
   },
-  //probably need to comment/delete the below section out
-  // likePost: async (req, res) => {
-  //   try {
-  //     await BirthdayPerson.findOneAndUpdate(
-  //       { _id: req.params.id },
-  //       {
-  //         $inc: { likes: 1 },
-  //       }
-  //     );
-  //     console.log("Likes +1");
-  //     res.redirect(`/post/${req.params.id}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
+  editPost: async (req, res) => {
+    try {
+      await BirthdayPerson.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: {name : req.body.name, birthday : req.body.birthday},
+        }
+      );
+      console.log("Post Updated");
+      res.redirect(`/post/${req.params.id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  },
   deletePost: async (req, res) => {
     try {
       // Find post by id
