@@ -66,7 +66,7 @@ module.exports = {
       let post = await BirthdayPerson.findById({ _id: req.params.id });
       
       // Delete post from db
-      await BirthdayPerson.remove({ _id: req.params.id });
+      await BirthdayPerson.deleteOne({ _id: req.params.id });
       console.log("Deleted Post");
       res.redirect("/profile");
     } catch (err) {
