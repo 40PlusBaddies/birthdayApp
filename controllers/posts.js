@@ -55,7 +55,7 @@ module.exports = {
         }
       );
       console.log("Post Updated");
-      res.redirect(`/post/${req.params.id}`);
+      res.redirect("/profile");
     } catch (err) {
       console.log(err);
     }
