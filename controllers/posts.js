@@ -55,7 +55,7 @@ module.exports = {
         }
       );
       console.log("Post Updated");
-      res.redirect(`/post/${req.params.id}`);
+      res.redirect("/profile");
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +66,7 @@ module.exports = {
       let post = await BirthdayPerson.findById({ _id: req.params.id });
       
       // Delete post from db
-      await BirthdayPerson.remove({ _id: req.params.id });
+      await BirthdayPerson.deleteOne({ _id: req.params.id });
       console.log("Deleted Post");
       res.redirect("/profile");
     } catch (err) {
