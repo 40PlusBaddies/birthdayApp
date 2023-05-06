@@ -35,7 +35,6 @@ html, body {
 
 a {
     font-family: 'Dosis', sans-serif; 
-    font-weight: bold;
     font-size: 1.8rem;
 }
 
@@ -44,7 +43,6 @@ a {
     border: transparent;
     border-radius: 10px;
     font-size: 1.8rem;
-    font-weight: bold;
 }
 
 .btn:hover {
