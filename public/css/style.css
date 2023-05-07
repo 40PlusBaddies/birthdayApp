@@ -80,3 +80,8 @@ label {
     color: var(--secondary-color);
 }
 
+.list-group-container {
+    background-color: transparent;
+    border: none;
+  }
+  
