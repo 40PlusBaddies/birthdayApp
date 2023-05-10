@@ -8,13 +8,11 @@ html, body {
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-}
-
-body {
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(/images/background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    background-image: url("/images/background.png");
 }
 
 .container-fluid {
@@ -23,8 +21,8 @@ body {
 
 .logo {
     font-family: 'Dosis', sans-serif;
-    font-weight: bold;
     color: red;
+    font-size: 2rem;
 }
 
 .logo a {
@@ -37,7 +35,6 @@ body {
 
 a {
     font-family: 'Dosis', sans-serif; 
-    font-weight: bold;
     font-size: 1.8rem;
 }
 
@@ -46,7 +43,6 @@ a {
     border: transparent;
     border-radius: 10px;
     font-size: 1.8rem;
-    font-weight: bold;
 }
 
 .btn:hover {
@@ -84,3 +80,8 @@ label {
     color: var(--secondary-color);
 }
 
+.list-group-container {
+    background-color: transparent;
+    border: none;
+  }
+  
