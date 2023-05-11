@@ -78,16 +78,16 @@
               </div>
               <div class="col-auto">
                 <!-- Delete Button -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<%= posts[i]._id %>">
                   Delete
                 </button>
               </div>
               <div class="col-auto">
-                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
                         <div class="modal-header border-bottom-0">
-                          <h5 class="modal-title" id="modal-title">Confirm Deletion?</h5>
+                          <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion?</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
