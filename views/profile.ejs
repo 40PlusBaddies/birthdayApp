@@ -64,8 +64,12 @@
                             <input type="name" class="form-control" id="name" name="name" value="<%= posts[i].name %>" placeholder="Enter new name here...or don't.">
                           </div>
                           <div class="form-group">
-                            <label for="date">Edit Birthday</label>
-                            <input type="date" class="form-control" id="birthday" name="birthday" value="<%= posts[i].birthday %>">
+                            <label for="date">Current Birthday</label>
+                            <input type="text" class="form-control" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('MM/DD/YYYY') %>">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">New Birthday</label>
+                            <input type="date" class="form-control" id="birthday" name="birthday">
                           </div>
                         </div>
                         <div class="modal-footer">
