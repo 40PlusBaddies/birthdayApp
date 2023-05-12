@@ -29,7 +29,7 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
-      background-image: url(cid:background-warm);
+      background-image: url(cid:background);
     "
   >
     <div
@@ -77,7 +77,11 @@
 
                                 <!-- <p style="font-size: 18px; color: #e84f13eb; margin-top: 0; margin-bottom: 12px; font-weight: bold;">Tomorrow:</p> -->
                                 <% for (let i = 0; i < indAlert.individualBirthdayAlert.length; i++) { %>
-                                <p style="font-size: 16px; margin-top: 0; margin-bottom: 18px;"><span style="font-weight: bold;"><%= indAlert.individualBirthdayAlert[i].birthdayPerson %>:</span><span style="font-weight: normal;">  <%= indAlert.individualBirthdayAlert[i].birthday %></span></p> 
+                                <p style="font-size: 16px; margin-top: 0; margin-bottom: 18px;"><span style="font-weight: bold;">
+                                  <%= indAlert.individualBirthdayAlert[i].birthdayPerson %>
+                                  :</span><span style="font-weight: normal;">                                     
+                                    <%= indAlert.individualBirthdayAlert[i].birthday %></span></p> 
+                
                              <% } %>   
                               </div>
                   </tr>
