@@ -127,7 +127,7 @@ const BirthdayCountdown = async () => {
 const sendEmails = async (dailyBirthdayAlerts) => {
     for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
         //some console logs to see what's going on
-        parentPort.postMessage(dailyBirthdayAlerts[i])
+        //parentPort.postMessage(dailyBirthdayAlerts[i])
         //parentPort.postMessage(dailyBirthdayAlerts[i].individualBirthdayAlert)
 
         //pass the individualAlert object to the recurring task function, so we can access the User email and the birthday people and birthdays that need to be emailed today
@@ -146,7 +146,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
 
     //if we don't already have the User in the array, we add them here
     if (!dailyBirthdayAlerts.some(e => e.userEmail === userEmail.email)) {
-        parentPort.postMessage("if conditional called")
+        //parentPort.postMessage("if conditional called")
         //make a new object with the User email and their first set of birthday people
         let individualAlerts = {
             userEmail: userEmail.email,
@@ -160,7 +160,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
     }
     //if the User is already in the array, we add on more birthday people in here
     else {
-        parentPort.postMessage("else conditional called")
+        //parentPort.postMessage("else conditional called")
         //first find the index of the individual alert object that contains the email we already have
         let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
 
