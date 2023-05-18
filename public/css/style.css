@@ -8,7 +8,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-    background: url(/images/background.jpg) no-repeat center center fixed; 
+    background: url(/images/background_5.png) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -16,6 +16,8 @@ html, body {
 }
 
 .container-fluid {
+    position: relative;
+    z-index: 1;
     height: 100vh;
 }
 
@@ -92,4 +94,75 @@ label {
     padding: 5px;
     color: var(--secondary-color);
   }
-  
+
+#balloon_1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background: url("balloon_1.png") no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+    animation-name: slide-up;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
+    animation-fill-mode: forwards;
+}
+
+#balloon_2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: url("balloon_2.png") no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+    animation-name: slide-up;
+    animation-delay: 0.5s;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
+    animation-fill-mode: forwards;
+}
+
+#balloon_3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: url("balloon_3.png") no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+    animation-name: slide-up;
+    animation-delay: 1s;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
+    animation-fill-mode: forwards;
+}
+
+#balloon_4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    background: url("balloon_4.png") no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+    animation-name: slide-up;
+    animation-delay: 1.5s;
+    animation-duration: 2s;
+    animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
+    animation-fill-mode: forwards;
+}
+
+  @keyframes slide-up {
+      0% {
+        top: 100%;
+        transform: translateY(0);
+        opacity: 100%;
+      }
+      100% {
+        top: 0%;
+        transform: translateY(0);
+        opacity: 90%;
+      }
+    }
