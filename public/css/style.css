@@ -45,6 +45,11 @@ a {
     border: transparent;
     border-radius: 10px;
     font-size: 1.8rem;
+    color: white;
+}
+.btn-close {
+    background-color: white;
+    color: white;
 }
 
 .btn:hover {
