@@ -32,6 +32,7 @@ async function sendNotificationEmail(indAlert) {
             clientSecret: process.env.my_oauth_client_secret,
             refreshToken: process.env.my_oauth_refresh_token,
             accessToken: accessToken
+
         }, tls: {
             rejectUnauthorized: false
         }
@@ -59,9 +60,9 @@ async function sendNotificationEmail(indAlert) {
                 cid: 'logo'
             }, 
             {
-                filename: 'background-warm.svg', 
-                path: path.join(__dirname, '../public/images/background-warm.svg'),
-                cid: 'background-warm'
+                filename: 'background.jpg', 
+                path: path.join(__dirname, '../public/images/background.jpg'),
+                cid: 'background'
             }
         ]
     })
@@ -137,7 +138,8 @@ const sendEmails = async (dailyBirthdayAlerts) => {
 const createAlerts = async (post, dailyBirthdayAlerts) => {
     //get the birthday people ready to add to the correct object
     let name = post.name;
-    let birthday = post.birthday;
+    let birthday = dayjs.utc(post.birthday).format('MMM D, YYYY');
+
 
     //get the Users from the database who have a notification to go out
     let userEmail = await User.findById({ _id: post.userId });
