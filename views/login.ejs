@@ -5,8 +5,9 @@
     <section class="col-6 mt-5">
       <% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
       <div class="alert alert-danger"><%= el.msg %></div>
-      <% }) %> <% } %> <% if (locals.messages.info) { %> <%
-      messages.info.forEach( el => { %>
+      <% }) %> <% } %> 
+      <% if (locals.messages.info) { %> 
+        <%  messages.info.forEach( el => { %>
       <div class="alert alert-info"><%= el.msg %></div>
       <% }) %> <% } %>
       <!-- directs to auth.js -> exports.postLogin (by way of main.js) -->
