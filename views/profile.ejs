@@ -60,15 +60,11 @@
                       <form action="/post/editPost/<%= posts[i]._id %>?_method=PUT"  method="POST">
                         <div class="modal-body">
                           <div class="form-group">
-                            <label for="name">Edit Name</label>
-                            <input type="name" class="form-control" id="name" name="name" value="<%= posts[i].name %>" placeholder="Enter new name here...or don't.">
                             <label for="name">Edit Name:</label>
                             <input type="text" class="form-control" id="name" name="name" value="<%= posts[i].name %>">
                           </div>
                           
                           <div class="form-group">
-                            <label for="date">Edit Birthday</label>
-                            <input type="date" class="form-control" id="birthday" name="birthday" value="<%= posts[i].birthday %>">
                             <label for="date">Enter birthday in MM/DD/YYYY format: </label>
                             <input type="text" class="form-control" id="birthday" name="birthday" value=" <%= dayjs.utc(posts[i].birthday).format('MM/DD/YYYY') %>">
                           </div>
