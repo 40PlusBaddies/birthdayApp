@@ -32,6 +32,7 @@ async function sendNotificationEmail(indAlert) {
             clientSecret: process.env.my_oauth_client_secret,
             refreshToken: process.env.my_oauth_refresh_token,
             accessToken: accessToken
+
         }, tls: {
             rejectUnauthorized: false
         }
@@ -59,9 +60,9 @@ async function sendNotificationEmail(indAlert) {
                 cid: 'logo'
             }, 
             {
-                filename: 'background-warm.svg', 
-                path: path.join(__dirname, '../public/images/background-warm.svg'),
-                cid: 'background-warm'
+                filename: 'background.jpg', 
+                path: path.join(__dirname, '../public/images/background.jpg'),
+                cid: 'background'
             }
         ]
     })
@@ -126,7 +127,7 @@ const BirthdayCountdown = async () => {
 const sendEmails = async (dailyBirthdayAlerts) => {
     for (let i = 0; i < dailyBirthdayAlerts.length; i++) {
         //some console logs to see what's going on
-        parentPort.postMessage(dailyBirthdayAlerts[i])
+        //parentPort.postMessage(dailyBirthdayAlerts[i])
         //parentPort.postMessage(dailyBirthdayAlerts[i].individualBirthdayAlert)
 
         //pass the individualAlert object to the recurring task function, so we can access the User email and the birthday people and birthdays that need to be emailed today
@@ -137,14 +138,15 @@ const sendEmails = async (dailyBirthdayAlerts) => {
 const createAlerts = async (post, dailyBirthdayAlerts) => {
     //get the birthday people ready to add to the correct object
     let name = post.name;
-    let birthday = post.birthday;
+    let birthday = dayjs.utc(post.birthday).format('MMM D, YYYY');
+
 
     //get the Users from the database who have a notification to go out
     let userEmail = await User.findById({ _id: post.userId });
 
     //if we don't already have the User in the array, we add them here
     if (!dailyBirthdayAlerts.some(e => e.userEmail === userEmail.email)) {
-        parentPort.postMessage("if conditional called")
+        //parentPort.postMessage("if conditional called")
         //make a new object with the User email and their first set of birthday people
         let individualAlerts = {
             userEmail: userEmail.email,
@@ -158,7 +160,7 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
     }
     //if the User is already in the array, we add on more birthday people in here
     else {
-        parentPort.postMessage("else conditional called")
+        //parentPort.postMessage("else conditional called")
         //first find the index of the individual alert object that contains the email we already have
         let i = dailyBirthdayAlerts.findIndex(x => x.userEmail === userEmail.email)
 
