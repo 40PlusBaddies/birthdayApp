@@ -48,6 +48,10 @@ module.exports = {
   },
   editPost: async (req, res) => {
     try {
+      if (isNaN(Date.parse(req.body.birthday))) {
+        const errorMessage = "Invalid date format";
+        return res.redirect(`/profile?error=${errorMessage}`);
+      }
       await BirthdayPerson.findOneAndUpdate(
         { _id: req.params.id },
         {
