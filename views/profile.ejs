@@ -24,14 +24,9 @@
                 <textarea class="form-control" id="relation" name="relation"></textarea>
               </div>
               <div class="mb-3">
-                <label for="relation" class="form-label">Gift Ideas</label>
-                <textarea class="form-control" id="relation" name="relation"></textarea>
-              </div>
-              <!-- included gift idea form 
-              <div class="mb-3">
                 <label for="gift-ideas" class="form-label">Gift ideas</label>
-                <textarea class="form-control" id="gift-ideas" name="gift-ideas"></textarea>
-              </div>-->
+                <textarea class="form-control" id="gift" name="gift"></textarea>
+              </div>
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
@@ -67,10 +62,13 @@
                             <label for="name">Edit Name:</label>
                             <input type="text" class="form-control" id="name" name="name" value="<%= posts[i].name %>">
                           </div>
-                          
                           <div class="form-group">
                             <label for="date">Edit Birthday: </label>
                             <input type="date" class="form-control" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Add or Edit Gift Ideas: </label>
+                            <input type="text" class="form-control" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
                           </div>
                         </div>
                         <div class="modal-footer">
