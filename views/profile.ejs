@@ -4,7 +4,7 @@
   <div id="balloon_2"></div>
   <div id="balloon_3"></div>
   <div id="balloon_4"></div>
-  <div class="row mt-5 flex-wrap">
+  <div class="row mt-5 flex-wrap" id="infoList">
       <div class="col-md-6 col-sm-12">
           <div>
               <p><strong>User Name</strong>: <%= user.userName %></p>
@@ -36,7 +36,7 @@
             </form>
           </div>
       </div>
-      <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
+      <div class="col-md-6 col-sm-12 mt-5 mt-md-0" id="infoList">
         <ul class="list-group-container px-md-5 px-0">
         <% for(let i=0; i<posts.length; i++) {%>
           <li class="justify-content-between mst-4 list-group-item">
@@ -51,7 +51,7 @@
                   Edit
                 </button>
               </div>
-              <div class="col-auto">
+              <div class="col-auto" id="topModal">
                 <div class="modal fade" id="edit<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -85,7 +85,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-auto">
+              <div class="col-auto" id="topModal">
                 <!-- Delete Button -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete<%= posts[i]._id %>id">
                   Delete
