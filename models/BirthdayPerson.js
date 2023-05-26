@@ -30,7 +30,10 @@ const BirthdayPersonSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  //gifts: [String]
+  gifts: {
+    type: [String],
+    default: [],
+  },
 })
 
 module.exports = mongoose.model('BirthdayPerson', BirthdayPersonSchema)
