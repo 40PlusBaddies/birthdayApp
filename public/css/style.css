@@ -26,6 +26,8 @@ html, body {
     font-family: 'Dosis', sans-serif;
     color: red;
     font-size: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .logo a {
@@ -34,11 +36,15 @@ html, body {
     text-decoration: none;
     font-size: 5rem;
     padding-top: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 a {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
+    position: relative;
+    z-index: 1;
 }
 
 .btn {
@@ -47,19 +53,32 @@ a {
     border-radius: 10px;
     font-size: 1.8rem;
     color: white;
+    position: relative;
+    z-index: 1;
 }
 .btn-close {
     background-color: white;
     color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .btn:hover {
     background-color: orange;
     font-size: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .balloonLogo {
     max-width: 100px;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    position: relative;
+    z-index: 1;
 }
 
 h2 {
@@ -68,24 +87,32 @@ h2 {
     color: var(--secondary-color);
     font-weight: bold;
     margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 p {
     font-family: 'Dosis', sans-serif; 
     font-size: 2rem;
     color: var(--secondary-color);
+    position: relative;
+    z-index: 1;
 }
 
 label {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
     color: var(--secondary-color);
+    position: relative;
+    z-index: 1;
 }
 
 .form-control {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
     color: var(--secondary-color);
+    position: relative;
+    z-index: 1;
 }
 
 .list-group-container {
@@ -100,12 +127,6 @@ label {
     padding: 5px;
     color: var(--secondary-color);
   }
-
-#infoList {
-    position: relative;
-    z-index: 9999;
-    background-color: rgba(255, 255, 255, 0);
-}
 
 #balloon_1 {
     position: absolute;
