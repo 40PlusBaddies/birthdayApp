@@ -37,7 +37,7 @@ module.exports = {
         relation: req.body.relation,
         birthday: req.body.birthday,
         userId: req.user.id,
-        //gifts: req.body.gift-ideas,
+        gifts: req.body.gift,
       });
       console.log(req.body)
       console.log("Your friend or family member has been added!");
@@ -51,7 +51,7 @@ module.exports = {
       await BirthdayPerson.findOneAndUpdate(
         { _id: req.params.id },
         {
-          $set: {name : req.body.name, birthday : req.body.birthday},
+          $set: {name : req.body.name, birthday : req.body.birthday, gifts : req.body.gifts},
         }
       );
       console.log("Post Updated");
