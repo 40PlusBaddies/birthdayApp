@@ -135,7 +135,6 @@ const createAlerts = async (post, dailyBirthdayAlerts) => {
     let name = post.name;
     let birthday = dayjs.utc(post.birthday).format('MMM D, YYYY');
 
-
     //get the Users from the database who have a notification to go out
     let userEmail = await User.findById({ _id: post.userId });
 
