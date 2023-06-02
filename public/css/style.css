@@ -26,6 +26,7 @@ html, body {
     font-family: 'Dosis', sans-serif;
     color: red;
     font-size: 2rem;
+    position: relative;
     z-index: 1;
 }
 
@@ -35,12 +36,14 @@ html, body {
     text-decoration: none;
     font-size: 5rem;
     padding-top: 20px;
+    position: relative;
     z-index: 1;
 }
 
 a {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
+    position: relative;
     z-index: 1;
 }
 
@@ -73,12 +76,18 @@ a {
     z-index: 1;
 }
 
+h1 {
+    position: relative;
+    z-index: 1;
+}
+
 h2 {
     font-family: 'Dosis', sans-serif; 
     font-size: 2.6rem;
     color: var(--secondary-color);
     font-weight: bold;
     margin-bottom: 20px;
+    position: relative;
     z-index: 1;
 }
 
@@ -86,7 +95,7 @@ p {
     font-family: 'Dosis', sans-serif; 
     font-size: 2rem;
     color: var(--secondary-color);
-    position:relative;
+    position: relative;
     z-index: 1;
 }
 
@@ -118,8 +127,6 @@ label {
     padding: 5px;
     color: var(--secondary-color);
   }
-
-
 
 #balloon_1 {
     position: absolute;
