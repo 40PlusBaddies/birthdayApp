@@ -4,7 +4,7 @@
   <div id="balloon_2"></div>
   <div id="balloon_3"></div>
   <div id="balloon_4"></div>
-  <div class="row mt-5 flex-wrap" id="infoList">
+  <div class="row mt-5 flex-wrap">
     <div class="col-md-6 col-sm-12">
       <div>
           <p><strong>User Name</strong>: <%= user.userName %></p>
@@ -12,12 +12,10 @@
           <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a>
           <a href="/logout" class="btn btn-primary">Logout</a>
       </div>
-
       <div class="mt-5">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
           Add a birthday person
         </button>
-
         <div class="col-auto">
           <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -31,23 +29,23 @@
                 <form action="/post/createPost" method="POST">
                   <div class="modal-body">
                     <div class="form-group">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <div class="mb-3">
-                          <label for="date" class="form-label">Birthday</label>
-                          <input type="date" class="form-control" id="birthday" name="birthday">
-                        </div>
-                        <div class="mb-3">
-                          <label for="relation" class="form-label">Relation</label>
-                          <textarea class="form-control" id="relation" name="relation"></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label for="gift-ideas" class="form-label">Gift ideas</label>
-                          <textarea class="form-control" id="gift" name="gift"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Birthday</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday">
+                      </div>
+                      <div class="mb-3">
+                        <label for="relation" class="form-label">Relation</label>
+                        <input type="text" class="form-control" id="relation" name="relation">
+                      </div>
+                      <div class="mb-3">
+                        <label for="gift-ideas" class="form-label">Gift ideas</label>
+                        <input type="text" class="form-control" id="gift" name="gift">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                   </div>
                 </form>
@@ -57,8 +55,7 @@
         </div>
       </div>
     </div>
-
-    <div class="col-md-6 col-sm-12 mt-5 mt-md-0" id="infoList">
+    <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
       <ul class="list-group-container px-md-5 px-0">
       <% for(let i=0; i<posts.length; i++) {%>
         <li class="justify-content-between mst-4 list-group-item">
