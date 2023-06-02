@@ -115,18 +115,11 @@ label {
     z-index: 1;
 }
 
-.list-group-container {
+.accordion, .accordion-item, .accordion-button, .accordion-collapse, .accordion-body {
     background-color: transparent;
-    border: none;
     box-shadow: none;
+    z-index: 1;
 }
-
-.list-group-item {
-    background-color: transparent;
-    border: none;
-    padding: 5px;
-    color: var(--secondary-color);
-  }
 
 #balloon_1 {
     position: absolute;
