@@ -9,7 +9,7 @@
       <div>
           <p><strong>User Name</strong>: <%= user.userName %></p>
           <p><strong>Email</strong>: <%= user.email %></p>             
-          <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a>
+          <!--<a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a>-->
           <a href="/logout" class="btn btn-primary">Logout</a>
       </div>
       <div class="mt-5">
@@ -57,12 +57,19 @@
     </div>
     <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
       <ul class="list-group-container px-md-5 px-0">
+        <!-- today's date -->
+      <h2><strong">Today is: <%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
       <% for(let i=0; i<posts.length; i++) {%>
+        <% let birthday = dayjs.utc(posts[i].birthday) %>
+        <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
+        <% if (days < 0) { days = days + 365 } %>
+
         <li class="justify-content-between mst-4 list-group-item">
           <div class="row">
             <!-- Name -->
             <div class="col">
-              <h3><%= posts[i].name %> - <%= dayjs.utc(posts[i].birthday).format('MMM D, YYYY') %></h3>
+              
+              <h3>In <%=days%> Days     <%= posts[i].name %>:     (<%= dayjs.utc(posts[i].birthday).format('MMM D, YYYY')%>)</h3>
             </div>
             <div class="col-auto">
               <!-- Edit Button -->
@@ -138,7 +145,7 @@
                 </div>
               </div>
             </div>
-        </li>
+          </li>
         <% } %>
       </ul>
     </div>

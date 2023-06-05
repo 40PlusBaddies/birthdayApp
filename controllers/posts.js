@@ -5,6 +5,7 @@ module.exports = {
   getProfile: async (req, res) => {
     try {
       const posts = await BirthdayPerson.find({ userId: req.user.id }).sort({ name: 1 }).lean();
+      console.log("get profile called");
       res.render("profile.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
