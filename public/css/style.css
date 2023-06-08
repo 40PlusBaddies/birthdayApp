@@ -118,7 +118,12 @@ label {
 .accordion, .accordion-item, .accordion-button, .accordion-collapse, .accordion-body {
     background-color: transparent;
     box-shadow: none;
+    color: var(--secondary-color);
     z-index: 1;
+}
+
+.modal-backdrop {
+    z-index: 0;
 }
 
 #balloon_1 {

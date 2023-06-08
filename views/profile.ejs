@@ -45,8 +45,8 @@
             </h2>
             <div id="panelsStayOpen<%=[i]%>" class="accordion-collapse collapse">
               <div class="accordion-body">
-                <h3>Relation: <br><%= posts[i].relation %></h3><br>
-                <h3>Gift Ideas: <br><%= posts[i].gifts[0] %></h3><br>
+                <h3>Relation: <%= posts[i].relation %></h3><br>
+                <h3>Gift Ideas: <br><%= posts[i].gifts %></h3><br>
                 <div class="row">
                   <div class="col-auto"> <!-- Edit Button -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
