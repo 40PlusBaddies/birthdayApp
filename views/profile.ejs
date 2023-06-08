@@ -13,34 +13,58 @@
               <a href="/logout" class="btn btn-primary">Logout</a>
           </div>
           <div class="mt-5">
-            <h2>Add a birthday person</h2>
-            <form action="/post/createPost"  method="POST">
-              <div class="mb-3">
-                  <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" name="name">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
+              Add a birthday person
+            </button>
+            <div class="col-auto">
+              <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                      <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
+                      <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                      </button>
+                    </div>
+                    <form action="/post/createPost" method="POST">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                          </div>
+                          <div class="mb-3">
+                            <label for="date" class="form-label">Birthday</label>
+                            <input type="date" class="form-control" id="birthday" name="birthday">
+                          </div>
+                          <div class="mb-3">
+                            <label for="relation" class="form-label">Relation</label>
+                            <input type="text" class="form-control" id="relation" name="relation">
+                          </div>
+                          <div class="mb-3">
+                            <label for="gift-ideas" class="form-label">Gift ideas</label>
+                            <input type="text" class="form-control" id="gift" name="gift">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div> 
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="date" class="form-label">Birthday</label>
-                <input type="date" class="form-control" id="birthday" name="birthday">
-              </div>
-              <div class="mb-3">
-                <label for="relation" class="form-label">Relation</label>
-                <textarea class="form-control" id="relation" name="relation"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="gift-ideas" class="form-label">Gift ideas</label>
-                <textarea class="form-control" id="gift" name="gift"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            </div>
           </div>
       </div>
       <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0">
+        <h2><strong">Today is: <%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
         <% for(let i=0; i<posts.length; i++) {%>
+          <% let birthday = dayjs.utc(posts[i].birthday) %>
+        <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
+        <% if (days < 0) { days = days + 365 } %>
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen<%=[i]%>" aria-expanded="false" aria-controls="panelsStayOpen<%=[i]%>">
-                <h3><%= posts[i].name %> - <%= dayjs.utc(posts[i].birthday).format('MMMM D') %></h3>
+                <h3><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)  </h3>
               </button>
             </h2>
             <div id="panelsStayOpen<%=[i]%>" class="accordion-collapse collapse">
