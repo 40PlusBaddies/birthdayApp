@@ -4,7 +4,18 @@ const User = require("../models/User");
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const posts = await BirthdayPerson.find({ userId: req.user.id }).sort({ name: 1 }).lean();
+      const posts = await BirthdayPerson.aggregate([
+        { $match: { userId: req.user.id } },
+        {
+          $addFields: {
+            monthAndDay: {
+              $substrBytes: ["$birthday", 5, 5]
+            }
+          }
+        },
+        { $sort: { monthAndDay: 1 } },
+        { $project: { _id: 0, name: 1, birthday: 1, relation: 1, gifts: 1 } }
+      ]);
       console.log("get profile called");
       res.render("profile.ejs", { posts: posts, user: req.user });
     } catch (err) {
