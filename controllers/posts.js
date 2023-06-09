@@ -1,11 +1,12 @@
 const BirthdayPerson = require("../models/BirthdayPerson");
 const User = require("../models/User");
+const { ObjectId } = require("mongodb")
 
 module.exports = {
   getProfile: async (req, res) => {
     try {
       const posts = await BirthdayPerson.aggregate([
-        { $match: { userId: req.user.id } },
+        { $match: { userId: ObjectId(req.user.id) } },
         {
           $addFields: {
             monthAndDay: {
@@ -13,8 +14,7 @@ module.exports = {
             }
           }
         },
-        { $sort: { monthAndDay: 1 } },
-        { $project: { _id: 0, name: 1, birthday: 1, relation: 1, gifts: 1 } }
+        { $sort: { monthAndDay: 1 } }
       ]);
       console.log("get profile called");
       res.render("profile.ejs", { posts: posts, user: req.user });
