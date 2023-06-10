@@ -1,13 +1,12 @@
 :root {
     --primary-color: red;
-    --secondary-color: white; 
+    --secondary-color: green; 
 }
 
 html, body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    z-index: -1;
     font-size: 62.5%;
     background: url(/images/background_5.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -18,7 +17,6 @@ html, body {
 
 .container-fluid {
     position: relative;
-    z-index: 1;
     height: 100vh;
 }
 
@@ -27,7 +25,6 @@ html, body {
     color: red;
     font-size: 2rem;
     position: relative;
-    z-index: 1;
 }
 
 .logo a {
@@ -37,14 +34,12 @@ html, body {
     font-size: 5rem;
     padding-top: 20px;
     position: relative;
-    z-index: 1;
 }
 
 a {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
     position: relative;
-    z-index: 1;
 }
 
 .btn {
@@ -54,31 +49,26 @@ a {
     font-size: 1.8rem;
     color: white;
     position: relative;
-    z-index: 1;
 }
 .btn-close {
     background-color: white;
     color: white;
     position: relative;
-    z-index: 1;
 }
 
 .btn:hover {
     background-color: orange;
     font-size: 2rem;
     position: relative;
-    z-index: 1;
 }
 
 .balloonLogo {
     max-width: 100px;
     position: relative;
-    z-index: 1;
 }
 
 h1 {
     position: relative;
-    z-index: 1;
 }
 
 h2 {
@@ -88,7 +78,6 @@ h2 {
     font-weight: bold;
     margin-bottom: 20px;
     position: relative;
-    z-index: 1;
 }
 
 p {
@@ -96,7 +85,6 @@ p {
     font-size: 2rem;
     color: var(--secondary-color);
     position: relative;
-    z-index: 1;
 }
 
 label {
@@ -104,7 +92,6 @@ label {
     font-size: 1.8rem;
     color: var(--secondary-color);
     position: relative;
-    z-index: 1;
 }
 
 .form-control {
@@ -112,22 +99,19 @@ label {
     font-size: 1.8rem;
     color: var(--secondary-color);
     position: relative;
-    z-index: 1;
 }
 
-.list-group-container {
+.accordion, .accordion-item, .accordion-button {
     background-color: transparent;
-    border: none;
     box-shadow: none;
+    color: white;
 }
 
-.list-group-item {
-    background-color: transparent;
-    border: none;
-    padding: 5px;
+.modal-title {
     color: var(--secondary-color);
-  }
+}
 
+/*
 #balloon_1 {
     position: absolute;
     top: 0;
@@ -201,3 +185,4 @@ label {
         filter: sepia(20%) brightness(80%);
       }
     }
+*/
