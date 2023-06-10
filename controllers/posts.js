@@ -5,23 +5,57 @@ const { ObjectId } = require("mongodb")
 module.exports = {
   getProfile: async (req, res) => {
     try {
+      const currentDate = new Date(); // Get current date
       const posts = await BirthdayPerson.aggregate([
-        { $match: { userId: ObjectId(req.user.id) } },
+        { $match: { userId: ObjectId(req.user.id) } }, //filter only user's people
         {
           $addFields: {
-            monthAndDay: {
-              $substrBytes: ["$birthday", 5, 5]
+            nextBirthday: { //compare each person's bday to current date
+              $cond: {
+                if: {
+                  $gte: [
+                    { $dateFromParts: { year: { $year: currentDate }, month: { $month: "$birthday" }, day: { $dayOfMonth: "$birthday" } } },
+                    currentDate
+                  ]
+                },
+                then: { //if in the future, build field
+                  $dateFromParts: { 
+                    year: { $year: currentDate },
+                    month: { $month: "$birthday" },
+                    day: { $dayOfMonth: "$birthday" },
+                    timezone: { $literal: "UTC" }
+                  }
+                },
+                else: { //else, build field for next year (not sure how this will function as December approaches)
+                  $dateFromParts: {
+                    year: { $add: [{ $year: currentDate }, 1] },
+                    month: { $month: "$birthday" },
+                    day: { $dayOfMonth: "$birthday" },
+                    timezone: { $literal: "UTC" }
+                  }
+                }
+              }
             }
           }
         },
-        { $sort: { monthAndDay: 1 } }
+        {
+          $addFields: {
+            daysUntilNextBirthday: { //calc diff to current date and convert to ms
+              $divide: [
+                { $subtract: ["$nextBirthday", currentDate] },
+                1000 * 60 * 60 * 24 // Convert milliseconds to days
+              ]
+            }
+          }
+        },
+        { $sort: { daysUntilNextBirthday: 1 } } //sort ascending
       ]);
-      console.log("get profile called");
+  
       res.render("profile.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
     }
-  },
+  },  
   // probably need to comment/delete the below section out
   getFeed: async (req, res) => {
     try {
