@@ -43,6 +43,7 @@ a {
 }
 
 .btn {
+    font-family: 'Dosis', sans-serif; 
     background-color: var(--primary-color);
     border: transparent;
     border-radius: 10px;
@@ -104,7 +105,7 @@ label {
 .accordion, .accordion-item, .accordion-button {
     background-color: transparent;
     box-shadow: none;
-    color: white;
+    color: var(--secondary-color);
 }
 
 .modal-title {
