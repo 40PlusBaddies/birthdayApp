@@ -201,3 +201,38 @@ label {
         filter: sepia(20%) brightness(80%);
       }
     }
+
+    .footer-delete {
+        border: transparent;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        z-index: 2;
+    }
+
+    .footer-delete p {
+        margin: 0 auto;
+        color: black;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .footer-delete-button {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .footer-delete-button button {
+       background-color: transparent;
+       color: black;
+       font-family: 'Dosis', sans-serif;
+    } 
+    
+.footer-delete-button button:hover {
+    background-color: transparent;
+    font-size: 2rem;
+    position: relative;
+}
