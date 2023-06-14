@@ -236,3 +236,7 @@ label {
     font-size: 2rem;
     position: relative;
 }
+
+.modal-backdrop {
+    z-index: -1;
+}
