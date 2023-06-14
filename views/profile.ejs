@@ -1,155 +1,155 @@
 <%- include('partials/header') -%>
-<div class="container">
+<div class="container">  <!-- Full Page -->
   <div id="balloon_1"></div>
   <div id="balloon_2"></div>
   <div id="balloon_3"></div>
   <div id="balloon_4"></div>
-  <div class="row mt-5 flex-wrap">
-    <div class="col-md-6 col-sm-12">
-      <div>
-          <p><strong>User Name</strong>: <%= user.userName %></p>
-          <p><strong>Email</strong>: <%= user.email %></p>             
-          <!--<a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a>-->
-          <a href="/logout" class="btn btn-primary">Logout</a>
-      </div>
-      <div class="mt-5">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
-          Add a birthday person
-        </button>
-        <div class="col-auto">
-          <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                  <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
-                  <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                  </button>
-                </div>
-                <form action="/post/createPost" method="POST">
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
-                      </div>
-                      <div class="mb-3">
-                        <label for="date" class="form-label">Birthday</label>
-                        <input type="date" class="form-control" id="birthday" name="birthday">
-                      </div>
-                      <div class="mb-3">
-                        <label for="relation" class="form-label">Relation</label>
-                        <input type="text" class="form-control" id="relation" name="relation">
-                      </div>
-                      <div class="mb-3">
-                        <label for="gift-ideas" class="form-label">Gift ideas</label>
-                        <input type="text" class="form-control" id="gift" name="gift">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+  <div class="row mt-5 flex-wrap"> <!-- Full Content -->
+    <div class="col-md-6 col-sm-12"> <!-- First Column -->
+        <div>
+            <p><strong>User Name</strong>: <%= user.userName %></p>
+            <p><strong>Email</strong>: <%= user.email %></p>             
+            <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a>
+            <a href="/logout" class="btn btn-primary">Logout</a>
+        </div>
+        <div class="mt-5">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
+            Add a birthday person
+          </button>
+          <div class="col-auto">
+            <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                    <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true"></span>
+                    </button>
                   </div>
-                </form>
-              </div> 
+                  <form action="/post/createPost" method="POST">
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <div class="mb-3">
+                          <label for="name" class="form-label">Name</label>
+                          <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="mb-3">
+                          <label for="date" class="form-label">Birthday</label>
+                          <input type="date" class="form-control" id="birthday" name="birthday">
+                        </div>
+                        <div class="mb-3">
+                          <label for="relation" class="form-label">Relation</label>
+                          <input type="text" class="form-control" id="relation" name="relation">
+                        </div>
+                        <div class="mb-3">
+                          <label for="gift-ideas" class="form-label">Gift ideas</label>
+                          <input type="text" class="form-control" id="gift" name="gift">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div> 
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
-      <ul class="list-group-container px-md-5 px-0">
-        <!-- today's date -->
-      <h2><strong">Today is: <%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
+      </div> 
+    <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0"> <!-- Second Column -->
+      <h2><strong>Today is: <%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
       <% for(let i=0; i<posts.length; i++) {%>
         <% let birthday = dayjs.utc(posts[i].birthday) %>
-        <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
-        <% if (days < 0) { days = days + 365 } %>
-
-        <li class="justify-content-between mst-4 list-group-item">
-          <div class="row">
-            <!-- Name -->
-            <div class="col">
-              
-              <h3>In <%=days%> Days     <%= posts[i].name %>:     (<%= dayjs.utc(posts[i].birthday).format('MMM D, YYYY')%>)</h3>
-            </div>
-            <div class="col-auto">
-              <!-- Edit Button -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
-                Edit
-              </button>
-            </div>
-            <div class="col-auto">
-              <div class="modal fade" id="edit<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                      <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
-                      <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                      </button>
-                    </div>
-                    <form action="/post/editPost/<%= posts[i]._id %>?_method=PUT"  method="POST">
-                      <div class="modal-body">
-                        <div class="form-group">
-                          <label for="name">Edit Name:</label>
-                          <input type="text" class="form-control" id="name" name="name" value="<%= posts[i].name %>">
-                        </div>
-                        <div class="form-group">
-                          <label for="date">Edit Birthday: </label>
-                          <input type="date" class="form-control" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
-                        </div>
-                        <div class="form-group">
-                          <label for="date">Add or Edit Gift Ideas: </label>
-                          <input type="text" class="form-control" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Submit Changes</button>
-                        <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                      </div>
-                    </form>
-                  </div>
+      <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
+      <% if (days < 0) { days = days + 365 } %>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen<%=[i]%>" aria-expanded="false" aria-controls="panelsStayOpen<%=[i]%>">
+              <h3><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)</h3>
+            </button>
+          </h2>
+          <div id="panelsStayOpen<%=[i]%>" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <h3>Relation: <%= posts[i].relation %></h3><br>
+              <h3>Gift Ideas: <br><%= posts[i].gifts %></h3><br>
+              <div class="row">
+                <div class="col-auto"> <!-- Edit Button -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
+                    Edit
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div class="col-auto">
-              <!-- Delete Button -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete<%= posts[i]._id %>id">
-                Delete
-              </button>
-            </div>
-            <div class="col-auto">
-              <div class="modal fade" id="delete<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header border-bottom-0">
-                        <h3 class="modal-title" id="deleteModalLabel">Confirm Deletion?</h3>
-                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true"></span>
-                        </button>
-                      </div>
-                      <div class="modal-body p-0">
-                          <div class="card border-0 p-sm-3 p-2 justify-content-center">
-                              <div class="card-body px-sm-4 mb-2 pt-1 pb-0"> 
-                                  <form action="/post/deletePost/<%= posts[i]._id %>?_method=DELETE" method="POST">
-                                    <div class="row justify-content-end no-gutters">
-                                      <div class="col-auto">
-                                        <button class="btn btn-primary" type="submit">Delete</button>
-                                      </div>
-                                    </div>
-                                  </form>
+                <div class="col-auto"> <!-- Edit Modal -->
+                  <div class="modal fade" id="edit<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                          <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
+                          <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                          </button>
+                        </div>
+                        <form action="/post/editPost/<%= posts[i]._id %>?_method=PUT"  method="POST">
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="name">Edit Name:</label>
+                              <input type="text" class="form-control" id="name" name="name" value="<%= posts[i].name %>">
                             </div>
-                        </div>  
+                            <div class="form-group">
+                              <label for="date">Edit Birthday: </label>
+                              <input type="date" class="form-control" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
+                            </div>
+                            <div class="form-group">
+                              <label for="date">Add or Edit Gift Ideas: </label>
+                              <input type="text" class="form-control" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Submit Changes</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                        </form>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto"> <!-- Delete Button -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete<%= posts[i]._id %>id">
+                    Delete
+                  </button>
+                </div>
+                <div class="col-auto">  <!-- Delete Modal -->
+                  <div class="modal fade" id="delete<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header border-bottom-0">
+                            <h3 class="modal-title" id="deleteModalLabel">Confirm Deletion?</h3>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true"></span>
+                            </button>
+                          </div>
+                          <div class="modal-body p-0">
+                              <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                                  <div class="card-body px-sm-4 mb-2 pt-1 pb-0"> 
+                                      <form action="/post/deletePost/<%= posts[i]._id %>?_method=DELETE" method="POST">
+                                        <div class="row justify-content-end no-gutters">
+                                          <div class="col-auto">
+                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                          </div>
+                                        </div>
+                                      </form>
+                                  </div>
+                              </div>  
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </li>
-        <% } %>
-      </ul>
+          </div>
+        </div>
+      <% } %>
     </div>
-    </div>  
   </div>
+</div>
 
 <%- include('partials/footer') -%>
