@@ -215,13 +215,23 @@ label {
         margin: 0 auto;
         color: black;
         margin: 0 auto;
+        text-align: left;
+    }
+
+    .footer-delete span {
+        font-weight: bold;
         text-align: center;
+        display: block;
+        margin: 0 auto;
+        font-family: 'Dosis', sans-serif;
+        font-size: 2rem;
+        margin-top: 5px;
     }
 
     .footer-delete-button {
         display: block;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto !important;
+        margin-top: 5px;
         text-align: center;
     }
 
@@ -239,4 +249,8 @@ label {
 
 .modal-backdrop {
     z-index: -1;
+}
+
+.footer-delete p.copyright {
+    text-align: center;
 }
