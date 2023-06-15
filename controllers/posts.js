@@ -76,7 +76,10 @@ module.exports = {
   },
   deleteAcct: async (req, res) => {
     try {
-      // Delete post from db
+      // Delete posts from db
+      await BirthdayPerson.deleteMany({ userId: req.params.id });
+      console.log("Deleted All User Posts");
+      // Delete user from db
       await User.deleteOne({ _id: req.params.id });
       console.log("Deleted User Acct");
       res.redirect("/");
