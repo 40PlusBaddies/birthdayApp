@@ -74,4 +74,14 @@ module.exports = {
       res.redirect("/profile");
     }
   },
+  deleteAcct: async (req, res) => {
+    try {
+      // Delete post from db
+      await User.deleteOne({ _id: req.params.id });
+      console.log("Deleted User Acct");
+      res.redirect("/");
+    } catch (err) {
+      res.redirect("/profile");
+    }
+  },
 };

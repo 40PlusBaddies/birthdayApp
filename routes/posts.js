@@ -13,5 +13,7 @@ router.put("/editPost/:id", postsController.editPost);
 
 router.delete("/deletePost/:id", postsController.deletePost);
 
+router.delete("/deleteAcct/:id", postsController.deleteAcct);
+
 module.exports = router;
 

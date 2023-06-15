@@ -14,13 +14,13 @@
               <span aria-hidden="true"></span>
             </button>
           </div>
-          <!-- <form action="/post/createPost" method="POST"> -->
+          <form action="/post/deleteAcct/<%= user._id %>?_method=DELETE" method="POST">
             <div class="modal-body">
               <div class="form-group">
                 <p>You will permanently lose access to your account and associated birthdays.</p>
                 <span>This action cannot be undone.</span>  
-                  <label for="deleteEmail">To confirm, type "xxxx" in the box below:</label>
-                  <input type="text" class="#" id="deleteEmail" name="deleteEmail">
+                  <!-- <label for="deleteEmail">To confirm, type "xxxx" in the box below:</label>
+                  <input type="text" class="#" id="deleteEmail" name="deleteEmail"> -->
                 <button type="submit" class="btn btn-primary">Yes, I want to delete my account</button>
               </div>
             </div>
