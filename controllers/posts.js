@@ -34,14 +34,14 @@ module.exports = {
     try {
       const people = await BirthdayPerson.find({ userId: req.params.id });
       
-      // csvData will be an array of strings representing the User object and the people objects, converted using the specified fields; each CSV string in the array represents one row in the final file
+      // csvData will be an array of strings representing the User object and the people objects; each CSV string in the array represents one row in the final file
       const fields = ['name', 'birthday'];
       const csvData = [];
 
-      // Add the header row to the csvData array
+      // add header row to the csvData array
       csvData.push(fields.join(','));
 
-      // Add each person's data as a new row in the csvData array
+      // add each person's data as a new row in the csvData array
       people.forEach((item) => {
         const rowData = fields.map((field) => {
           if (field === 'birthday') {
