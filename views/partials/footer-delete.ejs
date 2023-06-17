@@ -18,6 +18,9 @@
             <div class="modal-body">
               <div class="form-group">
                 <p>You will permanently lose access to your account and associated birthdays.</p>
+                <form action="/download" method="GET">
+                  <button type="submit" class="btn btn-primary">Download Friend List</button>
+                </form>                
                 <span>This action cannot be undone.</span>
                 <label for="deleteEmail">To confirm, type your email in the box below:</label>
                 <input type="text" class="form-control" id="deleteEmail" name="deleteEmail" oninput="checkEmailInput()">
