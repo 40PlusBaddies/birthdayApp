@@ -1,7 +1,7 @@
 const BirthdayPerson = require("../models/BirthdayPerson");
 const User = require("../models/User");
 const fs = require('fs');
-const json2csv = require('json2csv').parse;
+const dayjs = require('dayjs');
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -36,7 +36,22 @@ module.exports = {
       
       // csvData will be an array of strings representing the User object and the people objects, converted using the specified fields; each CSV string in the array represents one row in the final file
       const fields = ['name', 'birthday'];
-      const csvData = people.map((item) => json2csv(item.toObject(), { fields }));
+      const csvData = [];
+
+      // Add the header row to the csvData array
+      csvData.push(fields.join(','));
+
+      // Add each person's data as a new row in the csvData array
+      people.forEach((item) => {
+        const rowData = fields.map((field) => {
+          if (field === 'birthday') {
+            return dayjs(item[field]).format('YYYY-MM-DD');
+          }
+          return item[field];
+        });
+    
+        csvData.push(rowData.join(','));
+      });
 
       // download file name
       const fileName = "friend-list-db.csv";
