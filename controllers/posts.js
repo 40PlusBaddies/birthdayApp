@@ -1,5 +1,7 @@
 const BirthdayPerson = require("../models/BirthdayPerson");
 const User = require("../models/User");
+const fs = require('fs');
+const dayjs = require('dayjs');
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -28,11 +30,54 @@ module.exports = {
       console.log(err);
     }
   },
+  getCsv: async (req, res) => {
+    try {
+      const people = await BirthdayPerson.find({ userId: req.params.id });
+      
+      // csvData will be an array of strings representing the User object and the people objects; each CSV string in the array represents one row in the final file
+      const fields = ['name', 'birthday'];
+      const csvData = [];
+
+      // add header row to the csvData array
+      csvData.push(fields.join(','));
+
+      // add each person's data as a new row in the csvData array
+      people.forEach((item) => {
+        const rowData = fields.map((field) => {
+          if (field === 'birthday') {
+            return dayjs(item[field]).format('YYYY-MM-DD');
+          }
+          return item[field];
+        });
+    
+        csvData.push(rowData.join(','));
+      });
+
+      // download file name
+      const fileName = "friend-list-db.csv";
+
+      // fs method that writes data to file
+      fs.writeFileSync(fileName, csvData.join('\n'));
+
+      // sets the response headers for the download
+      res.setHeader('Content-Type', 'text/csv'); // informs browser of file type
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`); // informs browser to treat file as attachment rather than displaying it in browser
+
+      // stream file contents to browser as the data is being read from the file
+      const fileStream = fs.createReadStream(fileName); // creates a stream to read data from a file
+      fileStream.pipe(res); // connects a readable stream to a writable stream
+
+      // deletes temporary file used for streaming the CSV data after the data has been successfully sent as a response; the clean up step
+      fileStream.on('end', () => { //event listener emitted when the entire file has been read and streamed
+        fs.unlinkSync(fileName); //deletes the temporary file that was created earlier to store the CSV data
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  },
   createPost: async (req, res) => {
     try {
-      // Upload image to cloudinary
-      //const result = await cloudinary.uploader.upload(req.file.path);
-
       await BirthdayPerson.create({
         name: req.body.name,
         relation: req.body.relation,
