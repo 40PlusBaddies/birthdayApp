@@ -254,3 +254,16 @@ label {
 .footer-delete p.copyright {
     text-align: center;
 }
+
+.form-group .form-text {
+    font-size: 1.8rem;
+    display: block;
+    margin: 5px auto !important;
+    text-align: center;
+}
+
+.form-group button {
+    display: block;
+    text-align: center;
+    margin: 5px auto !important;
+}
