@@ -7,7 +7,6 @@ html, body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    z-index: -1;
     font-size: 62.5%;
     background: url(/images/background_5.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -18,7 +17,6 @@ html, body {
 
 .container-fluid {
     position: relative;
-    z-index: 1;
     height: 100vh;
 }
 
@@ -27,7 +25,6 @@ html, body {
     color: red;
     font-size: 2rem;
     position: relative;
-    z-index: 1;
 }
 
 .logo a {
@@ -37,48 +34,42 @@ html, body {
     font-size: 5rem;
     padding-top: 20px;
     position: relative;
-    z-index: 1;
 }
 
 a {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
     position: relative;
-    z-index: 1;
 }
 
 .btn {
+    font-family: 'Dosis', sans-serif; 
     background-color: var(--primary-color);
     border: transparent;
     border-radius: 10px;
     font-size: 1.8rem;
     color: white;
     position: relative;
-    z-index: 1;
 }
 .btn-close {
     background-color: white;
     color: white;
     position: relative;
-    z-index: 1;
 }
 
 .btn:hover {
     background-color: orange;
     font-size: 2rem;
     position: relative;
-    z-index: 1;
 }
 
 .balloonLogo {
     max-width: 100px;
     position: relative;
-    z-index: 1;
 }
 
 h1 {
     position: relative;
-    z-index: 1;
 }
 
 h2 {
@@ -88,7 +79,6 @@ h2 {
     font-weight: bold;
     margin-bottom: 20px;
     position: relative;
-    z-index: 1;
 }
 
 p {
@@ -96,7 +86,6 @@ p {
     font-size: 2rem;
     color: var(--secondary-color);
     position: relative;
-    z-index: 1;
 }
 
 label {
@@ -104,7 +93,6 @@ label {
     font-size: 1.8rem;
     color: var(--secondary-color);
     position: relative;
-    z-index: 1;
 }
 
 .form-control {
@@ -112,21 +100,17 @@ label {
     font-size: 1.8rem;
     color: var(--secondary-color);
     position: relative;
-    z-index: 1;
 }
 
-.list-group-container {
+.accordion, .accordion-item, .accordion-button {
     background-color: transparent;
-    border: none;
     box-shadow: none;
+    color: var(--secondary-color);
 }
 
-.list-group-item {
-    background-color: transparent;
-    border: none;
-    padding: 5px;
+.modal-title {
     color: var(--secondary-color);
-  }
+}
 
 #balloon_1 {
     position: absolute;
@@ -202,69 +186,69 @@ label {
       }
     }
 
-    .footer-delete {
-        border: transparent;
-        width: 100%;
-        position: fixed;
-        bottom: 0;
-        background-color: rgba(255, 255, 255, 0.5);
-        z-index: 2;
-        text-align: center;
-    }
+.footer-delete {
+    border: transparent;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 2;
+    text-align: center;
+}
 
-    .footer-delete p {
-        margin: 0 auto;
-        color: black;
-        margin: 0 auto;
-        text-align: left;
-    }
+.footer-delete p {
+    margin: 0 auto;
+    color: black;
+    margin: 0 auto;
+    text-align: left;
+}
 
-    .footer-delete span {
-        font-weight: bold;
-        text-align: center;
-        display: block;
-        margin: 0 auto;
-        font-family: 'Dosis', sans-serif;
-        font-size: 2rem;
-        margin-top: 5px;
-    }
-
-    .footer-delete-button {
-        display: block;
-        margin: 0 auto !important;
-        margin-top: 5px;
-        text-align: center;
-    }
-
-    .footer-delete-button button {
-       background-color: transparent;
-       color: black;
-       font-family: 'Dosis', sans-serif;
-    } 
-    
-.footer-delete-button button:hover {
-    background-color: transparent;
+.footer-delete span {
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    font-family: 'Dosis', sans-serif;
     font-size: 2rem;
-    position: relative;
+    margin-top: 5px;
+}
+
+.footer-delete-button {
+    display: block;
+    margin: 0 auto !important;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.footer-delete-button button {
+   background-color: transparent;
+   color: black;
+   font-family: 'Dosis', sans-serif;
+} 
+
+.footer-delete-button button:hover {
+background-color: transparent;
+font-size: 2rem;
+position: relative;
 }
 
 .modal-backdrop {
-    z-index: -1;
+z-index: -1;
 }
 
 .footer-delete p.copyright {
-    text-align: center;
+text-align: center;
 }
 
 .form-group .form-text {
-    font-size: 1.8rem;
-    display: block;
-    margin: 5px auto !important;
-    text-align: center;
+font-size: 1.8rem;
+display: block;
+margin: 5px auto !important;
+text-align: center;
 }
 
 .form-group button {
-    display: block;
-    text-align: center;
-    margin: 5px auto !important;
+display: block;
+text-align: center;
+margin: 5px auto !important;
 }
