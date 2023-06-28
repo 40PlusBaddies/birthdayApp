@@ -1,6 +1,7 @@
 :root {
     --primary-color: red;
-    --secondary-color: green; 
+    --secondary-color: rgb(1, 187, 1); 
+    --tertiary-color: rgb(182, 0, 182);
 }
 
 html, body {
@@ -82,39 +83,14 @@ h2 {
     /* font-weight: bold; */
     margin-bottom: 20px;
     position: relative;
-    text-shadow: 
-    -1px -1px 0 purple, 
-    1px -1px 0 purple, 
-    -1px 1px 0 purple, 
-    1px 1px 0 purple, 
-    1px 0px 0px green, 
-    0px 1px 0px green, 
-    2px 1px 0px green, 
-    1px 2px 0px green, 
-    3px 2px 0px green, 
-    2px 3px 0px green, 
-    4px 3px 0px green, 
-    3px 4px 0px green, 
-    5px 4px 0px green,
-    3px 5px 0px purple, 
-    6px 5px 0px purple, 
-    -1px 2px 0 black, 
-    0 3px 0 purple, 
-    1px 4px 0 purple, 
-    2px 5px 0px purple,
-    2px -1px 0 purple, 
-    3px 0 0 purple, 
-    4px 1px 0 purple, 
-    5px 2px 0px purple, 
-    6px 3px 0 purple, 
-    7px 4px 0 purple,
-    8px 8px 4px #dac249;
+    text-shadow: 1px 1px 1px var(--tertiary-color);
 }
 
 p {
     font-family: 'Dosis', sans-serif; 
     font-size: 2.4rem;
     color: var(--secondary-color);
+    text-shadow: 1px 1px 1px var(--tertiary-color);
     position: relative;
 }
 
@@ -141,11 +117,13 @@ label {
     background-color: transparent;
     box-shadow: none;
     color: var(--secondary-color);
+    text-shadow: 1px 1px 1px var(--tertiary-color);
     position: relative;
 }
 
 .modal-title {
     color: var(--secondary-color);
+    text-shadow: 1px 1px 1px var(--tertiary-color);
     position: relative;
 }
 
