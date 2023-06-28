@@ -7,15 +7,19 @@
   <div class="row mt-5 flex-wrap"> <!-- Full Content -->
     <div class="col-md-6 col-sm-12"> <!-- First Column -->
         <div>
-            <p><strong>User Name</strong>: <%= user.userName %></p>
-            <p><strong>Email</strong>: <%= user.email %></p>             
-            <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a>
-            <a href="/logout" class="btn btn-primary">Logout</a>
+            <p class="hello">Hello <strong><%= user.userName %></strong>,</p>
+            <p>It's time to celebrate!</p>
+            <p>Someone you love will have a birthday soon.</p>
+            <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
+            <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
+            
         </div>
         <div class="mt-5">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
             Add a birthday person
           </button>
+          <br>
+          <a href="/logout" class="btn btn-primary my-4">Logout</a>
           <div class="col-auto">
             <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -56,7 +60,7 @@
         </div>
       </div> 
     <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0"> <!-- Second Column -->
-      <h2><strong>Today is: <%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
+      <h2>Today is <strong><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
       <% for(let i=0; i<posts.length; i++) {%>
         <% let birthday = dayjs.utc(posts[i].birthday) %>
       <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>

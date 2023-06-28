@@ -21,20 +21,23 @@ html, body {
 }
 
 .logo {
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Crafty Girls', cursive;
     color: red;
-    font-size: 2rem;
+    font-size: 5rem;
     position: relative;
+    font-weight: bold;
+    z-index: 1;
 }
 
-.logo a {
+
+/* .logo a {
     display: block;
     color: red;
     text-decoration: none;
     font-size: 5rem;
     padding-top: 20px;
     position: relative;
-}
+} */
 
 a {
     font-family: 'Dosis', sans-serif; 
@@ -74,18 +77,22 @@ h1 {
 
 h2 {
     font-family: 'Dosis', sans-serif; 
-    font-size: 2.6rem;
+    font-size: 3rem;
     color: var(--secondary-color);
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 20px;
     position: relative;
 }
 
 p {
     font-family: 'Dosis', sans-serif; 
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: var(--secondary-color);
     position: relative;
+}
+
+p.hello {
+    font-size: 3rem;
 }
 
 label {
@@ -112,7 +119,7 @@ label {
     color: var(--secondary-color);
 }
 
-/*
+
 #balloon_1 {
     position: absolute;
     top: 0;
@@ -186,4 +193,3 @@ label {
         filter: sepia(20%) brightness(80%);
       }
     }
-*/
