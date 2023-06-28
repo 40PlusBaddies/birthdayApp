@@ -35,7 +35,7 @@ module.exports = {
       const people = await BirthdayPerson.find({ userId: req.params.id });
       
       // csvData will be an array of strings representing the User object and the people objects; each CSV string in the array represents one row in the final file
-      const fields = ['name', 'birthday'];
+      const fields = ['name', 'birthday', 'relation', 'gifts'];
       const csvData = [];
 
       // add header row to the csvData array
