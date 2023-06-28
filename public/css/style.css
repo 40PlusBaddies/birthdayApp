@@ -26,7 +26,6 @@ html, body {
     font-size: 5rem;
     position: relative;
     font-weight: bold;
-    z-index: 1;
 }
 
 
@@ -73,6 +72,7 @@ a {
 
 h1 {
     position: relative;
+    z-index: 1;
 }
 
 h2 {
@@ -93,6 +93,7 @@ p {
 
 p.hello {
     font-size: 3rem;
+    position: relative;
 }
 
 label {
@@ -113,18 +114,18 @@ label {
     background-color: transparent;
     box-shadow: none;
     color: var(--secondary-color);
+    position: relative;
 }
 
 .modal-title {
     color: var(--secondary-color);
+    position: relative;
 }
-
 
 #balloon_1 {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_1.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -138,7 +139,6 @@ label {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_2.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -152,7 +152,6 @@ label {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_3.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -166,7 +165,6 @@ label {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_4.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
