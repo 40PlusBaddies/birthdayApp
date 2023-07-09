@@ -121,6 +121,11 @@ label {
     position: relative;
 }
 
+.accordion-button:not(.collapsed) {
+    color: var(--secondary-color);
+    background-color: transparent;
+}
+
 .modal-title {
     color: var(--secondary-color);
     text-shadow: 1px 1px 1px var(--tertiary-color);
