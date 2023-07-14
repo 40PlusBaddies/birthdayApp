@@ -1,6 +1,7 @@
 :root {
     --primary-color: red;
-    --secondary-color: rgb(16, 66, 6); 
+    --secondary-color: rgb(1, 187, 1); 
+    --tertiary-color: rgb(182, 0, 182);
 }
 
 html, body {
@@ -21,20 +22,22 @@ html, body {
 }
 
 .logo {
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Crafty Girls', cursive;
     color: red;
-    font-size: 2rem;
+    font-size: 5rem;
     position: relative;
+    font-weight: bold;
 }
 
-.logo a {
+
+/* .logo a {
     display: block;
     color: red;
     text-decoration: none;
     font-size: 5rem;
     padding-top: 20px;
     position: relative;
-}
+} */
 
 a {
     font-family: 'Dosis', sans-serif; 
@@ -70,21 +73,29 @@ a {
 
 h1 {
     position: relative;
+    z-index: 1;
 }
 
 h2 {
     font-family: 'Dosis', sans-serif; 
-    font-size: 2.6rem;
+    font-size: 3rem;
     color: var(--secondary-color);
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 20px;
     position: relative;
+    text-shadow: 1px 1px 1px var(--tertiary-color);
 }
 
 p {
     font-family: 'Dosis', sans-serif; 
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: var(--secondary-color);
+    text-shadow: 1px 1px 1px var(--tertiary-color);
+    position: relative;
+}
+
+p.hello {
+    font-size: 3rem;
     position: relative;
 }
 
@@ -106,17 +117,25 @@ label {
     background-color: transparent;
     box-shadow: none;
     color: var(--secondary-color);
+    text-shadow: 1px 1px 1px var(--tertiary-color);
+    position: relative;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--secondary-color);
+    background-color: transparent;
 }
 
 .modal-title {
     color: var(--secondary-color);
+    text-shadow: 1px 1px 1px var(--tertiary-color);
+    position: relative;
 }
 
 #balloon_1 {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_1.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -130,7 +149,6 @@ label {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_2.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -144,7 +162,6 @@ label {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_3.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -158,7 +175,6 @@ label {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_4.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -185,7 +201,6 @@ label {
         filter: sepia(20%) brightness(80%);
       }
     }
-
 .footer-delete {
     border: transparent;
     width: 100%;
