@@ -133,6 +133,7 @@ label {
 }
 
 #balloon_1 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
@@ -146,6 +147,7 @@ label {
 }
 
 #balloon_2 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
@@ -159,6 +161,7 @@ label {
 }
 
 #balloon_3 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
@@ -172,6 +175,7 @@ label {
 }
 
 #balloon_4 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
