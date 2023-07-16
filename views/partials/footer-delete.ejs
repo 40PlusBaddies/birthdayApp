@@ -40,12 +40,12 @@
     const deleteEmailInput = document.getElementById('deleteEmail');
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
     const emailError = document.getElementById('emailError');
-    const userEmail = '<%= user.email %>';
+    const userEmail = '<%= user.email %>'.toLowerCase();
 
     if (deleteEmailInput.value.trim() === '') {
       deleteAccountBtn.disabled = true;
       emailError.innerText = 'Please enter your email address.';
-    } else if (deleteEmailInput.value.trim() !== userEmail) {
+    } else if (deleteEmailInput.value.trim().toLowerCase() !== userEmail) {
       deleteAccountBtn.disabled = true;
       emailError.innerText = 'Email does not match.';
     } else {
