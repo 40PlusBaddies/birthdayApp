@@ -121,6 +121,10 @@ label {
     position: relative;
 }
 
+.accordion-item:last-child {
+    margin-bottom: 80px;
+}
+
 .accordion-button:not(.collapsed) {
     color: var(--secondary-color);
     background-color: transparent;
@@ -213,6 +217,7 @@ label {
     background-color: rgba(255, 255, 255, 0.5);
     z-index: 2;
     text-align: center;
+    margin-top: -80px;
 }
 
 .footer-delete p {
