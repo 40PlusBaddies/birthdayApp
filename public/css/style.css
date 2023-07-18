@@ -127,7 +127,7 @@ label {
     position: relative;
 }
 
-.accordion-item:last-child {
+.friend-list:last-child {
     margin-bottom: 80px;
 }
 
@@ -135,10 +135,15 @@ label {
     color: var(--secondary-color);
     background-color: transparent;
 }
+
 .accordion-button {
     border-bottom-width: 2px;
     border-bottom-style: dotted; /* or dashed */
   }
+
+.custom-nav-item {
+    margin: 0.5rem; /* Adjust the margin value as per your preference */
+}
 
 .modal-title {
     color: var(--secondary-color);

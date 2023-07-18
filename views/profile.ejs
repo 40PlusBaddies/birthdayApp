@@ -1,57 +1,112 @@
 <%- include('partials/header') -%>
   <nav class="navbar navbar-light">
-    <div class="container">
-      <button class="navbar-toggler order-first" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <div class="col-auto"> <!-- Edit Profile Button -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModalId">
-                edit profile
-              </button>
-            </div>
-            <div class="col-auto"> <!-- Edit Profile Modal -->
-              <div class="modal fade" id="editProfileModalId" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                      <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
-                      <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                      </button>
+  <div class="container">
+    <button class="navbar-toggler order-first" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav d-flex justify-content-between">
+        <li class="nav-item custom-nav-item">
+          <div class="d-flex mt-4"> <!-- Edit Profile Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModalId">
+              Edit Profile
+            </button>
+          </div>
+          <div class="col-auto"> <!-- Edit Profile Modal -->
+            <div class="modal fade" id="editProfileModalId" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                    <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <form action="/updateProfile/<%= user._id %>?_method=PUT" method="POST">
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="userName">Edit Name:</label>
+                        <input type="text" class="form-control" id="userName" name="userName"
+                          value="<%= user.userName %>">
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Edit Email: </label>
+                        <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>">
+                      </div>
+                      <div class="form-group">
+                        <label for="password">Edit Password: </label>
+                        <input type="password" class="form-control" id="password" name="password"
+                          value="<%= user.password %>">
+                      </div>
                     </div>
-                    <form action="/updateProfile/<%= user._id %>?_method=PUT"  method="POST">
-                      <div class="modal-body">
-                        <div class="form-group">
-                          <label for="userName">Edit Name:</label>
-                          <input type="text" class="form-control" id="userName" name="userName" value="<%= user.userName %>">
-                        </div>
-                        <div class="form-group">
-                          <label for="email">Edit Email: </label>
-                          <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>">
-                        </div>
-                        <div class="form-group">
-                          <label for="password">Edit Password: </label>
-                          <input type="password" class="form-control" id="password" name="password" value="<%= user.password %>">
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">Submit Changes</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item custom-nav-item">
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-header btn btn-primary" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen" aria-expanded="true" aria-controls="panelsStayOpen">
+                More...
+              </button>
+              <div id="panelsStayOpen" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <form action="/post/getCsv/<%= user._id %>" method="GET"> <!-- CSV Button -->
+                    <button type="submit" class="btn btn-primary">Download Friend List</button>
+                  </form>
+                  <div class="mt-3"> <!-- Delete Profile Button -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      data-bs-target="#deleteAccount">
+                      Delete my account
+                    </button>
+                  </div>
+                  <div class="col-auto"> <!-- Delete Profile Modal -->
+                    <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog"
+                      aria-labelledby="editModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header border-bottom-0">
+                            <h3 class="modal-title" id="editModalLabel">Are you sure you want to delete your account?</h3>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true"></span>
+                            </button>
+                          </div>
+                          <form action="/post/deleteAcct/<%= user._id %>?_method=DELETE" method="POST">
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <p>You will permanently lose access to your account and associated birthdays.</p>
+                                <span>This action cannot be undone.</span>
+                                <label for="deleteEmail">To confirm, type your email in the box below:</label>
+                                <input type="text" class="form-control" id="deleteEmail" name="deleteEmail"
+                                  oninput="checkEmailInput()">
+                                <small id="emailError" class="form-text text-danger">Please retype your email to confirm.</small>
+                                <button type="submit" class="btn btn-danger mt-3" id="deleteAccountBtn" disabled>
+                                  Yes, I want to delete my account
+                                </button>
+                              </div>
+                            </div>
+                          </form>
                         </div>
                       </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Submit Changes</button>
-                        <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                      </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </li>
-          <li class="nav-item">
-            <a href="/logout" class="btn btn-primary my-4">logout</a>
-          </li>
-          <!-- Add more menu items here -->
-        </ul>
+          </div>
+        </li>
+        <li class="nav-item custom-nav-item">
+          <a href="/logout" class="btn btn-primary ml-3">Logout</a>
+        </li>        <!-- Add more menu items here -->      </ul>
       </div>
     </div>
   </nav>
@@ -120,7 +175,7 @@
         <% let birthday = dayjs.utc(posts[i].birthday) %>
       <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
       <% if (days < 0) { days = days + 365 } %>
-        <div class="accordion-item">
+        <div class="accordion-item friend-list">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen<%=[i]%>" aria-expanded="false" aria-controls="panelsStayOpen<%=[i]%>">
               <h3><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)</h3>
@@ -225,8 +280,24 @@
     accordionButton.style.borderBottomColor = color
   })
 </script>
+<script>
+  function checkEmailInput() {
+    const deleteEmailInput = document.getElementById('deleteEmail');
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const emailError = document.getElementById('emailError');
+    const userEmail = '<%= user.email %>';
 
+    if (deleteEmailInput.value.trim() === '') {
+      deleteAccountBtn.disabled = true;
+      emailError.innerText = 'Please enter your email address.';
+    } else if (deleteEmailInput.value.trim() !== userEmail) {
+      deleteAccountBtn.disabled = true;
+      emailError.innerText = 'Email does not match.';
+    } else {
+      deleteAccountBtn.disabled = false;
+      emailError.innerText = '';
+    }
+  }
+</script>
 
-
-
-<%- include('partials/footer-delete') -%>
+<%- include('partials/footer') -%>
