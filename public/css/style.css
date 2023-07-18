@@ -29,7 +29,11 @@ html, body {
     font-weight: bold;
 }
 
-
+.navbar {
+    position: relative;
+    z-index: 1;
+  }
+  
 /* .logo a {
     display: block;
     color: red;

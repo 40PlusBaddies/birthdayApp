@@ -1,4 +1,61 @@
 <%- include('partials/header') -%>
+  <nav class="navbar navbar-light">
+    <div class="container">
+      <button class="navbar-toggler order-first" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <div class="col-auto"> <!-- Edit Profile Button -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModalId">
+                edit profile
+              </button>
+            </div>
+            <div class="col-auto"> <!-- Edit Profile Modal -->
+              <div class="modal fade" id="editProfileModalId" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                      <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
+                      <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                      </button>
+                    </div>
+                    <form action="/updateProfile/<%= user._id %>?_method=PUT"  method="POST">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="userName">Edit Name:</label>
+                          <input type="text" class="form-control" id="userName" name="userName" value="<%= user.userName %>">
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Edit Email: </label>
+                          <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>">
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Edit Password: </label>
+                          <input type="password" class="form-control" id="password" name="password" value="<%= user.password %>">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Submit Changes</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="btn btn-primary my-4">logout</a>
+          </li>
+          <!-- Add more menu items here -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 <div id="balloon_1"></div>
 <div id="balloon_2"></div>
 <div id="balloon_3"></div>
@@ -19,7 +76,6 @@
             add a birthday
           </button>
           <br>
-          <a href="/logout" class="btn btn-primary my-4">logout</a>
           <div class="col-auto">
             <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -75,7 +131,7 @@
               <h3>Relation: <%= posts[i].relation %></h3><br>
               <h3>Gift Ideas: <br><%= posts[i].gifts %></h3><br>
               <div class="row">
-                <div class="col-auto"> <!-- Edit Button -->
+                <div class="col-auto"> <!-- Edit Post Button -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
                     Edit
                   </button>
