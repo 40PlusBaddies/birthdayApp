@@ -7,19 +7,19 @@
   <div class="row mt-5 flex-wrap"> <!-- Full Content -->
     <div class="col-md-6 col-sm-12"> <!-- First Column -->
         <div>
-            <p class="hello">Hello <strong><%= user.userName %></strong>,</p>
-            <p>It's time to celebrate!</p>
-            <p>Someone you love will have a birthday soon.</p>
+            <p class="hello">Hello <strong><%= user.userName %></strong>!</p>
+            <h2>Today is <strong><%= dayjs().format('MMMM D'); %></strong></h2>
+            <p>Add a friend or family member to your list of upcoming birthdays!</p>
             <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
             <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
             
         </div>
         <div class="mt-5">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
-            Add a birthday person
+            add a birthday
           </button>
           <br>
-          <a href="/logout" class="btn btn-primary my-4">Logout</a>
+          <a href="/logout" class="btn btn-primary my-4">logout</a>
           <div class="col-auto">
             <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,7 +60,6 @@
         </div>
       </div> 
     <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0 mb-5"> <!-- Second Column -->
-      <h2>Today is <strong><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
       <% for(let i=0; i<posts.length; i++) {%>
         <% let birthday = dayjs.utc(posts[i].birthday) %>
       <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
@@ -155,7 +154,21 @@
     </div>
   </div>
 </div>
-
+<script>
+  const presetColors = ["#0079FF", "#00DFA2", "#F6FA70", "#FF0060"]
+  let lastColorIndex = 0
+  function getNextColor() {
+    var color = presetColors[lastColorIndex]
+    lastColorIndex = (lastColorIndex + 1) % presetColors.length
+    return color
+  }
+  let accordionItems = document.querySelectorAll(".accordion-item")
+  accordionItems.forEach(function (item, index) {
+    let accordionButton = item.querySelector(".accordion-button")
+    let color = getNextColor()
+    accordionButton.style.borderBottomColor = color
+  })
+</script>
 
 
 
