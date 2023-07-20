@@ -34,7 +34,6 @@ html, body {
     background-color: rgb(203,178,121,.5);
     border-radius: 5px;
     position: relative;
-    z-index: 1;
   }
 
 /* .logo a {
@@ -80,7 +79,6 @@ a {
 
 h1 {
     position: relative;
-    z-index: 1;
 }
 
 h2 {
@@ -260,7 +258,6 @@ label , #del-warning{
     position: fixed;
     bottom: 0;
     background-color: transparent;
-    z-index: 2;
     text-align: center;
     margin-top: -80px;
 }
@@ -299,10 +296,6 @@ label , #del-warning{
     background-color: transparent;
     font-size: 2rem;
     position: relative;
-}
-
-.modal-backdrop {
-    z-index: -1;
 }
 
 .footer p.copyright {
