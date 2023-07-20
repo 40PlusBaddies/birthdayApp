@@ -1,5 +1,5 @@
 <%- include('partials/header') -%>
-  <nav class="navbar navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top fixed-left rounded-3">
   <div class="container">
     <button class="navbar-toggler order-first" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav d-flex justify-content-between">
         <li class="nav-item custom-nav-item">
-          <div class="d-flex mt-4"> <!-- Edit Profile Button -->
+          <div class="d-flex"> <!-- Edit Profile Button -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModalId">
               Edit Profile
             </button>
@@ -105,71 +105,72 @@
           </div>
         </li>
         <li class="nav-item custom-nav-item">
-          <a href="/logout" class="btn btn-primary ml-3">Logout</a>
-        </li>        <!-- Add more menu items here -->      </ul>
-      </div>
+          <a href="/logout" class="btn btn-primary">Logout</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 </header>
 <div id="balloon_1"></div>
 <div id="balloon_2"></div>
 <div id="balloon_3"></div>
 <div id="balloon_4"></div>
 <div class="container">  <!-- Full Page -->
-  <div class="row mt-5 flex-wrap"> <!-- Full Content -->
+  <div class="row mt-5 flex-wrap;"> <!-- Full Content -->
     <div class="col-md-6 col-sm-12"> <!-- First Column -->
-        <div>
-            <p class="hello">Hello <strong><%= user.userName %></strong>!</p>
-            <h2>Today is <strong><%= dayjs().format('MMMM D'); %></strong></h2>
-            <p>Add a friend or family member to your list of upcoming birthdays!</p>
-            <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
-            <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
-            
-        </div>
-        <div class="mt-5">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
-            add a birthday
-          </button>
-          <br>
-          <div class="col-auto">
-            <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header border-bottom-0">
-                    <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true"></span>
-                    </button>
-                  </div>
-                  <form action="/post/createPost" method="POST">
-                    <div class="modal-body">
-                      <div class="form-group">
-                        <div class="mb-3">
-                          <label for="name" class="form-label">Name</label>
-                          <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <div class="mb-3">
-                          <label for="date" class="form-label">Birthday</label>
-                          <input type="date" class="form-control" id="birthday" name="birthday">
-                        </div>
-                        <div class="mb-3">
-                          <label for="relation" class="form-label">Relation</label>
-                          <input type="text" class="form-control" id="relation" name="relation">
-                        </div>
-                        <div class="mb-3">
-                          <label for="gift-ideas" class="form-label">Gift ideas</label>
-                          <input type="text" class="form-control" id="gift" name="gift">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="first-col">
+          <p class="hello">Hello <strong><%= user.userName %></strong>!</p>
+          <h2>Today is <strong><%= dayjs().format('MMMM D'); %></strong></h2>
+          <p>Add a friend or family member to your list of upcoming birthdays!</p>
+          <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
+          <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
+          
+      </div>
+      <div class="mt-5">
+        <button type="button" class="btn btn-primary first-col" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
+          add a birthday
+        </button>
+        <br>
+        <div class="col-auto">
+          <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                  <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
+                  <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                  </button>
+                </div>
+                <form action="/post/createPost" method="POST">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
                       </div>
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Birthday</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday">
+                      </div>
+                      <div class="mb-3">
+                        <label for="relation" class="form-label">Relation</label>
+                        <input type="text" class="form-control" id="relation" name="relation">
+                      </div>
+                      <div class="mb-3">
+                        <label for="gift-ideas" class="form-label">Gift ideas</label>
+                        <input type="text" class="form-control" id="gift" name="gift">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                  </form>
-                </div> 
-              </div>
+                  </div>
+                </form>
+              </div> 
             </div>
           </div>
         </div>
-      </div> 
+      </div>
+    </div> 
     <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0 mb-5"> <!-- Second Column -->
       <% for(let i=0; i<posts.length; i++) {%>
         <% let birthday = dayjs.utc(posts[i].birthday) %>
@@ -178,13 +179,13 @@
         <div class="accordion-item friend-list">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen<%=[i]%>" aria-expanded="false" aria-controls="panelsStayOpen<%=[i]%>">
-              <h3><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)</h3>
+              <p><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)</p>
             </button>
           </h2>
           <div id="panelsStayOpen<%=[i]%>" class="accordion-collapse collapse">
             <div class="accordion-body">
-              <h3>Relation: <%= posts[i].relation %></h3><br>
-              <h3>Gift Ideas: <br><%= posts[i].gifts %></h3><br>
+              <h4>Relation: <h3><%= posts[i].relation %></h3></h4><br>
+              <h4>Gift Ideas: <br><h3><%= posts[i].gifts %></h3></h4><br>
               <div class="row">
                 <div class="col-auto"> <!-- Edit Post Button -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
@@ -266,14 +267,14 @@
   </div>
 </div>
 <script>
-  const presetColors = ["#0079FF", "#00DFA2", "#F6FA70", "#FF0060"]
+  const presetColors = ["#fc887b", "#fefc97", "#fbbb62", "#d0e6a5", "#86e3c3", "#ccabda"]
   let lastColorIndex = 0
   function getNextColor() {
-    var color = presetColors[lastColorIndex]
+    let color = presetColors[lastColorIndex]
     lastColorIndex = (lastColorIndex + 1) % presetColors.length
     return color
   }
-  let accordionItems = document.querySelectorAll(".accordion-item")
+  let accordionItems = document.querySelectorAll(".friend-list")
   accordionItems.forEach(function (item, index) {
     let accordionButton = item.querySelector(".accordion-button")
     let color = getNextColor()

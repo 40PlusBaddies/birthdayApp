@@ -1,7 +1,7 @@
 :root {
-    --primary-color: red;
-    --secondary-color: rgb(1, 187, 1); 
-    --tertiary-color: rgb(182, 0, 182);
+    --primary-color: #CBB279;
+    --secondary-color: #EEEEEE; 
+    --tertiary-color: #79CBB2;
 }
 
 html, body {
@@ -9,7 +9,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-    background: url(/images/background_5.jpg) no-repeat center center fixed; 
+    background: url(/images/Paper-bg.png) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -30,10 +30,12 @@ html, body {
 }
 
 .navbar {
+    width: fit-content;
+    background-color: #CBB279;
     position: relative;
     z-index: 1;
   }
-  
+
 /* .logo a {
     display: block;
     color: red;
@@ -88,20 +90,24 @@ h2 {
     /* font-weight: bold; */
     margin-bottom: 20px;
     position: relative;
-    text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
 }
 
 p {
     font-family: 'Dosis', sans-serif; 
     font-size: 2.4rem;
     color: var(--secondary-color);
-    text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
     position: relative;
 }
 
 p.hello {
     font-size: 3rem;
     position: relative;
+}
+
+.first-col {
+    margin-left: 12px;
 }
 
 label {
@@ -123,7 +129,7 @@ label {
     border: none;
     box-shadow: none;
     color: var(--secondary-color);
-    text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
     position: relative;
 }
 
@@ -145,9 +151,15 @@ label {
     margin: 0.5rem; /* Adjust the margin value as per your preference */
 }
 
+@media (min-width: 992px) {
+    .navbar-transparent {
+      background-color: transparent;
+    }
+}
+
 .modal-title {
     color: var(--secondary-color);
-    text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
     position: relative;
 }
 
@@ -192,7 +204,7 @@ label {
     animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
     animation-fill-mode: forwards;
 }
-
+/*
 #balloon_4 {
     will-change: transform;
     position: absolute;
@@ -206,7 +218,7 @@ label {
     animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
     animation-fill-mode: forwards;
 }
-
+*/
   @keyframes slide-up {
       0% {
         top: 100%;
@@ -224,25 +236,26 @@ label {
         filter: sepia(20%) brightness(80%);
       }
     }
-.footer-delete {
+    
+.footer {
     border: transparent;
     width: 100%;
     position: fixed;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
     z-index: 2;
     text-align: center;
     margin-top: -80px;
 }
 
-.footer-delete p {
+.footer p {
     margin: 0 auto;
-    color: black;
-    margin: 0 auto;
+    color: var(--secondary-color);
     text-align: left;
+    font-size: 1.5rem;
 }
 
-.footer-delete span {
+.footer span {
     font-weight: bold;
     text-align: center;
     display: block;
@@ -252,20 +265,20 @@ label {
     margin-top: 5px;
 }
 
-.footer-delete-button {
+.footer-button {
     display: block;
     margin: 0 auto !important;
     margin-top: 5px;
     text-align: center;
 }
 
-.footer-delete-button button {
+.footer-button button {
    background-color: transparent;
    color: black;
    font-family: 'Dosis', sans-serif;
 } 
 
-.footer-delete-button button:hover {
+.footer-button button:hover {
 background-color: transparent;
 font-size: 2rem;
 position: relative;
@@ -275,7 +288,7 @@ position: relative;
 z-index: -1;
 }
 
-.footer-delete p.copyright {
+.footer p.copyright {
 text-align: center;
 }
 
