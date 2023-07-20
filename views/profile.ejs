@@ -1,5 +1,5 @@
 <%- include('partials/header') -%>
-<nav class="navbar navbar-expand-lg navbar-light fixed-top fixed-left rounded-3">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top fixed-left">
   <div class="container">
     <button class="navbar-toggler order-first" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header border-bottom-0">
-                    <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
+                    <!-- <h3 class="modal-title" id="editModalLabel">Make Changes</h3> -->
                     <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true"></span>
                     </button>
@@ -28,16 +28,16 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label for="userName">Edit Name:</label>
-                        <input type="text" class="form-control" id="userName" name="userName"
+                        <input type="text" class="form-control placeholder-text" id="userName" name="userName"
                           value="<%= user.userName %>">
                       </div>
                       <div class="form-group">
                         <label for="email">Edit Email: </label>
-                        <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>">
+                        <input type="email" class="form-control placeholder-text" id="email" name="email" value="<%= user.email %>">
                       </div>
                       <div class="form-group">
                         <label for="password">Edit Password: </label>
-                        <input type="password" class="form-control" id="password" name="password"
+                        <input type="password" class="form-control placeholder-text" id="password" name="password"
                           value="<%= user.password %>">
                       </div>
                     </div>
@@ -66,7 +66,7 @@
                   <div class="mt-3"> <!-- Delete Profile Button -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                       data-bs-target="#deleteAccount">
-                      Delete my account
+                      Delete My Account
                     </button>
                   </div>
                   <div class="col-auto"> <!-- Delete Profile Modal -->
@@ -75,7 +75,7 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header border-bottom-0">
-                            <h3 class="modal-title" id="editModalLabel">Are you sure you want to delete your account?</h3>
+                            <h3 class="modal-title text-danger" id="editModalLabel">Are you sure you want to delete your account?</h3>
                             <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true"></span>
                             </button>
@@ -83,14 +83,12 @@
                           <form action="/post/deleteAcct/<%= user._id %>?_method=DELETE" method="POST">
                             <div class="modal-body">
                               <div class="form-group">
-                                <p>You will permanently lose access to your account and associated birthdays.</p>
-                                <span>This action cannot be undone.</span>
-                                <label for="deleteEmail">To confirm, type your email in the box below:</label>
+                                <p id="del-warning">You will permanently lose access to your account and associated birthdays. This action cannot be undone.</p>
                                 <input type="text" class="form-control" id="deleteEmail" name="deleteEmail"
                                   oninput="checkEmailInput()">
                                 <small id="emailError" class="form-text text-danger">Please retype your email to confirm.</small>
                                 <button type="submit" class="btn btn-danger mt-3" id="deleteAccountBtn" disabled>
-                                  Yes, I want to delete my account
+                                  Yes, I Want to Delete My Account
                                 </button>
                               </div>
                             </div>
@@ -121,7 +119,7 @@
     <div class="col-md-6 col-sm-12"> <!-- First Column -->
       <div class="first-col">
           <p class="hello">Hello <strong><%= user.userName %></strong>!</p>
-          <h2>Today is <strong><%= dayjs().format('MMMM D'); %></strong></h2>
+          <h2>Today is <strong><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
           <p>Add a friend or family member to your list of upcoming birthdays!</p>
           <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
           <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
@@ -129,7 +127,7 @@
       </div>
       <div class="mt-5">
         <button type="button" class="btn btn-primary first-col" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
-          add a birthday
+          Add a Birthday
         </button>
         <br>
         <div class="col-auto">
@@ -151,7 +149,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="date" class="form-label">Birthday</label>
-                        <input type="date" class="form-control" id="birthday" name="birthday">
+                        <input type="date" class="form-control placeholder-text" id="birthday" name="birthday">
                       </div>
                       <div class="mb-3">
                         <label for="relation" class="form-label">Relation</label>
@@ -184,20 +182,28 @@
           </h2>
           <div id="panelsStayOpen<%=[i]%>" class="accordion-collapse collapse">
             <div class="accordion-body">
-              <h4>Relation: <h3><%= posts[i].relation %></h3></h4><br>
-              <h4>Gift Ideas: <br><h3><%= posts[i].gifts %></h3></h4><br>
               <div class="row">
+                <div>
+                  <h4>Relation:</h4>
+                  <h3><%= posts[i].relation %></h3>
+                </div>
+                <div class="mt-3">
+                  <h4>Gift Ideas:</h4>
+                  <h3><%= posts[i].gifts %></h3>
+                </div>
+              </div>
+              <div class="row my-3">
                 <div class="col-auto"> <!-- Edit Post Button -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
                     Edit
                   </button>
                 </div>
-                <div class="col-auto"> <!-- Edit Modal -->
+                <div class="col-auto"> <!-- Edit Post Modal -->
                   <div class="modal fade" id="edit<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
                         <div class="modal-header border-bottom-0">
-                          <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
+                          <!-- <h3 class="modal-title" id="editModalLabel">Make Changes</h3> -->
                           <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"></span>
                           </button>
@@ -206,15 +212,19 @@
                           <div class="modal-body">
                             <div class="form-group">
                               <label for="name">Edit Name:</label>
-                              <input type="text" class="form-control" id="name" name="name" value="<%= posts[i].name %>">
+                              <input type="text" class="form-control placeholder-text" id="name" name="name" value="<%= posts[i].name %>">
                             </div>
                             <div class="form-group">
                               <label for="date">Edit Birthday: </label>
-                              <input type="date" class="form-control" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
+                              <input type="date" class="form-control placeholder-text" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
                             </div>
                             <div class="form-group">
-                              <label for="date">Add or Edit Gift Ideas: </label>
-                              <input type="text" class="form-control" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
+                              <label for="relation">Edit Relation: </label>
+                              <input type="text" class="form-control placeholder-text" id="relation" name="relation" value="<%= posts[i].relation %>">
+                            </div>
+                            <div class="form-group">
+                              <label for="gifts">Add or Edit Gift Ideas: </label>
+                              <input type="text" class="form-control placeholder-text" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -226,17 +236,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-auto"> <!-- Delete Button -->
+                <div class="col-auto"> <!-- Delete Post Button -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete<%= posts[i]._id %>id">
                     Delete
                   </button>
                 </div>
-                <div class="col-auto">  <!-- Delete Modal -->
+                <div class="col-auto">  <!-- Delete Post Modal -->
                   <div class="modal fade" id="delete<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header border-bottom-0">
-                            <h3 class="modal-title" id="deleteModalLabel">Confirm Deletion?</h3>
+                            <h3 class="modal-title text-danger" id="deleteModalLabel">Confirm Deletion?</h3>
                             <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true"></span>
                             </button>
@@ -247,7 +257,7 @@
                                       <form action="/post/deletePost/<%= posts[i]._id %>?_method=DELETE" method="POST">
                                         <div class="row justify-content-end no-gutters">
                                           <div class="col-auto">
-                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                           </div>
                                         </div>
                                       </form>
@@ -278,7 +288,11 @@
   accordionItems.forEach(function (item, index) {
     let accordionButton = item.querySelector(".accordion-button")
     let color = getNextColor()
-    accordionButton.style.borderBottomColor = color
+    accordionButton.style.borderTopColor = color
+    
+    if (index === 0) {
+      accordionButton.classList.add("hide-top-border");
+    }
   })
 </script>
 <script>

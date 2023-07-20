@@ -31,7 +31,8 @@ html, body {
 
 .navbar {
     width: fit-content;
-    background-color: #CBB279;
+    background-color: rgb(203,178,121,.5);
+    border-radius: 5px;
     position: relative;
     z-index: 1;
   }
@@ -63,7 +64,6 @@ a {
 }
 .btn-close {
     background-color: white;
-    color: white;
     position: relative;
 }
 
@@ -110,10 +110,10 @@ p.hello {
     margin-left: 12px;
 }
 
-label {
+label , #del-warning{
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
-    color: var(--secondary-color);
+    color: #537188;
     position: relative;
 }
 
@@ -122,6 +122,10 @@ label {
     font-size: 1.8rem;
     color: var(--secondary-color);
     position: relative;
+}
+
+.placeholder-text {
+    color: #9baab5;
 }
 
 .accordion, .accordion-item, .accordion-button {
@@ -143,12 +147,16 @@ label {
 }
 
 .accordion-button {
-    border-bottom-width: 2px;
-    border-bottom-style: dotted; /* or dashed */
+    border-top-width: 2px;
+    border-top-style: dashed; /* or dotted */
   }
 
+.accordion-button.hide-top-border {
+    border-top: none;
+}
+
 .custom-nav-item {
-    margin: 0.5rem; /* Adjust the margin value as per your preference */
+    margin: 0.5rem;
 }
 
 @media (min-width: 992px) {
@@ -157,10 +165,19 @@ label {
     }
 }
 
+.modal-content { 
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+}
+
 .modal-title {
-    color: var(--secondary-color);
+    color: #537188;
     /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
     position: relative;
+}
+
+.del-title {
+    color: var(--primary-color);
 }
 
 #balloon_1 {
@@ -279,28 +296,32 @@ label {
 } 
 
 .footer-button button:hover {
-background-color: transparent;
-font-size: 2rem;
-position: relative;
+    background-color: transparent;
+    font-size: 2rem;
+    position: relative;
 }
 
 .modal-backdrop {
-z-index: -1;
+    z-index: -1;
 }
 
 .footer p.copyright {
-text-align: center;
+    text-align: center;
 }
 
 .form-group .form-text {
-font-size: 1.8rem;
-display: block;
-margin: 5px auto !important;
-text-align: center;
+    font-size: 1.8rem;
+    display: block;
+    margin: 5px auto !important;
+    text-align: center;
 }
 
 .form-group button {
-display: block;
-text-align: center;
-margin: 5px auto !important;
+    display: block;
+    text-align: center;
+    margin: 5px auto !important;
+}
+
+.form-control {
+    border-radius: 5px;
 }
