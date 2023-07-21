@@ -9,7 +9,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-    background: url(/images/Paper-bg.png) no-repeat center center fixed; 
+    background: url(/images/paper-bg.png) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -31,8 +31,8 @@ html, body {
 
 .navbar {
     width: fit-content;
-    background-color: rgb(203,178,121,.5);
-    border-radius: 5px;
+    /* background-color: rgb(203,178,121,.5);
+    border-radius: 5px; */
     position: relative;
   }
 
@@ -317,4 +317,8 @@ label , #del-warning{
 
 .form-control {
     border-radius: 5px;
+}
+
+.form-login {
+    color: var(--secondary-color);
 }
