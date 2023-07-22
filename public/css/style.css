@@ -4,6 +4,11 @@
     --tertiary-color: #79CBB2;
 }
 
+@font-face {
+    font-family: 'Berylium';
+    src: url('/fonts/Berylium.ttf'); 
+ }
+
 html, body {
     box-sizing: border-box;
     margin: 0;
@@ -18,15 +23,15 @@ html, body {
 
 .container-fluid {
     position: relative;
+    text-align: center;
     height: 100vh;
 }
 
 .logo {
-    font-family: 'Crafty Girls', cursive;
-    color: red;
+    font-family: 'Berylium', Helvetica, sans-serif;
+    color: #FC887B;
     font-size: 5rem;
     position: relative;
-    font-weight: bold;
 }
 
 .navbar {
@@ -73,7 +78,8 @@ a {
 }
 
 .balloonLogo {
-    max-width: 100px;
+    margin: 0 auto;
+    width: 20rem;
     position: relative;
 }
 
@@ -352,6 +358,6 @@ label , #del-warning{
     border-radius: 5px;
 }
 
-.form-login {
+.form-login, .form-signup {
     color: var(--secondary-color);
 }
