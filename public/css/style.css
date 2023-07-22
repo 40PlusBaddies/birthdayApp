@@ -68,7 +68,7 @@ a {
 
 .btn:hover {
     background-color: orange;
-    font-size: 2rem;
+    /* font-size: 2rem; */
     position: relative;
 }
 
@@ -157,13 +157,46 @@ label , #del-warning{
     margin: 0.5rem;
 }
 
+.dropdown-toggle::after {
+    display: none;
+}
+  
+.dropdown-toggle {
+    border-radius: 10px; 
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.dropdown-toggle:hover, .dropdown-item:hover{
+    background-color: orange;
+}
+
+.dropdown-menu {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
+}
+
+.dropdown-item {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    border-radius: 5px;
+}
+
 @media (min-width: 992px) {
     .navbar-transparent {
       background-color: transparent;
     }
 }
 
-.modal-content { 
+@media (min-width: 992px) {
+    .full-content {
+      padding-top: 50px; 
+    }
+  }
+
+  .modal-content { 
     background-color: var(--secondary-color);
     border-radius: 5px;
 }
