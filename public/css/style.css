@@ -142,10 +142,10 @@ label , #del-warning{
 .accordion-button:not(.collapsed) {
     color: var(--secondary-color);
     background-color: transparent;
+    box-shadow: none;
 }
 
 .accordion-button {
-    border-top-width: 2px;
     border-top-style: dashed; /* or dotted */
   }
 
