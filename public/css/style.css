@@ -91,9 +91,8 @@ h2 {
     font-family: 'Dosis', sans-serif; 
     font-size: 3rem;
     color: var(--secondary-color);
-    /* font-weight: bold; */
-    margin-bottom: 20px;
     position: relative;
+    /* font-weight: bold; */
     /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
 }
 
@@ -102,11 +101,6 @@ p {
     font-size: 2.4rem;
     color: var(--secondary-color);
     /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
-    position: relative;
-}
-
-p.hello {
-    font-size: 3rem;
     position: relative;
 }
 
@@ -273,6 +267,13 @@ label , #del-warning{
     animation-fill-mode: forwards;
 }
 */
+
+@media (max-width: 576px) {
+    #balloon_1, #balloon_2, #balloon_3 {
+      display: none;
+    }
+}
+
   @keyframes slide-up {
       0% {
         top: 100%;
