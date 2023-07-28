@@ -2,6 +2,8 @@
 
 Let’s countdown to Birthday Town! This app allows users to easily keep track of friends' and family members' birthdays. It will send email reminders leading up to each birthday to help you remember to celebrate your loved ones.
 
+![An example dashboard where the left column shows user info and a right column shows a list of birthdays for friends and family members.](https://github.com/borojetski/birthdayApp/blob/newTheme/public/images/Screencap.png?raw=true)
+
 ## Overview
 
 1. Create an account and login
