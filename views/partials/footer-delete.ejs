@@ -1,59 +1,7 @@
-<div class="footer-delete">
-  <div class="mt-2 footer-delete-button">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteAccount">
-      Delete my account
-    </button>
-  </div>
-  <div class="col-auto">
-    <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header border-bottom-0">
-            <h3 class="modal-title" id="editModalLabel">Are you sure you want to delete your account?</h3>
-            <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true"></span>
-            </button>
-          </div>
-          <form action="/post/getCsv/<%= user._id %>" method="GET">
-            <button type="submit" class="btn btn-primary">Download Friend List</button>
-          </form>
-          <form action="/post/deleteAcct/<%= user._id %>?_method=DELETE" method="POST">
-            <div class="modal-body">
-              <div class="form-group">
-                <p>You will permanently lose access to your account and associated birthdays.</p>
-                <span>This action cannot be undone.</span>
-                <label for="deleteEmail">To confirm, type your email in the box below:</label>
-                <input type="text" class="form-control" id="deleteEmail" name="deleteEmail" oninput="checkEmailInput()">
-                <small id="emailError" class="form-text text-danger">Please retype your email to confirm.</small>
-                <button type="submit" class="btn btn-primary" id="deleteAccountBtn" disabled>Yes, I want to delete my account</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="footer-delete fixed-bottom">
   <p class="copyright">Copyright &copy 40 Plus Baddies</p>
 </div>
-<script>
-  function checkEmailInput() {
-    const deleteEmailInput = document.getElementById('deleteEmail');
-    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
-    const emailError = document.getElementById('emailError');
-    const userEmail = '<%= user.email %>';
 
-    if (deleteEmailInput.value.trim() === '') {
-      deleteAccountBtn.disabled = true;
-      emailError.innerText = 'Please enter your email address.';
-    } else if (deleteEmailInput.value.trim() !== userEmail) {
-      deleteAccountBtn.disabled = true;
-      emailError.innerText = 'Email does not match.';
-    } else {
-      deleteAccountBtn.disabled = false;
-      emailError.innerText = '';
-    }
-  }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
