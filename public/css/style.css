@@ -96,7 +96,7 @@ h2 {
     /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
 }
 
-p {
+p, .login-page ul, .login-page ol {
     font-family: 'Dosis', sans-serif; 
     font-size: 2.4rem;
     color: var(--secondary-color);
@@ -155,6 +155,10 @@ label , #del-warning{
 
 .custom-nav-item {
     margin: 0.5rem;
+}
+
+.acc-row {
+    margin-left: 1rem;
 }
 
 .dropdown-toggle::after {
@@ -359,6 +363,6 @@ label , #del-warning{
     border-radius: 5px;
 }
 
-.form-login, .form-signup {
+.form-login, .form-signup, ul, ol {
     color: var(--secondary-color);
 }

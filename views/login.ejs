@@ -1,8 +1,8 @@
 <%- include('partials/header') -%>
 
 <main class="container">
-   <div class="row justify-content-center">
-    <section class="col-6 mt-5">
+   <div class="row justify-content-center login-page">
+    <section id="section_one" class="col-6 mt-5">
       <% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
       <div class="alert alert-danger"><%= el.msg %></div>
       <% }) %> <% } %> 
@@ -34,7 +34,57 @@
           />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+      </form></a>
+      <div class="d-flex justify-content-center mt-5">
+        <a href="#overview" class="btn btn-primary">Overview</a> 
+      </div>
+    </section>
+    <section id="overview" class="col-lg-9 mt-5">
+      <div class="login-section">
+        <p>Let’s countdown to Birthday Town! This app allows users to easily keep track of friends' and family members' birthdays. It will send email reminders leading up to each birthday to help you remember to celebrate your loved ones.</p>
+      </div>
+      <div class="d-flex justify-content-center mt-5">
+        <a href="#how_to" class="btn btn-primary">How To Use</a>
+      </div>
+    </section>
+    <section id="how_to" class="col-lg-9 mt-5">
+      <div class="login-section">
+        <header>
+          <h2>How to Use</h2>
+        </header>
+        <ol>
+          <li>Create an account and login</li>
+          <li>Click "Add Birthday" to add a friend or family member</li>
+          <li>Fill in their name, birthday, your relationship, and any gift or party ideas</li>
+          <li>The app stores this birthday info in a database and sends automated email reminders leading up to each birthday
+            <ul>
+              <li>1 month before - to plan the party</li>
+              <li>1 week before - to get the gift</li>  
+              <li>1 day before - to do the thing</li>
+            </ul>
+          </li>
+          <li>View your dashboard to see all upcoming birthdays</li>
+          <li>Come back anytime to add more people and birthdays</li>  
+        </ol>        
+        <p>We hope this app helps you easily remember all your loved ones' special days! Please contact us at 40plusbday@gmail.comif you have any issues.</p>
+      </div>
+      <div class="d-flex justify-content-center mt-5">
+        <a href="#privacy" class="btn btn-primary">Privacy</a>
+      </div>
+    </section>
+    <section id="privacy" class="col-lg-9 mt-5">
+      <div class="login-section">
+        <header>
+          <h2>Privacy Policy</h2>
+        </header>
+        <p>We respect your privacy. This app collects only the information necessary for creating an account and sending birthday reminders. The information collected includes your name, email address, password, birthday dates for your connections, and any additional notes you provide.</p>
+        <p>Your data is not processed, used, sold, traded, advertised, or given to any third parties in any way. Your information is kept confidential and secure.</p>
+        <p>Email reminders are sent using a secure SMTP service. Message contents are not stored, read, or retained after sending.</p>
+        <p>Account information is stored in a secure database protected by encryption, firewalls, and access controls. Data is kept only as long as your account is active.</p>
+      </div>
+      <div class="d-flex justify-content-center my-5">
+        <a href="#top_login" class="btn btn-primary">Back to Login</a>
+      </div>
     </section>
   </div>
 </main>
