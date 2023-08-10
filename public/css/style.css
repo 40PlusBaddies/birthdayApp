@@ -1,14 +1,20 @@
 :root {
-    --primary-color: red;
-    --secondary-color: green; 
+    --primary-color: #CBB279;
+    --secondary-color: #EEEEEE; 
+    --tertiary-color: #79CBB2;
 }
+
+@font-face {
+    font-family: 'Berylium';
+    src: url('/fonts/Berylium.ttf'); 
+ }
 
 html, body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-    background: url(/images/background_5.jpg) no-repeat center center fixed; 
+    background: url(/images/paper-bg.png) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -17,29 +23,69 @@ html, body {
 
 .container-fluid {
     position: relative;
+    text-align: center;
     height: 100vh;
 }
 
 .logo {
-    font-family: 'Dosis', sans-serif;
-    color: red;
-    font-size: 2rem;
+    font-family: 'Berylium', Helvetica, sans-serif;
+    color: #FC887B;
+    font-size: 5rem;
     position: relative;
 }
 
-.logo a {
+.navbar {
+    width: fit-content;
+    /* background-color: rgb(203,178,121,.5);
+    border-radius: 5px; */
+    position: relative;
+  }
+
+/* .logo a {
     display: block;
     color: red;
     text-decoration: none;
     font-size: 5rem;
     padding-top: 20px;
     position: relative;
-}
+} */
 
-a {
+a, .login-page ul, .login-page ol, .login-page p {
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
     position: relative;
+}
+
+.login-page {
+    line-height: 1.8;
+}
+
+.txt-shaded-y-o {
+    background: linear-gradient(-175deg,#FEFC97 0%,#FBBB62 82.5%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0,0,0,.15);
+}
+
+.txt-shaded-y-r {
+    background: linear-gradient(-175deg,#FEFC97 0%,#FC887B 82.5%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0,0,0,.15);
+}
+
+.txt-shaded-b-r {
+    background: linear-gradient(-175deg,#CBB279 0%,#FC887B 82.5%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0,0,0,.15);
+}
+
+.txt-shaded-w-y {
+    background: linear-gradient(-175deg,white 0%,#FEFC97 82.5%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0,0,0,.15);
 }
 
 .btn {
@@ -50,21 +96,23 @@ a {
     font-size: 1.8rem;
     color: white;
     position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
 }
+
 .btn-close {
     background-color: white;
-    color: white;
     position: relative;
 }
 
 .btn:hover {
     background-color: orange;
-    font-size: 2rem;
+    /* font-size: 2rem; */
     position: relative;
 }
 
 .balloonLogo {
-    max-width: 100px;
+    margin: 0 auto;
+    width: 20rem;
     position: relative;
 }
 
@@ -74,24 +122,29 @@ h1 {
 
 h2 {
     font-family: 'Dosis', sans-serif; 
-    font-size: 2.6rem;
+    font-size: 3rem;
     color: var(--secondary-color);
-    font-weight: bold;
-    margin-bottom: 20px;
     position: relative;
+    /* font-weight: bold; */
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
 }
 
 p {
     font-family: 'Dosis', sans-serif; 
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: var(--secondary-color);
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
     position: relative;
 }
 
-label {
+.first-col {
+    margin-left: 12px;
+}
+
+label , #del-warning{
     font-family: 'Dosis', sans-serif; 
     font-size: 1.8rem;
-    color: var(--secondary-color);
+    color: #537188;
     position: relative;
 }
 
@@ -102,22 +155,104 @@ label {
     position: relative;
 }
 
+.placeholder-text {
+    color: #9baab5;
+}
+
 .accordion, .accordion-item, .accordion-button {
     background-color: transparent;
+    border: none;
     box-shadow: none;
     color: var(--secondary-color);
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
+    position: relative;
+}
+
+.friend-list:last-child {
+    margin-bottom: 80px;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--secondary-color);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.accordion-button {
+    border-top-style: dashed; /* or dotted */
+  }
+
+.accordion-button.hide-top-border {
+    border-top: none;
+}
+
+.custom-nav-item {
+    margin: 0.5rem;
+}
+
+.acc-row {
+    margin-left: 1rem;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+  
+.dropdown-toggle {
+    border-radius: 10px; 
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.dropdown-toggle:hover, .dropdown-item:hover{
+    background-color: orange;
+}
+
+.dropdown-menu {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
+}
+
+.dropdown-item {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    border-radius: 5px;
+}
+
+@media (min-width: 992px) {
+    .navbar-transparent {
+      background-color: transparent;
+    }
+}
+
+@media (min-width: 992px) {
+    .full-content {
+      padding-top: 50px; 
+    }
+  }
+
+  .modal-content { 
+    background-color: var(--secondary-color);
+    border-radius: 5px;
 }
 
 .modal-title {
-    color: var(--secondary-color);
+    color: #537188;
+    /*text-shadow: 1.25px 1.25px 1.25px var(--tertiary-color);*/
+    position: relative;
 }
 
-/*
+.del-title {
+    color: var(--primary-color);
+}
+
 #balloon_1 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_1.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -128,10 +263,10 @@ label {
 }
 
 #balloon_2 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_2.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -142,10 +277,10 @@ label {
 }
 
 #balloon_3 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_3.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -154,12 +289,12 @@ label {
     animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
     animation-fill-mode: forwards;
 }
-
+/*
 #balloon_4 {
+    will-change: transform;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     background: url("balloon_4.png") no-repeat center center fixed;
     height: 100%;
     width: 100%;
@@ -167,6 +302,13 @@ label {
     animation-duration: 2.5s;
     animation-timing-function: cubic-bezier(0, 0, 0.5, 1.3);
     animation-fill-mode: forwards;
+}
+*/
+
+@media (max-width: 576px) {
+    #balloon_1, #balloon_2, #balloon_3 {
+      display: none;
+    }
 }
 
   @keyframes slide-up {
@@ -186,4 +328,74 @@ label {
         filter: sepia(20%) brightness(80%);
       }
     }
-*/
+    
+.footer {
+    border: transparent;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: transparent;
+    text-align: center;
+    margin-top: -80px;
+}
+
+.footer p {
+    margin: 0 auto;
+    color: var(--secondary-color);
+    text-align: left;
+    font-size: 1.5rem;
+}
+
+.footer span {
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    font-family: 'Dosis', sans-serif;
+    font-size: 2rem;
+    margin-top: 5px;
+}
+
+.footer-button {
+    display: block;
+    margin: 0 auto !important;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.footer-button button {
+   background-color: transparent;
+   color: black;
+   font-family: 'Dosis', sans-serif;
+} 
+
+.footer-button button:hover {
+    background-color: transparent;
+    font-size: 2rem;
+    position: relative;
+}
+
+.footer p.copyright {
+    text-align: center;
+}
+
+.form-group .form-text {
+    font-size: 1.8rem;
+    display: block;
+    margin: 5px auto !important;
+    text-align: center;
+}
+
+.form-group button {
+    display: block;
+    text-align: center;
+    margin: 5px auto !important;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.form-login, .form-signup, ul, ol {
+    color: var(--secondary-color);
+}

@@ -120,3 +120,42 @@ exports.postSignup = (req, res, next) => {
     }
   );
 };
+
+// Edit user profile
+exports.updateProfile = (req, res, next) => {
+  // Get the user ID from the request parameters
+  const userId = req.params.id;
+
+  // Find the user by ID
+  User.findById(userId, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+
+    // Update the user's profile fields
+    user.userName = req.body.userName;
+    user.email = req.body.email;
+
+    // Check if the password field has been modified
+    if (req.body.password) {
+      // Set the new password and save the user
+      user.password = req.body.password;
+      user.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        req.flash("success", { msg: "Profile updated successfully!" });
+        res.redirect("/profile");
+      });
+    } else {
+      // Save the updated user without changing the password
+      user.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        req.flash("success", { msg: "Profile updated successfully!" });
+        res.redirect("/profile");
+      });
+    }
+  });
+};
