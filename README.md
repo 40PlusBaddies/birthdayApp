@@ -1,4 +1,4 @@
-# BirthdayTown
+# Birthday Note
 
 Let’s countdown to Birthday Town! This app allows users to easily keep track of friends' and family members' birthdays. It will send email reminders leading up to each birthday to help you remember to celebrate your loved ones.
 
