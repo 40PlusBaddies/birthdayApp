@@ -1,92 +1,165 @@
 <%- include('partials/header') -%>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top fixed-left">
+  <div class="container">
+    <button class="navbar-toggler order-first mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav d-flex justify-content-between">
+        <li class="nav-item custom-nav-item">
+          <div class="d-flex"> <!-- Edit Profile Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModalId">
+              Edit Profile
+            </button>
+          </div>
+        </li>
+        <li class="nav-item custom-nav-item">
+          <a href="/logout" class="btn btn-primary">Logout</a>
+        </li>
+        <!-- <li class="nav-item custom-nav-item">
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-header btn btn-primary" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen" aria-expanded="true" aria-controls="panelsStayOpen">
+                More...
+              </button>
+              <div id="panelsStayOpen" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <form action="/post/getCsv/<%= user._id %>" method="GET">
+                    <button type="submit" class="btn btn-primary">Download Friend List</button>
+                  </form>
+                  <div class="mt-3"> 
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      data-bs-target="#deleteAccount">
+                      Delete My Account
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li> -->
+        <li class="nav-item custom-nav-item">
+          <div class="dropdown">        
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              More...
+            </button>        
+            <ul class="dropdown-menu mt-3">            
+              <li>
+                <form action="/post/getCsv/<%= user._id %>" method="GET">
+                  <button class="dropdown-item" type="submit">
+                    Download Friend List
+                  </button>
+                </form>
+              </li>        
+              <li>
+                <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteAccount">
+                  Delete My Account
+                </button>
+              </li>        
+            </ul>        
+          </div>        
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
 <div id="balloon_1"></div>
 <div id="balloon_2"></div>
 <div id="balloon_3"></div>
 <div id="balloon_4"></div>
 <div class="container">  <!-- Full Page -->
-  <div class="row mt-5 flex-wrap"> <!-- Full Content -->
+  <div class="row flex-wrap full-content mt-4"> <!-- Full Content -->
     <div class="col-md-6 col-sm-12"> <!-- First Column -->
-        <div>
-            <p class="hello">Hello <strong><%= user.userName %></strong>,</p>
-            <p>It's time to celebrate!</p>
-            <p>Someone you love will have a birthday soon.</p>
-            <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
-            <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
-            
-        </div>
-        <div class="mt-5">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
-            Add a birthday person
-          </button>
-          <br>
-          <a href="/logout" class="btn btn-primary my-4">Logout</a>
-          <div class="col-auto">
-            <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header border-bottom-0">
-                    <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true"></span>
-                    </button>
-                  </div>
-                  <form action="/post/createPost" method="POST">
-                    <div class="modal-body">
-                      <div class="form-group">
-                        <div class="mb-3">
-                          <label for="name" class="form-label">Name</label>
-                          <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <div class="mb-3">
-                          <label for="date" class="form-label">Birthday</label>
-                          <input type="date" class="form-control" id="birthday" name="birthday">
-                        </div>
-                        <div class="mb-3">
-                          <label for="relation" class="form-label">Relation</label>
-                          <input type="text" class="form-control" id="relation" name="relation">
-                        </div>
-                        <div class="mb-3">
-                          <label for="gift-ideas" class="form-label">Gift ideas</label>
-                          <input type="text" class="form-control" id="gift" name="gift">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="first-col">
+          <h2 class="hello">Hello <strong><%= user.userName %></strong>!</h2>
+          <h2>Today is <strong><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
+          <p class="mt-5">Add a friend or family member to your list of upcoming birthdays!</p>
+          <!-- <p><strong>Email</strong>: <%= user.email %></p>              -->
+          <!-- <a href="/feed" class="btn btn-primary">See Upcoming Birthdays</a> -->
+          
+      </div>
+      <div class="mt-5">
+        <button type="button" class="btn btn-primary first-col" data-bs-toggle="modal" data-bs-target="#newBirthdayModal">
+          Add a Birthday
+        </button>
+        <br>
+        <div class="col-auto">
+          <div class="modal fade" id="newBirthdayModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                  <h3 class="modal-title" id="editModalLabel">Add a birthday person</h3>
+                  <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                  </button>
+                </div>
+                <form action="/post/createPost" method="POST">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
                       </div>
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Birthday</label>
+                        <input type="date" class="form-control placeholder-text" id="birthday" name="birthday">
+                      </div>
+                      <div class="mb-3">
+                        <label for="relation" class="form-label">Relation</label>
+                        <input type="text" class="form-control" id="relation" name="relation">
+                      </div>
+                      <div class="mb-3">
+                        <label for="gift-ideas" class="form-label">Gift ideas</label>
+                        <input type="text" class="form-control" id="gift" name="gift">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                  </form>
-                </div> 
-              </div>
+                  </div>
+                </form>
+              </div> 
             </div>
           </div>
         </div>
-      </div> 
-    <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0"> <!-- Second Column -->
-      <h2>Today is <strong><%= dayjs().format('MMMM D, YYYY'); %></strong></h2>
+      </div>
+    </div> 
+    <div class="accordion col-md-6 col-sm-12 mt-5 mt-md-0 mb-5"> <!-- Second Column -->
       <% for(let i=0; i<posts.length; i++) {%>
         <% let birthday = dayjs.utc(posts[i].birthday) %>
       <% let days = birthday.dayOfYear() - dayjs().dayOfYear()%>
       <% if (days < 0) { days = days + 365 } %>
-        <div class="accordion-item">
+        <div class="accordion-item friend-list">
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen<%=[i]%>" aria-expanded="false" aria-controls="panelsStayOpen<%=[i]%>">
-              <h3><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)</h3>
+            <button class="accordion-button collapsed pb-0" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen<%=[i]%>" aria-expanded="false" aria-controls="panelsStayOpen<%=[i]%>">
+              <p><%= posts[i].name %>'s Birthday is in <%=days%> Days (<%= dayjs.utc(posts[i].birthday).format('MMMM D') %>)</p>
             </button>
           </h2>
           <div id="panelsStayOpen<%=[i]%>" class="accordion-collapse collapse">
             <div class="accordion-body">
-              <h3>Relation: <%= posts[i].relation %></h3><br>
-              <h3>Gift Ideas: <br><%= posts[i].gifts %></h3><br>
-              <div class="row">
-                <div class="col-auto"> <!-- Edit Button -->
+              <div class="row acc-row">
+                <div>
+                  <h3 class="fw-bold txt-shaded-w-y">Relation:</h3>
+                  <h4><%= posts[i].relation %></h4>
+                </div>
+                <div class="mt-3">
+                  <h3 class="fw-bold txt-shaded-w-y">Gift Ideas:</h3>
+                  <h4><%= posts[i].gifts %></h4>
+                </div>
+              </div>
+              <div class="row m-3">
+                <div class="col-auto"> <!-- Edit Post Button -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit<%= posts[i]._id %>id">
                     Edit
                   </button>
                 </div>
-                <div class="col-auto"> <!-- Edit Modal -->
+                <div class="col-auto"> <!-- Edit Post Modal -->
                   <div class="modal fade" id="edit<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
                         <div class="modal-header border-bottom-0">
-                          <h3 class="modal-title" id="editModalLabel">Make Changes</h3>
+                          <!-- <h3 class="modal-title" id="editModalLabel">Make Changes</h3> -->
                           <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"></span>
                           </button>
@@ -95,15 +168,19 @@
                           <div class="modal-body">
                             <div class="form-group">
                               <label for="name">Edit Name:</label>
-                              <input type="text" class="form-control" id="name" name="name" value="<%= posts[i].name %>">
+                              <input type="text" class="form-control placeholder-text" id="name" name="name" value="<%= posts[i].name %>">
                             </div>
                             <div class="form-group">
                               <label for="date">Edit Birthday: </label>
-                              <input type="date" class="form-control" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
+                              <input type="date" class="form-control placeholder-text" id="birthday" name="birthday" value="<%= dayjs.utc(posts[i].birthday).format('YYYY-MM-DD') %>">
                             </div>
                             <div class="form-group">
-                              <label for="date">Add or Edit Gift Ideas: </label>
-                              <input type="text" class="form-control" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
+                              <label for="relation">Edit Relation: </label>
+                              <input type="text" class="form-control placeholder-text" id="relation" name="relation" value="<%= posts[i].relation %>">
+                            </div>
+                            <div class="form-group">
+                              <label for="gifts">Add or Edit Gift Ideas: </label>
+                              <input type="text" class="form-control placeholder-text" id="gifts" name="gifts" value="<%= posts[i].gifts %>">
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -115,17 +192,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-auto"> <!-- Delete Button -->
+                <div class="col-auto"> <!-- Delete Post Button -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete<%= posts[i]._id %>id">
                     Delete
                   </button>
                 </div>
-                <div class="col-auto">  <!-- Delete Modal -->
+                <div class="col-auto">  <!-- Delete Post Modal -->
                   <div class="modal fade" id="delete<%= posts[i]._id %>id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header border-bottom-0">
-                            <h3 class="modal-title" id="deleteModalLabel">Confirm Deletion?</h3>
+                            <h3 class="modal-title text-danger" id="deleteModalLabel">Confirm Deletion?</h3>
                             <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true"></span>
                             </button>
@@ -136,7 +213,7 @@
                                       <form action="/post/deletePost/<%= posts[i]._id %>?_method=DELETE" method="POST">
                                         <div class="row justify-content-end no-gutters">
                                           <div class="col-auto">
-                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                           </div>
                                         </div>
                                       </form>
@@ -156,8 +233,109 @@
   </div>
 </div>
 
+<div class="col-auto"> <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModalId" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <!-- <h3 class="modal-title" id="editModalLabel">Make Changes</h3> -->
+          <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <form action="/updateProfile/<%= user._id %>?_method=PUT" method="POST">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="userName">Edit Name:</label>
+              <input type="text" class="form-control placeholder-text" id="userName" name="userName"
+                value="<%= user.userName %>">
+            </div>
+            <div class="form-group">
+              <label for="email">Edit Email: </label>
+              <input type="email" class="form-control placeholder-text" id="email" name="email" value="<%= user.email %>">
+            </div>
+            <div class="form-group">
+              <label for="password">Edit Password: </label>
+              <input type="password" class="form-control placeholder-text" id="password" name="password"
+                value="<%= user.password %>">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Submit Changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="col-auto"> <!-- Delete Profile Modal -->
+  <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog"
+    aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h3 class="modal-title text-danger" id="editModalLabel">Are you sure you want to delete your account?</h3>
+          <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <form action="/post/deleteAcct/<%= user._id %>?_method=DELETE" method="POST">
+          <div class="modal-body">
+            <div class="form-group">
+              <p id="del-warning">This will permanently delete your user account and all associated member birthday data. This action cannot be undone.</p>
+              <input type="text" class="form-control" id="deleteEmail" name="deleteEmail"
+                oninput="checkEmailInput()">
+              <small id="emailError" class="form-text text-danger">Please retype your email to confirm.</small>
+              <button type="submit" class="btn btn-danger mt-3" id="deleteAccountBtn" disabled>
+                Yes, I Want to Delete My Account
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const presetColors = ["#fc887b", "#fefc97", "#fbbb62", "#d0e6a5", "#86e3c3", "#ccabda"]
+  let lastColorIndex = 0
+  function getNextColor() {
+    let color = presetColors[lastColorIndex]
+    lastColorIndex = (lastColorIndex + 1) % presetColors.length
+    return color
+  }
+  let accordionItems = document.querySelectorAll(".friend-list")
+  accordionItems.forEach(function (item, index) {
+    let accordionButton = item.querySelector(".accordion-button")
+    let color = getNextColor()
+    accordionButton.style.borderTopColor = color
+    
+    if (index === 0) {
+      accordionButton.classList.add("hide-top-border");
+    }
+  })
+</script>
+<script>
+  function checkEmailInput() {
+    const deleteEmailInput = document.getElementById('deleteEmail');
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const emailError = document.getElementById('emailError');
+    const userEmail = '<%= user.email %>';
 
+    if (deleteEmailInput.value.trim() === '') {
+      deleteAccountBtn.disabled = true;
+      emailError.innerText = 'Please enter your email address.';
+    } else if (deleteEmailInput.value.trim() !== userEmail) {
+      deleteAccountBtn.disabled = true;
+      emailError.innerText = 'Email does not match.';
+    } else {
+      deleteAccountBtn.disabled = false;
+      emailError.innerText = '';
+    }
+  }
+</script>
 
-
-<%- include('partials/footer-delete') -%>
+<%- include('partials/footer') -%>
